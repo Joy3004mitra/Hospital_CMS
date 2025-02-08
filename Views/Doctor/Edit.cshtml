@@ -1,0 +1,94 @@
+﻿@model HospitalManagement.Models.MastDoctor
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit Doctor";
+}
+
+<div class="page-header">
+    <h2 class="space">Add New Doctor</h2>
+</div>
+
+<div class="card">
+    @using (Html.BeginForm("Edit", "Doctor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DoctorName">Doctor Name</label>
+                    <input type="text" id="DoctorName" name="DoctorName" class="form-control" placeholder="Enter doctor name" value="@Model?.DoctorName" required />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DoctorDegree">Degree</label>
+                    <input type="text" id="DoctorDegree" name="DoctorDegree" class="form-control" placeholder="Enter degree" value="@Model?.DoctorDegree" required />
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="LinkedInLink">Linkdin Link</label>
+                    <input type="text" id="LinkedInLink" name="LinkedInLink" class="form-control" placeholder="Enter linkdin link" value="@Model?.LinkedInLink" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="XLink">X handle Link</label>
+                    <input type="text" id="XLink" name="XLink" class="form-control" placeholder="Enter X handle link" value="@Model?.XLink" />
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="FaceboolProfileLink">Facebook Profile Link</label>
+                    <input type="text" id="FaceboolProfileLink" name="FaceboolProfileLink" class="form-control" placeholder="Enter facebook profile link" value="@Model?.FaceboolProfileLink" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DoctorDesc">Description</label>
+                    <input type="text" id="DoctorDesc" name="DoctorDesc" class="form-control" placeholder="Enter description" value="@Model?.DoctorDesc" required />
+                </div>
+            </div>
+        </div>
+        <div class="form-group upload-section">
+            <label for="doctorImage">Upload Doctor Image</label>
+            <div class="upload-box">
+                <input type="file" id="doctorImage" name="doctorImage" class="form-control" />
+                <br />
+
+                <!-- Display Current Doctor Image -->
+                @if (!string.IsNullOrEmpty(Model.DoctorImage))
+                {
+                    <label>Current Image:</label>
+                    <img src="@Url.Content(Model.DoctorImage)" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;" />
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-warning">Update</button>
+        </div>
+    }
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Doctor updated successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("Index", "Doctor")';
+                }
+            });
+        });
+    </script>
+}

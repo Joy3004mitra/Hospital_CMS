@@ -1,0 +1,88 @@
+﻿@model IEnumerable<HospitalManagement.Models.MastDoctor>
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- BREADCRUMB
+============================================= -->
+<div id="breadcrumb" class="division" style="background-image:url('/images/servicesbanner.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class=" breadcrumb-holder text-center">
+
+
+                    <!-- Title -->
+                    <h1 class="h4-sm whitetext-color">Our Doctors</h1>
+                    <p class="whitetext-color">Compassionate nursing care, assisted living, memory care, rehabilitation, and wellness services ensuring comfort, dignity, and support for seniors.</p>
+
+                </div>
+            </div>
+        </div>  <!-- End row -->
+    </div>	<!-- End container -->
+</div>	<!-- END BREADCRUMB -->
+<!-- Doctors
+============================================= -->
+<div id="service-page" class="wide-60 service-page-section division">
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 section-title">
+                <!-- Section ID -->
+                <!-- Title 	-->
+                <h3 class="h3-md steelblue-color">Meet Our <span class="blue-text">Specialized Doctors</span></h3>
+
+
+            </div>
+        </div>  <!-- END SECTION TITLE -->
+        <!-- Doctor list-->
+        <div class="row pb-100">
+
+            <!-- Doctor BOX  -->
+            @foreach (var doctor in Model)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="doctor-1">
+
+                        <!-- Doctor Photo -->
+                        <div class="hover-overlay text-center">
+
+                            <!-- Photo -->
+                            <img class="img-fluid" src="@doctor.DoctorImage" alt="doctor-foto">
+
+
+                        </div>
+
+                        <!-- Doctor Meta -->
+                        <div class="doctor-meta">
+
+                            <h5 class="h5-sm steelblue-color">Doctor Name</h5>
+                            <span class="blue-color">@doctor.DoctorDegree</span>
+
+                            <p class="p-sm grey-color">
+                                @doctor.DoctorDesc
+                            </p>
+                            <div>
+                                <div class="footer-socials-links mt-20">
+                                    <ul class="foo-socials text-center clearfix">
+
+                                        <li><a href="@doctor.FaceboolProfileLink" class="ico-facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="@doctor.LinkedInLink" class="ico-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                                        <li><a href="@doctor.XLink" class="ico-twitter"><i class="fab fa-twitter"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>	<!-- END Services -->
+
+    </div>	<!-- End container -->
+</div>	<!-- END Doctors -->

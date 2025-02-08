@@ -1,0 +1,58 @@
+﻿@model HospitalManagement.Models.MastHosTestimonials
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create Testimonial";
+}
+
+<div class="page-header">
+    <h2 class="space">Add New Testimonial</h2>
+</div>
+
+<div class="card">
+    @using (Html.BeginForm("Create", "Testimonial", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="PatientName">Patient Name</label>
+                    <input type="text" id="PatientName" name="PatientName" class="form-control" placeholder="Enter patient name" value="@Model?.PatientName" required />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="PatientComments">Comments</label>
+                    <input type="text" id="PatientComments" name="PatientComments" class="form-control" placeholder="Enter comments" value="@Model?.PatientComments" required />
+                </div>
+            </div>
+        </div>
+        <div class="form-group upload-section">
+            <label for="patientImage">Upload Patient Image</label>
+            <div class="upload-box">
+                <input type="file" id="patientImage" name="patientImage" class="form-control" required />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    }
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Testimonial saved successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("Index", "Testimonial")';
+                }
+            });
+        });
+    </script>
+}

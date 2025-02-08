@@ -1,0 +1,157 @@
+﻿@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- BREADCRUMB
+            ============================================= -->
+<div id="breadcrumb" class="division" style="background-image:url('/images/servicesbanner.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class=" breadcrumb-holder text-center">
+
+
+                    <!-- Title -->
+                    <h1 class="h4-sm whitetext-color">Book an Appointment</h1>
+                    <p class="whitetext-color">Please fill out the form, and we will get in touch with you shortly to schedule your visit as quickly as possible. For any emergency support, please contact our helpline number.</p>
+
+                </div>
+            </div>
+        </div>  <!-- End row -->
+    </div>	<!-- End container -->
+</div>	<!-- END BREADCRUMB -->
+<!-- CONTACTS-1
+============================================= -->
+<div id="contacts-1" class="wide-60 contacts-section division">
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 section-title">
+
+
+                <h3 class="h3-md steelblue-color">Fill Out a <span class="blue-text">Quick Form</span></h3>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12 pb-100">
+                <!-- APPOINTMENT FORM -->
+                <div id="appointment-form-holder" class="text-center">
+                    <form id="appointment-form" name="appointmentform" class="row appointment-form">
+                        <div class="col-md-12">
+                            <h3 class="bookingform-legend steelblue-color">Select Your  <span class="blue-text">Service</span></h3>
+                        </div>
+                        <!-- Form Select -->
+                        <div id="input-department" class="col-md-4 input-department">
+                            @{
+                                var departments = ViewBag.Service as List<HospitalManagement.Models.MastHosService>;
+                            }
+                            <select id="departmentData" name="department" class="custom-select department" required>
+                                <option value="Pick Service">Pick Service</option>
+                                @if (departments != null && departments.Count > 0)
+                                {
+                                    @foreach (MastHosService department in departments)
+                                    {
+                                        <option value="@department.ServiceName">@department.ServiceName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Form Select -->
+                        <div id="input-doctor" class="col-md-4 input-doctor">
+                            @{
+                                var doctors = ViewBag.Doctor as List<HospitalManagement.Models.MastDoctor>;
+                            }
+                            <select id="doctorData" name="doctor" class="custom-select doctor" required>
+                                <option value="Select Doctor">Select Doctor</option>
+                                @if (doctors != null && doctors.Count > 0)
+                                {
+                                    @foreach (MastDoctor doctor in doctors)
+                                    {
+                                        <option value="@doctor.DoctorName">@doctor.DoctorName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Form Select -->
+                        <div id="input-patient" class="col-md-4 input-patient">
+                            <select id="inlineFormCustomSelect3" name="patient" class="custom-select patient" required>
+                                <option value="">Have You Visited Us Before?*</option>
+                                <option>New Patient</option>
+                                <option>Returning Patient</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h3 class="bookingform-legend steelblue-color">Enter Your   <span class="blue-text">Information</span></h3>
+                        </div>
+
+                        <!-- Contact Form Input -->
+                        <div id="input-name" class="col-lg-4">
+                            <input type="text" name="name" class="form-control name" placeholder="Enter Your Name*" required>
+                        </div>
+
+                        <!-- Contact Form Input -->
+                        <div id="input-name" class="col-lg-4">
+                            <select id="inlineFormCustomSelect4" name="gender" class="custom-select gender" required>
+                                <option value="">Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Transgender</option>
+                            </select>
+                        </div>
+
+                        <!-- Contact Form Input -->
+                        <div id="input-age" class="col-lg-4">
+                            <input type="text" name="age" class="form-control age" placeholder="Enter Your Age*" required>
+                        </div>
+
+                        <div id="input-email" class="col-lg-4">
+                            <input type="text" name="email" class="form-control email" placeholder="Enter Your Email*" required>
+                        </div>
+
+                        <div id="input-phone" class="col-lg-4">
+                            <input type="tel" name="phone" class="form-control phone" placeholder="Enter Your Phone Number*" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h3 class="bookingform-legend steelblue-color">Select Your <span class="blue-text"> Date</span></h3>
+                        </div>
+
+                        <!-- Contact Form Input -->
+                        <div id="input-date" class="col-lg-4">
+                            <input id="datetimepicker" type="text" name="date" class="form-control date" placeholder="Appointment Date" required>
+                        </div>
+
+
+                        <div id="input-message" class="col-lg-12 input-message">
+                            <textarea class="form-control message" name="message" rows="6" placeholder="Your Message ..."></textarea>
+                        </div>
+
+                        <!-- Contact Form Button -->
+                        <div class="col-lg-12 form-btn">
+                            <button type="submit" class="btn btn-blue blue-hover submit">Request an Appointment</button>
+                        </div>
+
+                        <!-- Contact Form Message -->
+                        <div class="col-lg-12 appointment-form-msg text-center">
+                            <div class="sending-msg"><span class="loading"></span></div>
+                        </div>
+
+                    </form>
+
+                </div>	<!-- END APPOINTMENT FORM -->
+            </div>
+
+        </div>	<!-- End row -->
+
+
+    </div>	   <!-- End container -->
+</div>	<!-- END CONTACTS-1 -->

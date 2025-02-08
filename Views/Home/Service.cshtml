@@ -1,0 +1,68 @@
+﻿@model IEnumerable<HospitalManagement.Models.MastHosService>
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- BREADCRUMB
+============================================= -->
+<div id="breadcrumb" class="division" style="background-image:url('/images/servicesbanner.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class=" breadcrumb-holder text-center">
+
+
+                    <!-- Title -->
+                    <h1 class="h4-sm whitetext-color">Services</h1>
+                    <p class="whitetext-color">Compassionate nursing care, assisted living, memory care, rehabilitation, and wellness services ensuring comfort, dignity, and support for seniors.</p>
+
+                </div>
+            </div>
+        </div>  <!-- End row -->
+    </div>	<!-- End container -->
+</div>	<!-- END BREADCRUMB -->
+<!-- SERVICE DETAILS
+============================================= -->
+<div id="service-page" class="wide-60 service-page-section division">
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 section-title">
+                <!-- Section ID -->
+                <!-- Title 	-->
+                <h3 class="h3-md steelblue-color">Services We <span class="blue-text">Offer</span></h3>
+
+
+            </div>
+        </div>  <!-- END SECTION TITLE -->
+        <!-- Services-->
+        <div class="row pb-100">
+
+            <!-- SERVICE BOX #1 -->
+            @foreach (var service in Model)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="sbox-4 ">
+
+                        <!-- Image -->
+                        <img class="img-fluid" src="@service.ServiceImage" alt="@service.ServiceImage" width="100%" height="auto" />
+
+                        <!-- Text -->
+                        <div class="sbox-4-txt">
+                            <h5 class="h5-md steelblue-color"><a href="#">@service.ServiceName</a></h5>
+                            <p>
+                                @service.ServiceShortDesc
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>	<!-- END Services -->
+
+    </div>	<!-- End container -->
+</div>	<!-- END SERVICE DETAILS -->

@@ -1,0 +1,141 @@
+﻿@model HospitalManagement.Models.ContactModel
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- BREADCRUMB
+            ============================================= -->
+<div id="breadcrumb" class="division" style="background-image:url('/images/servicesbanner.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class=" breadcrumb-holder text-center">
+
+
+                    <!-- Title -->
+                    <h1 class="h4-sm whitetext-color">Contact</h1>
+                    <p class="whitetext-color">Compassionate nursing care, assisted living, memory care, rehabilitation, and wellness services ensuring comfort, dignity, and support for everyone.</p>
+
+                </div>
+            </div>
+        </div>  <!-- End row -->
+    </div>	<!-- End container -->
+</div>	<!-- END BREADCRUMB -->
+<!-- CONTACTS-1
+============================================= -->
+<div id="contacts-1" class="wide-60 contacts-section division">
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 section-title">
+
+                <!-- Title 	-->
+                <h3 class="h3-md steelblue-color">Have a Question? <span class="blue-text">Get In Touch</span></h3>
+
+                <!-- Text -->
+                <p>Have a question? Give us a call or send an email to contact the Hiramani Memorial Hospital. </p>
+                <p>If you want to book an appointment please go to <a href="@Url.Action("BookingAppointment","Home")">Book appointment</a> page.</p>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+
+
+            <!-- CONTACTS INFO -->
+            <div class="col-md-5 col-lg-4">
+
+                <!-- General Information -->
+                <div class="contact-box mb-40">
+                    <h5 class="h5-sm steelblue-color">General Information</h5>
+
+                    <p><b>Address:</b> @Model.SiteAddress</p>
+
+                    <p><a href="https://maps.app.goo.gl/DUBBZnr3n1CgpwY96" class="blue-color"><i class="fa fa-map-pin" aria-hidden="true"></i> Locate us on map</a></p>
+
+                    <p><b>Phone:</b> +91 @Model.SitePhoneNo</p>
+
+                    <p><b>Emergency Number:</b> +91 @Model.SiteEmergencyNo</p>
+
+                    <p>Email: <a href="mailto:@Model.SiteEmail" class="blue-color">@Model.SiteEmail</a></p>
+
+                </div>
+
+
+                <!-- Working Hours -->
+                <div class="contact-box mb-40">
+                    <h5 class="h5-sm steelblue-color">Working Hours</h5>
+                    <p>Monday – Friday : Open 24 hours</p>
+                    <p>Saturday : Open 24 hours</p>
+                    <p>Sunday : Open 24 hours</p>
+                </div>
+
+
+
+
+
+
+            </div>	<!-- END CONTACTS INFO -->
+            <!-- CONTACT FORM -->
+            <div class="col-md-7 col-lg-8">
+                <div class="form-holder mb-40">
+                    <form method="post" class="row contact-form" asp-action="ContactUs" asp-controller="Home">
+
+                        <!-- Contact Form Input -->
+                        <div id="input-name" class="col-md-12 col-lg-6">
+                            <input type="text" id="Name" name="Name" class="form-control name" placeholder="Enter Your Name*" value="@Model.Name" required>
+                        </div>
+
+                        <div id="input-email" class="col-md-12 col-lg-6">
+                            <input type="text" id="Email" name="Email" class="form-control email" placeholder="Enter Your Email*" value="@Model.Email" required>
+                        </div>
+
+                        <div id="input-phone" class="col-md-12 col-lg-6">
+                            <input type="tel" id="PhoneNumber" name="PhoneNumber" class="form-control phone" placeholder="Enter Your Phone Number*" value="@Model.PhoneNumber" required>
+                        </div>
+
+
+                        <div id="input-subject" class="col-md-12 col-lg-6">
+                            <input type="text" id="Subject" name="Subject" class="form-control subject" placeholder="Subject*" value="@Model.Subject" required>
+                        </div>
+
+                        <div id="input-message" class="col-md-12 col-lg-12 input-message">
+                            <textarea class="form-control message" id="Message" name="Message" rows="6" placeholder="How Can We Help You* ..." value="@Model.Message" required></textarea>
+                        </div>
+
+                        <!-- Contact Form Button -->
+                        <div class="col-lg-12 mt-15 form-btn">
+                            <button type="submit" class="btn btn-blue blue-hover submit">Send Your Message</button>
+                        </div>
+
+                        <!-- Contact Form Message -->
+                        <div class="col-lg-12 contact-form-msg text-center">
+                            <div class="sending-msg"><span class="loading"></span></div>
+                        </div>
+
+                        @*@if (!string.IsNullOrEmpty(ViewBag.Success))
+                        {
+                        <p class="text-success">@ViewBag.Success</p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(ViewBag.Error))
+                        {
+                        <p class="text-danger">@ViewBag.Error</p>
+                        }*@
+
+                    </form>
+
+                </div>
+
+            </div> 	<!-- END CONTACT FORM -->
+
+
+        </div>	<!-- End row -->
+
+
+    </div>	   <!-- End container -->
+</div>	<!-- END CONTACTS-1 -->

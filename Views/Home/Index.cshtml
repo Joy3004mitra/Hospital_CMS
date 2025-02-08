@@ -1,0 +1,577 @@
+﻿@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<!-- HERO-2
+============================================= -->
+<section id="hero-2" class="hero-section division">
+
+
+    <!-- SLIDER -->
+    <div class="slider blue-nav">
+        <ul class="slides">
+
+
+            <!-- SLIDE #1 -->
+            <li id="slide-1">
+
+                <!-- Background Image -->
+                <img src="~/images/slider/slide1.jpg" alt="slide-background">
+
+
+            </li>	<!-- END SLIDE #1 -->
+            <!-- SLIDE #2 -->
+            <li id="slide-2">
+
+                <!-- Background Image -->
+                <img src="~/images/slider/slide2.jpg" alt="slide-background">
+
+
+            </li>	<!-- END SLIDE #1 -->
+            <!-- SLIDE #3 -->
+            <li id="slide-3">
+
+                <!-- Background Image -->
+                <img src="~/images/slider/slide3.jpg" alt="slide-background">
+
+            </li>	<!-- END SLIDE #1 -->
+            <!-- SLIDE #4 -->
+            <li id="slide-4">
+
+                <!-- Background Image -->
+                <img src="~/images/slider/slide4.jpg" alt="slide-background">
+
+            </li>	<!-- END SLIDE #1 -->
+
+
+
+        </ul>
+    </div>	<!-- END SLIDER -->
+
+
+</section>	<!-- END HERO-2 -->
+<!-- INFO-4
+============================================= -->
+<section id="info-4" class=" pt-50 pb-50 info-section division">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+
+
+            <!-- INFO IMAGE -->
+            <div class="col-lg-6">
+                <div class="info-4-img mb-40 text-center ">
+                    <img class="img-fluid" src="~/images/chief_doctor_700x800.png" alt="info-image">
+                </div>
+            </div>
+
+
+            <!-- INFO TEXT -->
+            <div class="col-lg-6">
+                <div class="txt-block mb-40 pc-30 ">
+
+                    <!-- Section ID -->
+                    <span class="section-id blue-color">Our Ambitions</span>
+
+                    <!-- Title -->
+                    <h3 class="h3-md steelblue-color">Our Patients Are Our Priority, We Offer <span class="blue-text">Specialist Doctor Service</span></h3>
+
+                    <!-- Text -->
+                    <p>
+                        <b>Providing Quality & Comprehensive Health Care under one roof:</b></br></br>
+
+                        Hiramani Memorial Hospital & Diagnostic Centre is a 120 bedded multi-speciality hospital situated in heart of Krishnanagar offering comprehensive medical services.Our clinical excellence is rooted in our brilliant team of doctors who are well versed with latest advancements in their respective field of medical expertise. The efficient nursing services, modern surroundings and hospitality are key aspects of service delivery. The hospital follows internationally benchmarked standards in medical, nursing and operating protocols. The entire team of Hiramani Hospital workers thus ensures the best quality of care.
+                    </p>
+
+
+                    <!-- Button -->
+                    <a href="@Url.Action("AboutUs","Home")" class="btn btn-blue blue-hover">Learn more</a>
+                </div>
+            </div>	<!-- END TEXT BLOCK -->
+
+
+        </div>    <!-- End row -->
+    </div>	   <!-- End container -->
+</section>	<!-- END INFO-4 -->
+<!-- SERVICES-4
+============================================= -->
+<section id="services-4" class=" pt-50 pb-50 services-section division">
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 section-title">
+                <!-- Section ID -->
+                <span class="section-id blue-color">Our Services</span>
+
+                <!-- Title 	-->
+                <h3 class="h3-md steelblue-color">Services We <span class="blue-text">Offer</span></h3>
+
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            @{
+                var services = ViewBag.ServiceList as List<HospitalManagement.Models.MastHosService>;
+            }
+            @if (services != null && services.Count > 0)
+            {
+                @foreach (MastHosService service in services)
+                {
+                    <div class="col-md-6 col-lg-3">
+                        <div class="sbox-4 ">
+
+                            <!-- Image -->
+                            <img class="img-fluid" src="@service.ServiceImage" alt="content-image" />
+
+                            <!-- Text -->
+                            <div class="sbox-4-txt">
+                                <h5 class="h5-md steelblue-color"><a href="single-services.html">@service.ServiceName</a></h5>
+                                <p>
+                                    @service.ServiceShortDesc
+                                </p>
+                                <a href="@Url.Action("Service","Home")" class="readmore blue-text">Read more <i class="fas fa-arrow-right"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+
+
+            <!-- Button -->
+            <a href="@Url.Action("Service","Home")" class="btn btn-blue blue-hover mx-auto">See All Services</a>
+
+
+        </div>	   <!-- End row -->
+    </div>	   <!-- End container -->
+</section>	<!-- END SERVICES-4 -->
+<!-- ABOUT-5
+============================================= -->
+<section id="about-5" class="bg-lightblue pt-50 pb-50 about-section division">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+
+
+            <!-- IMAGE BLOCK -->
+            <div class="col-lg-4">
+                <div class="about-img text-center ">
+                    <img class="img-fluid" src="~/images/image-03.png" alt="about-image">
+                </div>
+            </div>
+
+
+            <!-- TEXT BLOCK -->
+            <div class="col-lg-8">
+                <div class="txt-block pc-30 ">
+
+                    <!-- Section ID -->
+                    <span class="section-id blue-color">Our Key Features</span>
+
+                    <!-- Title -->
+                    <h3 class="h3-md steelblue-color">Why <span class="blue-text">Choose Us?</span></h3>
+
+                    <!-- Text -->
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 d-flex">
+                            <img src="~/images/whyus1.png" width="80" height="80">
+                            <span>
+                                <span class="section-id m-0">24*7 Communication</span>
+                                <p>24x7 emergency services and ambulance avilable</p>
+                            </span>
+                        </div>
+                        <div class="col-md-6 col-xs-12 d-flex">
+                            <img src="~/images/whyus2.png" width="80" height="80">
+                            <span>
+                                <span class="section-id  m-0">Top Rated Service</span>
+                                <p>24x7 emergency services and ambulance avilable</p>
+                            </span>
+                        </div>
+                        <div class="col-md-6 col-xs-12 d-flex">
+                            <img src="~/images/whyus3.png" width="80" height="80">
+                            <span>
+                                <span class="section-id  m-0">Instant Scheduling</span>
+                                <p>24x7 emergency services and ambulance avilable</p>
+                            </span>
+                        </div>
+                        <div class="col-md-6 col-xs-12 d-flex">
+                            <img src="~/images/whyus4.png" width="80" height="80">
+                            <span>
+                                <span class="section-id  m-0">Get Your Solution</span>
+                                <p>24x7 emergency services and ambulance avilable</p>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>	<!-- END TEXT BLOCK -->
+
+
+        </div>    <!-- End row -->
+    </div>	   <!-- End container -->
+</section>	<!-- END ABOUT-5 -->
+<!-- SERVICES-4
+============================================= -->
+<section id="services-4" class="wide-tb-30 services-section division">
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 section-title">
+                <!-- Section ID -->
+                <span class="section-id blue-color">The Process</span>
+
+                <!-- Title 	-->
+                <h3 class="h3-md steelblue-color">How  <span class="blue-text">It Works</span></h3>
+
+
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <div class="row">
+
+
+                <!-- SERVICE BOX #1 -->
+                <div class="col-md-6 col-lg-3 hwitworksbg">
+                    <div class="sbox-4">
+
+                        <!-- Image -->
+                        <img class="img-fluid" src="~/images/HowItWorks1.svg" alt="content-image" />
+
+                        <!-- Text -->
+                        <div class="sbox-4-txt">
+                            <h5 class="h5-md steelblue-color"><a href="single-services.html">Search For Professionals</a></h5>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- SERVICE BOX #2 -->
+                <div class="col-md-6 col-lg-3 hwitworksbg">
+                    <div class="sbox-4">
+
+                        <!-- Image -->
+                        <img class="img-fluid" src="~/images/HowItWorks2.svg" alt="content-image" />
+
+                        <!-- Text -->
+                        <div class="sbox-4-txt">
+                            <h5 class="h5-md steelblue-color"><a href="single-services.html">Book An Appointment</a></h5>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- SERVICE BOX #3 -->
+                <div class="col-md-6 col-lg-3 hwitworksbg">
+                    <div class="sbox-4">
+
+                        <!-- Image -->
+                        <img class="img-fluid" src="~/images/HowItWorks3.svg" alt="content-image" />
+
+                        <!-- Text -->
+                        <div class="sbox-4-txt">
+                            <h5 class="h5-md steelblue-color"><a href="single-services.html">Get The Treatment</a></h5>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- SERVICE BOX #4 -->
+                <div class="col-md-6 col-lg-3 hwitworksbg">
+                    <div class="sbox-4">
+
+                        <!-- Image -->
+                        <img class="img-fluid" src="~/images/HowItWorks4.svg" alt="content-image" />
+
+                        <!-- Text -->
+                        <div class="sbox-4-txt">
+                            <h5 class="h5-md steelblue-color"><a href="single-services.html">Leave Feedback</a></h5>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>	   <!-- End row -->
+        </div>
+    </div>	   <!-- End container -->
+</section>	<!-- END SERVICES-4 -->
+<!-- DOCTORS-1
+============================================= -->
+<section id="doctors-1" class=" pt-50 pb-50 doctors-section division bg-lightblue">
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 section-title">
+                <span class="section-id blue-color">Our Specialists</span>
+                <!-- Title 	-->
+                <h3 class="h3-md steelblue-color">Meet Our <span class="blue-text">Specialized Doctors</span></h3>
+
+
+
+            </div>
+        </div>	 <!-- END SECTION TITLE -->
+        <!-- TESTIMONIALS CONTENT -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="owl-carousel owl-theme doctor-holder">
+                    @{
+                        var doctors = ViewBag.DoctorList as List<HospitalManagement.Models.MastDoctor>;
+                    }
+                    @if (doctors != null && doctors.Count > 0)
+                    {
+                        @foreach (MastDoctor doctor in doctors)
+                        {
+                            <div class="doctor-item">
+                                <div class="doctor-1">
+
+                                    <!-- Doctor Photo -->
+                                    <div class="hover-overlay text-center">
+
+                                        <!-- Photo -->
+                                        <img class="img-fluid" src="@doctor.DoctorImage" alt="doctor-foto">
+
+
+                                    </div>
+
+                                    <!-- Doctor Meta -->
+                                    <div class="doctor-meta">
+
+                                        <h5 class="h5-sm steelblue-color">@doctor.DoctorName</h5>
+                                        <span class="blue-color">@doctor.DoctorDegree</span>
+
+                                        <p class="p-sm grey-color">
+                                            @doctor.DoctorDesc
+                                        </p>
+                                        <div>
+                                            <div class="footer-socials-links mt-20">
+                                                <ul class="foo-socials text-center clearfix">
+
+                                                    <li><a href="@doctor.FaceboolProfileLink" class="ico-facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li><a href="@doctor.LinkedInLink" class="ico-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                                                    <li><a href="@doctor.XLink" class="ico-twitter"><i class="fab fa-twitter"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+        <!-- END TESTIMONIALS CONTENT -->
+        <!-- ALL DOCTORS BUTTON -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="all-doctors mb-40">
+                    <a href="ourdoctors.html" class="btn btn-blue blue-hover">See All Doctors</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>	   <!-- End container -->
+</section>	<!-- END DOCTORS-1 -->
+<!-- STATISTIC-3
+============================================= -->
+<div id="statistic-3" class=" pt-50 pb-50 statistic-section division">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+
+
+            <!-- TEXT BLOCK -->
+            <div class="col-lg-6">
+                <div class="txt-block pc-30 mb-40">
+
+                    <!-- Section ID -->
+                    <span class="section-id blue-color">Best Practices</span>
+
+                    <!-- Title -->
+                    <h3 class="h3-md steelblue-color">Hiramani Memorial Hospital with <span class="blue-text">Innovative Approach to Treatment</span></h3>
+
+
+
+                    <!-- Statistic Holder -->
+                    <div class="statistic-holder">
+                        <div class="row">
+
+                            <!-- STATISTIC BLOCK #1 -->
+                            <div class="col-sm-4">
+                                <div class="statistic-block icon-sm">
+
+                                    <!-- Icon  -->
+                                    <span class="flaticon-062-cardiogram-3 blue-color"></span>
+
+                                    <!-- Text -->
+                                    <h5 class="statistic-number"><span class="count-element">50</span>K</h5>
+                                    <p>OPD Patients</p>
+
+                                </div>
+                            </div>
+
+                            <!-- STATISTIC BLOCK #2 -->
+                            <div class="col-sm-4">
+                                <div class="statistic-block icon-sm">
+
+                                    <!-- Icon  -->
+                                    <span class="flaticon-137-doctor blue-color"></span>
+
+                                    <!-- Text -->
+                                    <h5 class="statistic-number"><span class="count-element">40K</span>+</h5>
+                                    <p>IPD Patients</p>
+
+                                </div>
+                            </div>
+
+                            <!-- STATISTIC BLOCK #3 -->
+                            <div class="col-sm-4">
+                                <div class="statistic-block icon-sm">
+
+                                    <!-- Icon  -->
+                                    <span class="flaticon-065-hospital-bed blue-color"></span>
+
+                                    <!-- Text -->
+                                    <h5 class="statistic-number"><span class="count-element">20K</span>+ </h5>
+                                    <p>Emergency Patients</p>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>	<!-- End Statistic Holder -->
+
+
+                </div>
+            </div>	<!-- END TEXT BLOCK -->
+            <!-- STATISTIC IMAGE -->
+            <div class="col-lg-6">
+                <div class="statistic-img text-center mb-40">
+                    <img class="img-fluid" src="~/images/image-04.png" alt="hiramanihospital" width="100%" height="auto" />
+                </div>
+            </div>
+
+
+        </div>  <!-- End row -->
+    </div>	 <!-- End container -->
+</div>	 <!-- END STATISTIC-3 -->
+<!-- TESTIMONIALS-2
+============================================= -->
+<section id="reviews-2" class="bg-blue pt-50 pb-100  reviews-section division">
+    <div class="container">
+
+
+        <!-- SECTION TITLE -->
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 section-title">
+
+                <!-- Title 	-->
+                <h3 class="h3-md steelblue-color">What Our Patients Say</h3>
+
+
+            </div>
+        </div>	 <!-- END SECTION TITLE -->
+        <!-- TESTIMONIALS CONTENT -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="owl-carousel owl-theme reviews-holder">
+                    @{
+                        var testimonials = ViewBag.TestimonialList as List<HospitalManagement.Models.MastHosTestimonials>;
+                    }
+                    @if (testimonials != null && testimonials.Count > 0)
+                    {
+                        @foreach (MastHosTestimonials testimonial in testimonials)
+                        {
+                            <div class="review-2">
+                                <div class="review-txt text-center">
+
+                                    <!-- Quote -->
+                                    <div class="quote"><img src="~/images/quote.png" alt="quote-img" /></div>
+
+                                    <!-- Author Avatar -->
+                                    <div class="testimonial-avatar">
+                                        <img src="@testimonial.PatientImage" alt="testimonial-avatar">
+                                    </div>
+
+                                    <!-- Testimonial Text -->
+                                    <p>
+                                        @testimonial.PatientComments
+                                    </p>
+
+                                    <!-- Testimonial Author -->
+                                    <div class="review-author">
+                                        <h5 class="h5-sm">@testimonial.PatientName</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>	<!-- END TESTIMONIALS CONTENT -->
+
+
+    </div>	   <!-- End container -->
+</section>	 <!-- END TESTIMONIALS-2 -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Initialize Doctor Carousel
+            var $doctorCarousel = $('.doctor-holder');
+            var doctorCount = $doctorCarousel.find('.doctor-item').length;
+            $doctorCarousel.owlCarousel({
+                loop: doctorCount > 1,  // Loop only if there is more than one doctor
+                margin: 10,
+                nav: true,
+                responsive: {
+                    0: { items: 1 },
+                    600: { items: 2 },
+                    1000: { items: 4 }
+                }
+            });
+
+            // Initialize Reviews Carousel
+            var $reviewsCarousel = $('.reviews-holder');
+            var reviewCount = $reviewsCarousel.find('.review-2').length;
+            $reviewsCarousel.owlCarousel({
+                loop: reviewCount > 1,  // Loop only if there is more than one testimonial
+                margin: 10,
+                nav: true,
+                responsive: {
+                    0: { items: 1 },
+                    600: { items: 1 },
+                    1000: { items: 1 }
+                }
+            });
+        });
+    </script>
+}
+
+

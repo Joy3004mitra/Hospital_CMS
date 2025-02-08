@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="Jthemes" />
+    <meta name="description" content=" Hiramani Memorial Hospital" />
+    <meta name="keywords" content="Hiramani Memorial Hospital, Medical, Health, Healthcare, Doctor, Clinic, Care, Hospital">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SITE TITLE -->
+    <title> Hiramani Memorail Hospital</title>
+
+    <!-- FAVICON AND TOUCH ICONS  -->
+    <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/images/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/images/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/images/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" href="~/images/apple-touch-icon.png">
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FONT ICONS -->
+    <link href="~/css/fontawesome.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="~/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="~/css/flaticon.css" rel="stylesheet">
+
+    <!-- PLUGINS STYLESHEET -->
+    <link href="~/css/menu.css" rel="stylesheet">
+    <link id="effect" href="~/css/dropdown-effects/fade-down.css" media="all" rel="stylesheet">
+    <link href="~/css/magnific-popup.css" rel="stylesheet">
+    <link href="~/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/css/owl.theme.default.min.css" rel="stylesheet">
+    <link href="~/css/animate.css" rel="stylesheet">
+    <link href="~/css/jquery.datetimepicker.min.css" rel="stylesheet">
+
+    <!-- TEMPLATE CSS -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <!-- RESPONSIVE CSS -->
+    <link href="~/css/responsive.css" rel="stylesheet">
+
+</head>
+<body>
+    <!-- PRELOADER SPINNER
+        ============================================= -->
+    <div id="loader-wrapper">
+        <div id="loader"><div class="loader-inner"></div></div>
+    </div>
+
+    <!-- PAGE CONTENT
+        ============================================= -->
+    <div id="page" class="page">
+
+        <!-- HEADER
+            ============================================= -->
+        <header id="header" class="header">
+
+
+            <!-- MOBILE HEADER START-->
+            <div class="wsmobileheader clearfix">
+                <a id="wsnavtoggle" class="wsanimated-arrow"><span></span></a>
+                <span class="smllogo"><img src="~/images/logo.png" width="40" height="auto" alt="mobile-logo" /></span>
+                <a href="tel:+91 9000000000" class="callusbtn"> <i class="fas fa-phone"></i></a>
+            </div>
+            <!-- MOBILE HEADER END-->
+            <!-- HEADER STRIP -->
+            <div class="headtoppart  clearfix">
+                <div class="headerwp clearfix">
+
+                    <!-- Address -->
+                    <div class="headertopleft">
+                        <div class="address clearfix">
+                            <a href="mailto:hiramanihospital@gmail.com" class="callusbtn"><span><i class="fas fa-map-marker-alt"></i><b>Email us: hiramanihospital@gmail.com</b></span> </a>
+                        </div>
+                    </div>
+                    <!-- Social Links -->
+                    <div class="headertopright">
+                        <div class="address clearfix">
+                            <a href="tel:123456789" class="callusbtn"><i class="fas fa-phone"></i><b>Helpline Number: +91 9000000000</b></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>	<!-- END HEADER STRIP -->
+            <!-- NAVIGATION MENU -->
+            <div class="wsmainfull menu clearfix">
+                <div class="wsmainwp clearfix">
+
+                    <!-- LOGO IMAGE -->
+                    <div class="desktoplogo"><a href="@Url.Action("Index","Home")"><img src="~/images/logo.png" width="40" height="auto" alt="header-logo">Hiramani Memorial Hospital</a></div>
+
+                    <!-- MAIN MENU -->
+                    <nav class="wsmenu clearfix">
+                        <ul class="wsmenu-list">
+
+
+                            <!-- SIMPLE NAVIGATION LINK -->
+                            <li class="nl-simple" aria-haspopup="true"><a href="@Url.Action("Index","Home")">Home</a></li>
+
+                            <!-- SIMPLE NAVIGATION LINK -->
+                            <li class="nl-simple" aria-haspopup="true"><a href="@Url.Action("AboutUs","Home")">About</a></li>
+
+                            <!-- SIMPLE NAVIGATION LINK -->
+                            <li class="nl-simple" aria-haspopup="true"><a href="@Url.Action("Service","Home")">Services</a></li>
+
+                            <!-- SIMPLE NAVIGATION LINK -->
+                            <li class="nl-simple" aria-haspopup="true"><a href="@Url.Action("Doctor","Home")">Our Doctors</a></li>
+
+                            <!-- SIMPLE NAVIGATION LINK -->
+                            <li class="nl-simple" aria-haspopup="true"><a href="@Url.Action("ContactUs","Home")">Contact </a></li>
+
+                            <!-- NAVIGATION MENU BUTTON -->
+                            <li class="nl-simple header-btn" aria-haspopup="true"><a href="@Url.Action("BookingAppointment","Home")">Book an Appointment</a></li>
+
+
+                        </ul>
+                    </nav>	<!-- END MAIN MENU -->
+
+                </div>
+            </div>	<!-- END NAVIGATION MENU -->
+
+
+        </header>	<!-- END HEADER -->
+        @RenderBody()
+
+        <div class="container calltoactioinaouter wide-t-30">
+            <div class="calltoaction">
+                <div class="container white-color">
+                    <div class="row d-flex align-items-center">
+
+                        <div class="section-title">
+                            <span class="section-id">Our Specialists</span>
+                            <!-- Title 	-->
+                            <h3 class="h3-md">Meet Our Specialized Doctors</h3>
+                            <div>
+                                <a href="appointment.html" class="btn btn-blue btnwhite">Book An Appointment</a>
+                                <a href="@Url.Action("Doctor","Home")" class="btn btn-blue btnwhiteborder">Our Specialists</a>
+                            </div>
+
+
+
+                        </div>
+                    </div>      <!-- End row -->
+                </div>	    <!-- End container -->
+            </div>	<!-- END call to action -->
+
+        </div>
+        <!-- FOOTER-2
+        ============================================= -->
+        <footer id="footer-2" class="wide-40 footer division customfooter">
+            <div class="container">
+
+
+                <!-- FOOTER CONTENT -->
+                <div class="row">
+
+
+                    <!-- FOOTER INFO -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="footer-info mb-40">
+
+                            <!-- Footer Logo -->
+                            <!-- For Retina Ready displays take a image with double the amount of pixels that your image will be displayed (e.g 360 x 80  pixels) -->
+                            <img src="~/images/footer-logo.png" width="120" height="auto" alt=" Hiramani Memorial Hospital">
+
+                            <!-- Email -->
+                            <p class="foo-email">E: <a href="mailto:yourdomain@mail.com">infomemorial@gmail.com</a></p>
+
+                            <!-- Phone -->
+                            <p>P: +90000000000</p>
+                            <p>P: +90000000000 [Emergency Number]</p>
+
+                            <!-- Social Icons -->
+                            <div class="footer-socials-links mt-20">
+                                <ul class="foo-socials text-center clearfix">
+
+                                    <li><a href="#" class="ico-facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#" class="ico-twitter"><i class="fab fa-instagram"></i></a></li>
+                                    <li><a href="#" class="ico-whatsapp"><i class="fab fa-whatsapp"></i></a></li>
+
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>	<!-- END FOOTER INFO -->
+                    <!-- FOOTER PRODUCTS LINKS -->
+                    <div class="col-md-6 col-lg-2 offset-lg-1">
+                        <div class="footer-links mb-40">
+
+                            <!-- Title -->
+                            <h5 class="h5-xs">Services</h5>
+
+                            <!-- Footer List -->
+                            <ul class="clearfix">
+                                <li><a href="@Url.Action("Service","Home")">General Consultation</a></li>
+                                <li><a href="@Url.Action("Service","Home")">Paediatric Care</a></li>
+                                <li><a href="@Url.Action("Service","Home")">Specialized Treatments</a></li>
+                                <li><a href="@Url.Action("Service","Home")">Health Screenings</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                    <!-- FOOTER COMPANY LINKS -->
+                    <div class="col-md-6 col-lg-2">
+                        <div class="footer-links mb-40">
+
+                            <!-- Title -->
+                            <h5 class="h5-xs">Quick Links</h5>
+
+                            <!-- Footer Links -->
+                            <ul class="clearfix">
+                                <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                                <li><a href="@Url.Action("AboutUs","Home")">About</a></li>
+                                <li><a href="@Url.Action("Service","Home")">Services</a></li>
+                                <li><a href="@Url.Action("Doctor","Home")">Our Doctors</a></li>
+                                <li><a href="@Url.Action("ContactUs","Home")">Contact</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                    <!-- FOOTER NEWSLETTER FORM -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="footer-form mb-20">
+
+                            <!-- Title -->
+                            <h5 class="h5-xs">Get in touch:</h5>
+
+                            <!-- Text -->
+                            <p class="p-sm m-bottom-20"><b>Adress:</b> 40, Ananta Hari Mitra Road, Krishnanagar, West Bengal 741101</p>
+
+                            <iframe width="100%" height="200" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3661.5484078983222!2d88.4932984!3d23.4045488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f92197ddc82241%3A0xbab7c9f76a494adf!2sHIRAMANI%20MEMORIAL%20HOSPITAL!5e0!3m2!1sen!2sin!4v1738433546220!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+
+                        </div>
+                    </div>	<!-- END FOOTER NEWSLETTER FORM -->
+
+
+                </div>	  <!-- END FOOTER CONTENT -->
+                <!-- FOOTER COPYRIGHT -->
+                <div class="bottom-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="footer-copyright">&copy; 2025 <span>Hiramani Memorial Hospital</span>. All Rights Reserved</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>	   <!-- End container -->
+        </footer>	<!-- END FOOTER-2 -->
+
+        <div title="Chat on WhatsApp" class="flaoting">
+            <a title="Chat on WhatsApp" href="https://wa.me/9000000000" class="ico-whatsapp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+    <!-- EXTERNAL SCRIPTS
+        ============================================= -->
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/all.min.js"></script>
+    <script src="~/js/fontawesome.min.js"></script>
+    <script src="~/js/modernizr.custom.js"></script>
+    <script src="~/js/jquery.easing.js"></script>
+    <script src="~/js/jquery.appear.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/menu.js"></script>
+    <script src="~/js/sticky.js"></script>
+    <script src="~/js/jquery.scrollto.js"></script>
+    <script src="~/js/materialize.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/hero-form.js"></script>
+    <script src="~/js/contact-form.js"></script>
+    <script src="~/js/comment-form.js"></script>
+    <script src="~/js/appointment-form.js"></script>
+    <script src="~/js/jquery.datetimepicker.full.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/js/wow.js"></script>
+
+    <!-- Custom Script -->
+    <script src="~/js/custom.js"></script>
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        new WOW().init();
+    </script>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!-- [if lt IE 9]>
+        <script src="~/js/html5shiv.js" type="text/javascript"></script>
+        <script src="~/js/respond.min.js" type="text/javascript"></script>
+    <![endif] -->
+
+
+
+    <script src="~/js/changer.js"></script>
+    <script defer src="~/js/styleswitch.js"></script>
+
+
+</body>
+</html>

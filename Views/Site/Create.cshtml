@@ -1,0 +1,68 @@
+﻿@model HospitalManagement.Models.HeadSetting
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create/Edit Site Settings";
+}
+
+<div class="page-header">
+    <h2 class="space">Site Settings</h2>
+</div>
+
+<div class="card">
+    @using (Html.BeginForm("Create", "Site", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="EmailId">Email Id</label>
+                    <input type="text" id="EmailId" name="EmailId" class="form-control" placeholder="Enter email id" value="@Model?.EmailId" required />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="SiteAddress">Address</label>
+                    <input type="text" id="SiteAddress" name="SiteAddress" class="form-control" placeholder="Enter address" value="@Model?.SiteAddress" required />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="PhoneNo">Contact No</label>
+                    <input type="text" id="PhoneNo" name="PhoneNo" class="form-control" placeholder="Enter contact no" value="@Model?.PhoneNo" required />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="EmgncyPhoneNo">Emergency Contact No</label>
+                    <input type="text" id="EmgncyPhoneNo" name="EmgncyPhoneNo" class="form-control" placeholder="Enter emregency contact no" value="@Model?.EmgncyPhoneNo" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group upload-section">
+            <label for="logoImage">Upload Logo Image</label>
+            <div class="upload-box">
+                <input type="file" id="logoImage" name="logoImage" class="form-control" required />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    }
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Site settings saved successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+}
