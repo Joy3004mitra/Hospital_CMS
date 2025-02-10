@@ -139,3 +139,17 @@
 
     </div>	   <!-- End container -->
 </div>	<!-- END CONTACTS-1 -->
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Thank for your query. We will reach you soon',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
+}

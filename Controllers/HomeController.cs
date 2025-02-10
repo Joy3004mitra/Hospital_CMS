@@ -59,6 +59,7 @@ namespace HospitalManagement.Controllers
                 contactModel.SitePhoneNo = headSettings.PhoneNo;
                 contactModel.SiteEmergencyNo = headSettings.EmgncyPhoneNo;
             }
+            TempData["SuccessMessage"] = null;
             return View(contactModel);
         }
 
@@ -78,11 +79,11 @@ namespace HospitalManagement.Controllers
                                $"<p><strong>Subject:</strong> {contactModel.Subject}</p>" +
                                $"<p><strong>Message:</strong> {contactModel.Message}</p>";
 
-            bool emailSent = await _emailService.SendEmailAsync(contactModel.Email, contactModel.Subject, emailBody);
+            bool emailSent = await _emailService.SendEmailAsync(contactModel.Email, "General Query", emailBody);
 
             if (emailSent)
             {
-                ViewBag.Success = "Your message has been sent successfully!";
+                TempData["SuccessMessage"] = "Contact Us successfully!";
             }
             else
             {
@@ -100,6 +101,7 @@ namespace HospitalManagement.Controllers
             var servies = _context.MastHosServices.Where(x => x.TagDelete == 0).ToList();
             ViewBag.Service = servies;
 
+            TempData["SuccessMessage"] = null;
             return View();
         }
 
@@ -126,7 +128,7 @@ namespace HospitalManagement.Controllers
                 <p><strong>Message:</strong> {model.Message}</p>
             ";
 
-            bool emailSent = await _emailService.SendEmailAsync(model.Email, "New Appointment Request", emailBody);
+            bool emailSent = await _emailService.SendEmailAsync(model.Email, "Booking Request", emailBody);
 
             if (emailSent)
             {
@@ -148,13 +150,14 @@ namespace HospitalManagement.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
-                }catch(Exception ex)
-                {
-                    return Json(new { message=ex.Message.ToString()});
                 }
-                
+                catch (Exception ex)
+                {
+                    return Json(new { message = ex.Message.ToString() });
+                }
 
-                return Json(new { success = true });
+                TempData["SuccessMessage"] = "Booking appointment done successfully!";
+                return Json(new { success = true, AppointmentDate = appointmentHistory.AppointmentDate });
             }
             else
             {

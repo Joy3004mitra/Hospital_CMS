@@ -1,9 +1,9 @@
 // JavaScript Document
-$(document).ready(function() {
+$(document).ready(function () {
 
     "use strict";
 
-    $("#appointment-form").submit(function(e) {
+    $("#appointment-form").submit(function (e) {
         e.preventDefault();
         var department = $(".department");
         var doctor = $(".doctor");
@@ -94,8 +94,19 @@ $(document).ready(function() {
             data: JSON.stringify(formData),
             success: function (response) {
                 if (response.success) {
-                    $(".loading").html('<font color="#48af4b">Appointment Request Sent Successfully.</font>');
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your booking appointment successfully done. Our experts will contact you soon or you can call us on this numbrr: 7359423777',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
                 } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Error Sending Request. Please Try Again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     $(".loading").html('<font color="#ff5607">Error Sending Request. Please Try Again.</font>');
                 }
             },
@@ -105,10 +116,10 @@ $(document).ready(function() {
         });
         return false;
     });
-    $("#reset").on('click', function() {
+    $("#reset").on('click', function () {
         $(".form-control").removeClass("success").removeClass("error");
     });
-    
+
 })
 
 
