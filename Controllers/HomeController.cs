@@ -72,14 +72,15 @@ namespace HospitalManagement.Controllers
                 return View();
             }
 
-            string emailBody = $"<h3>New Contact Us Form Submission</h3>" +
-                               $"<p><strong>Name:</strong> {contactModel.Name}</p>" +
-                               $"<p><strong>Email:</strong> {contactModel.Email}</p>" +
-                               $"<p><strong>Phone:</strong> {contactModel.PhoneNumber}</p>" +
-                               $"<p><strong>Subject:</strong> {contactModel.Subject}</p>" +
-                               $"<p><strong>Message:</strong> {contactModel.Message}</p>";
+            //string emailBody = $"<h3>New Contact Us Form Submission</h3>" +
+            //                   $"<p><strong>Name:</strong> {contactModel.Name}</p>" +
+            //                   $"<p><strong>Email:</strong> {contactModel.Email}</p>" +
+            //                   $"<p><strong>Phone:</strong> {contactModel.PhoneNumber}</p>" +
+            //                   $"<p><strong>Subject:</strong> {contactModel.Subject}</p>" +
+            //                   $"<p><strong>Message:</strong> {contactModel.Message}</p>";
 
-            bool emailSent = await _emailService.SendEmailAsync(contactModel.Email, "General Query", emailBody);
+            //bool emailSent = await _emailService.SendEmailAsync(contactModel.Email, "General Query", emailBody);
+            bool emailSent = await _emailService.SendContactMailAsync(contactModel);
 
             if (emailSent)
             {
@@ -114,21 +115,22 @@ namespace HospitalManagement.Controllers
             }
             AppointmentHistory appointmentHistory = new AppointmentHistory();
 
-            string emailBody = $@"
-                <h3>New Appointment Request</h3>
-                <p><strong>Service:</strong> {model.ServiceName}</p>
-                <p><strong>Doctor:</strong> {model.DoctorName}</p>
-                <p><strong>Patient Status:</strong> {model.PatientStatus}</p>
-                <p><strong>Name:</strong> {model.FullName}</p>
-                <p><strong>Gender:</strong> {model.Gender}</p>
-                <p><strong>Age:</strong> {model.Age}</p>
-                <p><strong>Email:</strong> {model.Email}</p>
-                <p><strong>Phone:</strong> {model.PhoneNumber}</p>
-                <p><strong>Appointment Date:</strong> {model.AppointmentDate}</p>
-                <p><strong>Message:</strong> {model.Message}</p>
-            ";
+            //string emailBody = $@"
+            //    <h3>New Appointment Request</h3>
+            //    <p><strong>Service:</strong> {model.ServiceName}</p>
+            //    <p><strong>Doctor:</strong> {model.DoctorName}</p>
+            //    <p><strong>Patient Status:</strong> {model.PatientStatus}</p>
+            //    <p><strong>Name:</strong> {model.FullName}</p>
+            //    <p><strong>Gender:</strong> {model.Gender}</p>
+            //    <p><strong>Age:</strong> {model.Age}</p>
+            //    <p><strong>Email:</strong> {model.Email}</p>
+            //    <p><strong>Phone:</strong> {model.PhoneNumber}</p>
+            //    <p><strong>Appointment Date:</strong> {model.AppointmentDate}</p>
+            //    <p><strong>Message:</strong> {model.Message}</p>
+            //";
 
-            bool emailSent = await _emailService.SendEmailAsync(model.Email, "Booking Request", emailBody);
+            //bool emailSent = await _emailService.SendEmailAsync(model.Email, "Booking Request", emailBody);
+            bool emailSent = await _emailService.SendBookingMailAsync(model);
 
             if (emailSent)
             {

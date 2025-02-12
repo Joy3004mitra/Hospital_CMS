@@ -96,10 +96,17 @@ $(document).ready(function () {
                 if (response.success) {
                     Swal.fire({
                         title: 'Success!',
-                        text: 'Your booking appointment successfully done. Our experts will contact you soon or you can call us on this numbrr: 7359423777',
+                        html: 'Thank you for your booking request.<br><br>' +
+                            'Our executive will get in touch with you shortly to confirm a time slot for your appointment on ' +
+                            `<b>${response.appointmentDate}</b>.<br><br>` +
+                            'Alternatively, you can contact us at <b>+91 03472255448, +91 7872957300</b> or email us at ' +
+                            '<a href="mailto:hiramanimemorialhospital@gmail.com">hiramanimemorialhospital@gmail.com</a> to select your preferred time slot.<br><br>' +
+                            '<b>Please ensure you arrive at the hospital at least 30 minutes before your appointment.</b><br><br>' +
+                            'Best regards,<br><b>Hiramani Memorial Hospital</b>',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
+
                 } else {
                     Swal.fire({
                         title: 'Error!',

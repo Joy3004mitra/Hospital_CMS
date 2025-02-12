@@ -117,4 +117,122 @@ public class EmailService
     //        return false;
     //    }
     //}
+
+    public async Task<bool> SendContactMailAsync(ContactModel contactModel)
+    {
+        var smtpServer = _configuration["EmailSettings:SmtpServer"];
+        int smtpPort = 587;
+        var fromEmail = _configuration["EmailSettings:FromEmail"];
+        var adminEmail = _configuration["EmailSettings:AdminEmail"];
+        var encodedPassword = _configuration["EmailSettings:FromPassword"];
+        var fromPassword = Encoding.UTF8.GetString(Convert.FromBase64String(encodedPassword));
+
+        string path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "admin_contact_mail.html");
+        string fileContent = File.ReadAllText(path);
+        fileContent = fileContent.Replace("FULLNAME", contactModel.Name);
+        fileContent = fileContent.Replace("EMAIL", contactModel.Email);
+        fileContent = fileContent.Replace("PHONENO", contactModel.PhoneNumber);
+        fileContent = fileContent.Replace("SUBJECT", contactModel.Subject);
+        fileContent = fileContent.Replace("MESSAGE", contactModel.Message);
+        fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString());
+
+        MailMessage mail = new MailMessage();
+        mail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
+        mail.To.Add(adminEmail);
+        mail.Subject = "New Contact Form Submission Received";
+        mail.Body = fileContent;
+        mail.IsBodyHtml = true;
+
+        SmtpClient smtp = new SmtpClient(smtpServer, smtpPort);
+
+        smtp.UseDefaultCredentials = false;
+        smtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
+        smtp.EnableSsl = true;
+        await smtp.SendMailAsync(mail);
+
+        path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "user_contact_mail.html");
+        fileContent = File.ReadAllText(path);
+        fileContent = fileContent.Replace("FULLNAME", contactModel.Name);
+        fileContent = fileContent.Replace("EMAIL", contactModel.Email);
+        fileContent = fileContent.Replace("PHONENO", contactModel.PhoneNumber);
+        fileContent = fileContent.Replace("SUBJECT", contactModel.Subject);
+        fileContent = fileContent.Replace("MESSAGE", contactModel.Message);
+        fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString());
+
+        MailMessage usermail = new MailMessage();
+        usermail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
+        usermail.To.Add(contactModel.Email);
+        usermail.Subject = "Thank You for Contacting Hiramani Memorial Hospital!";
+        usermail.Body = fileContent;
+        usermail.IsBodyHtml = true;
+
+        SmtpClient usersmtp = new SmtpClient(smtpServer, smtpPort);
+
+        usersmtp.UseDefaultCredentials = false;
+        usersmtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
+        usersmtp.EnableSsl = true;
+        await smtp.SendMailAsync(usermail);
+
+        return true;
+    }
+
+    public async Task<bool> SendBookingMailAsync(AppointmentModel appointmentModel)
+    {
+        var smtpServer = _configuration["EmailSettings:SmtpServer"];
+        int smtpPort = 587;
+        var fromEmail = _configuration["EmailSettings:FromEmail"];
+        var adminEmail = _configuration["EmailSettings:AdminEmail"];
+        var encodedPassword = _configuration["EmailSettings:FromPassword"];
+        var fromPassword = Encoding.UTF8.GetString(Convert.FromBase64String(encodedPassword));
+
+        string path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "admin_booking_mail.html");
+        string fileContent = File.ReadAllText(path);
+        fileContent = fileContent.Replace("REQUESTSERVICE", appointmentModel.ServiceName);
+        fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
+        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName);
+        fileContent = fileContent.Replace("AGE", appointmentModel.Age);
+        fileContent = fileContent.Replace("GENDER", appointmentModel.Gender);
+        fileContent = fileContent.Replace("PHONENO", appointmentModel.PhoneNumber);
+        fileContent = fileContent.Replace("EMAIL", appointmentModel.Email);
+        fileContent = fileContent.Replace("DOCTORNAME", appointmentModel.DoctorName);
+        fileContent = fileContent.Replace("TYPE", appointmentModel.PatientStatus);
+        fileContent = fileContent.Replace("MESSAGE", appointmentModel.Message);
+
+        MailMessage mail = new MailMessage();
+        mail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
+        mail.To.Add(adminEmail);
+        mail.Subject = "Booking Request for" + appointmentModel.ServiceName + "on" + appointmentModel.AppointmentDate;
+        mail.Body = fileContent;
+        mail.IsBodyHtml = true;
+
+        SmtpClient smtp = new SmtpClient(smtpServer, smtpPort);
+
+        smtp.UseDefaultCredentials = false;
+        smtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
+        smtp.EnableSsl = true;
+        await smtp.SendMailAsync(mail);
+
+        path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "user_booking_mail.html");
+        fileContent = File.ReadAllText(path);
+        fileContent = fileContent.Replace("REQUESTSERVICE", appointmentModel.ServiceName);
+        fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
+        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName);
+        fileContent = fileContent.Replace("AGE", appointmentModel.Age);
+
+        MailMessage usermail = new MailMessage();
+        usermail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
+        usermail.To.Add(appointmentModel.Email);
+        usermail.Subject = "We Received your Booking Request for" + appointmentModel.ServiceName + "at Hiramani Hospital";
+        usermail.Body = fileContent;
+        usermail.IsBodyHtml = true;
+
+        SmtpClient usersmtp = new SmtpClient(smtpServer, smtpPort);
+
+        usersmtp.UseDefaultCredentials = false;
+        usersmtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
+        usersmtp.EnableSsl = true;
+        await smtp.SendMailAsync(usermail);
+
+        return true;
+    }
 }
