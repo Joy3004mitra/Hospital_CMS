@@ -139,7 +139,7 @@ public class EmailService
         MailMessage mail = new MailMessage();
         mail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
         mail.To.Add(adminEmail);
-        mail.Subject = "New Contact Form Submission Received";
+        mail.Subject = "New Contact Form Submission Received -" + contactModel.Name;
         mail.Body = fileContent;
         mail.IsBodyHtml = true;
 
