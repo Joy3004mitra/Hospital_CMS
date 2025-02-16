@@ -14,12 +14,21 @@ namespace HospitalManagement.Controllers
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
+        string defaultImagePath = "/images/review-author-1.jpg";
 
         // Index - View all Host testimonial
         public IActionResult Index()
         {
-            var doctors = _context.MastHosTestimonials.Where(d => d.TagDelete == 0).ToList();
-            return View(doctors);
+            var testimonialList = _context.MastHosTestimonials.Where(d => d.TagDelete == 0).ToList();
+            foreach (var testimonial in testimonialList)
+            {
+                if (string.IsNullOrEmpty(testimonial.PatientImage) ||
+                    !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", testimonial.PatientImage.TrimStart('/'))))
+                {
+                    testimonial.PatientImage = defaultImagePath;
+                }
+            }
+            return View(testimonialList);
         }
 
         // Create - Display form for new doctor
@@ -82,13 +91,19 @@ namespace HospitalManagement.Controllers
         // Edit - Show the edit form for a doctor
         public IActionResult Edit(int id)
         {
-            var doctor = _context.MastHosTestimonials.FirstOrDefault(d => d.MastHosTestimonialsKey == id);
-            if (doctor == null)
+            var testimonial = _context.MastHosTestimonials.FirstOrDefault(d => d.MastHosTestimonialsKey == id);
+            if (testimonial == null)
             {
                 return NotFound();
             }
+
+            if (string.IsNullOrEmpty(testimonial.PatientImage) ||
+                !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", testimonial.PatientImage.TrimStart('/'))))
+            {
+                testimonial.PatientImage = defaultImagePath;
+            }
             TempData["SuccessMessage"] = null;
-            return View(doctor);
+            return View(testimonial);
         }
 
         // Edit - Save edited doctor
@@ -96,52 +111,48 @@ namespace HospitalManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, MastHosTestimonials testimonial, IFormFile patientImage)
         {
-
-            if (ModelState.IsValid)
+            var existingtestimonial = _context.MastHosTestimonials.FirstOrDefault(x => x.MastHosTestimonialsKey == id);
+            if (existingtestimonial != null)
             {
-                var existingtestimonial = _context.MastHosTestimonials.FirstOrDefault(x => x.MastHosTestimonialsKey == id);
-                if (existingtestimonial != null)
-                {
-                    existingtestimonial.PatientName = testimonial.PatientName;
-                    existingtestimonial.PatientComments = testimonial.PatientComments;
-                }
-                // Handle file upload if a new image is selected
-                if (patientImage != null && patientImage.Length > 0)
-                {
-                    // Get file name and define the path
-                    string fileName = Path.GetFileName(patientImage.FileName);
-
-                    // Define the path in wwwroot
-                    string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "PatientImages");
-
-                    // Ensure directory exists
-                    if (!Directory.Exists(uploadsDirectory))
-                    {
-                        Directory.CreateDirectory(uploadsDirectory);
-                    }
-
-                    // Define the file path
-                    string filePath = Path.Combine(uploadsDirectory, fileName);
-
-                    // Save the file to the server
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await patientImage.CopyToAsync(stream);
-                    }
-
-                    // Update the testimonial's image path
-                    existingtestimonial.PatientImage = "/Content/PatientImages/" + fileName;
-                }
-
-                existingtestimonial.EditDate = DateTime.Now;
-                existingtestimonial.EditTime = DateTime.Now.ToLocalTime();
-                testimonial.PatientImage = existingtestimonial.PatientImage;
-
-                _context.Update(existingtestimonial);
-                await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = "Testimonial updated successfully!";
+                existingtestimonial.PatientName = testimonial.PatientName;
+                existingtestimonial.PatientComments = testimonial.PatientComments;
             }
+            // Handle file upload if a new image is selected
+            if (patientImage != null && patientImage.Length > 0)
+            {
+                // Get file name and define the path
+                string fileName = Path.GetFileName(patientImage.FileName);
+
+                // Define the path in wwwroot
+                string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "PatientImages");
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadsDirectory))
+                {
+                    Directory.CreateDirectory(uploadsDirectory);
+                }
+
+                // Define the file path
+                string filePath = Path.Combine(uploadsDirectory, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await patientImage.CopyToAsync(stream);
+                }
+
+                // Update the testimonial's image path
+                existingtestimonial.PatientImage = "/Content/PatientImages/" + fileName;
+            }
+
+            existingtestimonial.EditDate = DateTime.Now;
+            existingtestimonial.EditTime = DateTime.Now.ToLocalTime();
+            testimonial.PatientImage = existingtestimonial.PatientImage;
+
+            _context.Update(existingtestimonial);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Testimonial updated successfully!";
             return View(testimonial);
         }
 

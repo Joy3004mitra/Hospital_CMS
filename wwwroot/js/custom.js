@@ -22,32 +22,32 @@ $(window).on('load', function () {
 $(document).ready(function () {
 
     "use strict";
-    var $doctorCarousel = $('.doctor-holder');
-    var doctorItemCount = $doctorCarousel.find('.doctor-item').length;
-    $doctorCarousel.owlCarousel({
-        loop: doctorItemCount > 1, // Loop only if more than one item exists
-        margin: 10,
-        nav: true,
-        responsive: {
-            0: { items: 1 },
-            600: { items: 2 },
-            1000: { items: 4 }
-        }
-    });
+    //var $doctorCarousel = $('.doctor-holder');
+    //var doctorItemCount = $doctorCarousel.find('.doctor-item').length;
+    //$doctorCarousel.owlCarousel({
+    //    loop: doctorItemCount > 1, // Loop only if more than one item exists
+    //    margin: 10,
+    //    nav: true,
+    //    responsive: {
+    //        0: { items: 1 },
+    //        600: { items: 2 },
+    //        1000: { items: 4 }
+    //    }
+    //});
 
-    // Initialize Reviews Carousel
-    var $reviewsCarousel = $('.reviews-holder');
-    var reviewItemCount = $reviewsCarousel.find('.review-2').length;
-    $reviewsCarousel.owlCarousel({
-        loop: reviewItemCount > 1, // Loop only if more than one item exists
-        margin: 10,
-        nav: true,
-        responsive: {
-            0: { items: 1 },
-            600: { items: 1 },
-            1000: { items: 1 }
-        }
-    });
+    //// Initialize Reviews Carousel
+    //var $reviewsCarousel = $('.reviews-holder');
+    //var reviewItemCount = $reviewsCarousel.find('.review-2').length;
+    //$reviewsCarousel.owlCarousel({
+    //    loop: reviewItemCount > 1, // Loop only if more than one item exists
+    //    margin: 10,
+    //    nav: true,
+    //    responsive: {
+    //        0: { items: 1 },
+    //        600: { items: 1 },
+    //        1000: { items: 1 }
+    //    }
+    //});
 
     /*----------------------------------------------------*/
     /*	Animated Scroll To Anchor
@@ -351,7 +351,13 @@ $(document).ready(function () {
     });
 
 
-    $('#datetimepicker').datetimepicker();
+    /*$('#datetimepicker').datetimepicker();*/
+    $('#datetimepicker').datetimepicker({
+        format: 'Y/m/d', // Show only date, remove time
+        timepicker: false, // Disable time selection
+        scrollMonth: false, // Disable scrolling month
+        scrollInput: false // Disable scrolling in input field
+    });
 
 
     /*----------------------------------------------------*/

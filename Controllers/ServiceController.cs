@@ -1,6 +1,7 @@
 ﻿using HospitalManagement.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace HospitalManagement.Controllers
 {
@@ -15,11 +16,20 @@ namespace HospitalManagement.Controllers
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
+        string defaultImagePath = "/images/review-author-1.jpg";
 
         // Index - View all Host service
         public IActionResult Index()
         {
             var services = _context.MastHosServices.Where(d => d.TagDelete == 0).ToList();
+            foreach (var service in services)
+            {
+                if (string.IsNullOrEmpty(service.ServiceImage) ||
+                    !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", service.ServiceImage.TrimStart('/'))))
+                {
+                    service.ServiceImage = defaultImagePath;
+                }
+            }
             return View(services);
         }
 
@@ -86,6 +96,13 @@ namespace HospitalManagement.Controllers
             {
                 return NotFound();
             }
+
+            if (string.IsNullOrEmpty(service.ServiceImage) ||
+                !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", service.ServiceImage.TrimStart('/'))))
+            {
+                service.ServiceImage = defaultImagePath;
+            }
+
             TempData["SuccessMessage"] = null;
             return View(service);
         }
@@ -95,51 +112,47 @@ namespace HospitalManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, MastHosService service, IFormFile serviceImage)
         {
-
-            if (ModelState.IsValid)
+            var existingservice = _context.MastHosServices.FirstOrDefault(x => x.MastHosServiceKey == id);
+            if (existingservice != null)
             {
-                var existingservice = _context.MastHosServices.FirstOrDefault(x => x.MastHosServiceKey == id);
-                if (existingservice != null)
-                {
-                    existingservice.ServiceName = service.ServiceName;
-                    existingservice.ServiceShortDesc = service.ServiceShortDesc;
-                }
-                // Handle file upload if a new image is selected
-                if (serviceImage != null && serviceImage.Length > 0)
-                {
-                    // Get file name and define the path
-                    string fileName = Path.GetFileName(serviceImage.FileName);
-
-                    // Define the path in wwwroot
-                    string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "ServiceImages");
-
-                    // Ensure directory exists
-                    if (!Directory.Exists(uploadsDirectory))
-                    {
-                        Directory.CreateDirectory(uploadsDirectory);
-                    }
-
-                    // Define the file path
-                    string filePath = Path.Combine(uploadsDirectory, fileName);
-
-                    // Save the file to the server
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await serviceImage.CopyToAsync(stream);
-                    }
-
-                    // Update the service's image path
-                    existingservice.ServiceImage = "/Content/ServiceImages/" + fileName;
-                }
-
-                existingservice.EditDate = DateTime.Now;
-                existingservice.EditTime = DateTime.Now.ToLocalTime();
-                service.ServiceImage = existingservice.ServiceImage;
-
-                _context.Update(existingservice);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Service updated successfully!";
+                existingservice.ServiceName = service.ServiceName;
+                existingservice.ServiceShortDesc = service.ServiceShortDesc;
             }
+            // Handle file upload if a new image is selected
+            if (serviceImage != null && serviceImage.Length > 0)
+            {
+                // Get file name and define the path
+                string fileName = Path.GetFileName(serviceImage.FileName);
+
+                // Define the path in wwwroot
+                string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "ServiceImages");
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadsDirectory))
+                {
+                    Directory.CreateDirectory(uploadsDirectory);
+                }
+
+                // Define the file path
+                string filePath = Path.Combine(uploadsDirectory, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await serviceImage.CopyToAsync(stream);
+                }
+
+                // Update the service's image path
+                existingservice.ServiceImage = "/Content/ServiceImages/" + fileName;
+            }
+
+            existingservice.EditDate = DateTime.Now;
+            existingservice.EditTime = DateTime.Now.ToLocalTime();
+            service.ServiceImage = existingservice.ServiceImage;
+
+            _context.Update(existingservice);
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Service updated successfully!";
             return View(service);
         }
 

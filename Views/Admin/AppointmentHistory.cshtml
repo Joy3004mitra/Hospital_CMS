@@ -9,12 +9,11 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Sl. No.</th>
             <th>Department</th>
             <th>Doctor Name</th>
             <th>Patient Name</th>
             <th>Email Id</th>
-            <th>Conatct No</th>
+            <th>Contact No</th>
             <th>Appointment Date</th>
         </tr>
     </thead>
@@ -22,7 +21,6 @@
         @foreach (var appointmentHistory in Model)
         {
             <tr>
-                <td>@appointmentHistory.HeadAppointmentKey</td>
                 <td>@appointmentHistory.ServiceName</td>
                 <td>@appointmentHistory.DoctorName</td>
                 <td>@appointmentHistory.FullName</td>

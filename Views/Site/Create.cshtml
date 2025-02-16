@@ -44,9 +44,81 @@
         <div class="form-group upload-section">
             <label for="logoImage">Upload Logo Image</label>
             <div class="upload-box">
-                <input type="file" id="logoImage" name="logoImage" class="form-control" required />
+                <input type="file" id="logoImage" name="logoImage" class="form-control" /><br>
+                <label for="ImagePreview">Image Preview</label>
+                <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;">
             </div>
         </div>
+
+        <div class="upload-box">
+            <div class="row"><h3>Banner Slider</h3><br><br><br></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BannerImage1">Upload Banner Image1</label>
+                        <input type="file" id="bannerImage1" name="bannerImage1" class="form-control"><br>
+                        <label for="ImagePreview">Image Preview</label>
+                        <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;"><br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BannerLink1">Banner Link1</label>
+                        <input type="text" id="BannerLink1" name="BannerLink1" class="form-control" placeholder="Enter banner link1" value="@Model?.BannerLink1" required />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BannerImage2">Upload Banner Image2</label>
+                        <input type="file" id="bannerImage2" name="bannerImage2" class="form-control" /><br>
+                        <label for="ImagePreview">Image Preview</label>
+                        <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;"><br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BannerLink2">Banner Link2</label>
+                        <input type="text" id="BannerLink2" name="BannerLink2" class="form-control" placeholder="Enter banner link2" value="@Model?.BannerLink2" required />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BannerImage3">Upload Banner Image3</label>
+                        <input type="file" id="bannerImage3" name="bannerImage3" class="form-control" /><br>
+                        <label for="ImagePreview">Image Preview</label>
+                        <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;"><br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BannerLink3">Banner Link3</label>
+                        <input type="text" id="BannerLink3" name="BannerLink3" class="form-control" placeholder="Enter banner link3" value="@Model?.BannerLink3" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BannerImage4">Upload Banner Image4</label>
+                        <input type="file" id="bannerImage4" name="bannerImage4" class="form-control" /><br>
+                        <label for="ImagePreview">Image Preview</label>
+                        <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;"><br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="BannerLink4">Banner Link4</label>
+                        <input type="text" id="BannerLink4" name="BannerLink4" class="form-control" placeholder="Enter banner link4" value="@Model?.BannerLink4" required />
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-6">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>

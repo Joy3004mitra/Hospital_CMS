@@ -1458,7 +1458,7 @@ p.header-widget-phone {
   min-height: 620px; 
 }
 
-#carousel-slide-1 {
+/*#carousel-slide-1 {
   background-image: url(../images/carousel/slide-1.jpg); 
   background-position: top center;
 }
@@ -1469,7 +1469,7 @@ p.header-widget-phone {
 
 #carousel-slide-3 {
   background-image: url(../images/carousel/slide-3.jpg); 
-}
+}*/
 
 #heroCarousel .mask {
   position: absolute;
@@ -5856,4 +5856,23 @@ nav a#pull {
     font-size: 17px;
     padding: 10px;
     background: #eee;
+}
+
+.custom-confirm-button {
+    background-color: #0C5D87 !important; /* Green color */
+    color: white !important; /* White text */
+    border: none !important; /* Remove borders */
+    box-shadow: none !important; /* Remove any shadows */
+}
+
+.services-section .sbox-4 img, .service-page-section .sbox-4 img {
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+}
+
+.services-section .hwitworksbg .sbox-4 img {
+    border-radius: 0 !important;
+    width: 53px !important;
+    height: auto;
 }

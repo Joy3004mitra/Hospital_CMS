@@ -10,7 +10,6 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Sl. No.</th>
             <th>Image</th>
             <th>Name</th>
             <th>Specialization</th>
@@ -21,11 +20,10 @@
         @foreach (var doctor in Model)
         {
             <tr>
-                <td>@doctor.MastDoctorKey</td>
                 <td><img src="@doctor.DoctorImage" width="50" height="50"></td>
                 <td>@doctor.DoctorName</td>
                 <td>@doctor.DoctorDegree</td>
-                <td>
+                <td class="td-action-colomn">
                     <a href="@Url.Action("Edit", new { id = doctor.MastDoctorKey })" class="btn btn-warning">Edit</a>
                     @using (Html.BeginForm("Delete", "Doctor", new { id = doctor.MastDoctorKey }, FormMethod.Post, true, new { onsubmit = "return confirm('Are you sure you want to delete this doctor?');", style = "display:inline-block;" }))
                     {

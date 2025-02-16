@@ -32,64 +32,190 @@ namespace HospitalManagement.Controllers
         // Create - Save new doctor
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(HeadSetting setting, IFormFile? logoImage)
+        public async Task<IActionResult> Create(HeadSetting setting, IFormFile? logoImage, IFormFile? bannerImage1, IFormFile? bannerImage2, IFormFile? bannerImage3, IFormFile? bannerImage4)
         {
-            if (ModelState.IsValid)
+            // Handle file upload
+            if (logoImage != null && logoImage.Length > 0)
             {
-                // Handle file upload
+                // Get file name and define the path
+                string fileName = Path.GetFileName(logoImage.FileName);
+
+                // Define the path in wwwroot
+                string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "LogoImages");
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadsDirectory))
+                {
+                    Directory.CreateDirectory(uploadsDirectory);
+                }
+
+                // Define the file path
+                string filePath = Path.Combine(uploadsDirectory, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await logoImage.CopyToAsync(stream);
+                }
+
+                // Save the relative file path in the doctor's record
+                setting.LogoImage = "/Content/LogoImages/" + fileName;
+            }
+
+            if (bannerImage1 != null && bannerImage1.Length > 0)
+            {
+                // Get file name and define the path
+                string fileName = Path.GetFileName(bannerImage1.FileName);
+
+                // Define the path in wwwroot
+                string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "BannerImages");
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadsDirectory))
+                {
+                    Directory.CreateDirectory(uploadsDirectory);
+                }
+
+                // Define the file path
+                string filePath = Path.Combine(uploadsDirectory, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await bannerImage1.CopyToAsync(stream);
+                }
+
+                // Save the relative file path in the doctor's record
+                setting.BannerImage1 = "/Content/BannerImages/" + fileName;
+            }
+
+            if (bannerImage2 != null && bannerImage2.Length > 0)
+            {
+                // Get file name and define the path
+                string fileName = Path.GetFileName(bannerImage2.FileName);
+
+                // Define the path in wwwroot
+                string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "BannerImages");
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadsDirectory))
+                {
+                    Directory.CreateDirectory(uploadsDirectory);
+                }
+
+                // Define the file path
+                string filePath = Path.Combine(uploadsDirectory, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await bannerImage2.CopyToAsync(stream);
+                }
+
+                // Save the relative file path in the doctor's record
+                setting.BannerImage2 = "/Content/BannerImages/" + fileName;
+            }
+
+            if (bannerImage3 != null && bannerImage3.Length > 0)
+            {
+                // Get file name and define the path
+                string fileName = Path.GetFileName(bannerImage3.FileName);
+
+                // Define the path in wwwroot
+                string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "BannerImages");
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadsDirectory))
+                {
+                    Directory.CreateDirectory(uploadsDirectory);
+                }
+
+                // Define the file path
+                string filePath = Path.Combine(uploadsDirectory, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await bannerImage3.CopyToAsync(stream);
+                }
+
+                // Save the relative file path in the doctor's record
+                setting.BannerImage3 = "/Content/BannerImages/" + fileName;
+            }
+
+            if (bannerImage4 != null && bannerImage4.Length > 0)
+            {
+                // Get file name and define the path
+                string fileName = Path.GetFileName(bannerImage4.FileName);
+
+                // Define the path in wwwroot
+                string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "BannerImages");
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadsDirectory))
+                {
+                    Directory.CreateDirectory(uploadsDirectory);
+                }
+
+                // Define the file path
+                string filePath = Path.Combine(uploadsDirectory, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await bannerImage4.CopyToAsync(stream);
+                }
+
+                // Save the relative file path in the doctor's record
+                setting.BannerImage4 = "/Content/BannerImages/" + fileName;
+            }
+
+            var existingSetting = _context.HeadSetting.FirstOrDefault();
+            if (existingSetting != null)
+            {
+                existingSetting.EditDate = DateTime.Now;
+                existingSetting.EditTime = DateTime.Now.ToLocalTime();
+                existingSetting.EmailId = setting.EmailId;
+                existingSetting.PhoneNo = setting.PhoneNo;
+                existingSetting.EmgncyPhoneNo = setting.EmgncyPhoneNo;
+                existingSetting.SiteAddress = setting.SiteAddress;
+                existingSetting.BannerLink1 = setting.BannerLink1;
+                existingSetting.BannerLink2 = setting.BannerLink2;
+                existingSetting.BannerLink3 = setting.BannerLink3;
+                existingSetting.BannerLink4 = setting.BannerLink4;
                 if (logoImage != null && logoImage.Length > 0)
                 {
-                    // Get file name and define the path
-                    string fileName = Path.GetFileName(logoImage.FileName);
-
-                    // Define the path in wwwroot
-                    string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "LogoImages");
-
-                    // Ensure directory exists
-                    if (!Directory.Exists(uploadsDirectory))
-                    {
-                        Directory.CreateDirectory(uploadsDirectory);
-                    }
-
-                    // Define the file path
-                    string filePath = Path.Combine(uploadsDirectory, fileName);
-
-                    // Save the file to the server
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await logoImage.CopyToAsync(stream);
-                    }
-
-                    // Save the relative file path in the doctor's record
-                    setting.LogoImage = "/Content/LogoImages/" + fileName;
+                    existingSetting.LogoImage = setting.LogoImage;
                 }
-                var existingSetting = _context.HeadSetting.FirstOrDefault();
-                if (existingSetting != null)
+                if (bannerImage1 != null && bannerImage1.Length > 0)
                 {
-                    existingSetting.EditDate = DateTime.Now;
-                    existingSetting.EditTime = DateTime.Now.ToLocalTime();
-                    existingSetting.EmailId = setting.EmailId;
-                    existingSetting.PhoneNo = setting.PhoneNo;
-                    existingSetting.EmgncyPhoneNo = setting.EmgncyPhoneNo;
-                    existingSetting.SiteAddress = setting.SiteAddress;
-                    if (logoImage != null && logoImage.Length > 0)
-                    {
-                        existingSetting.LogoImage = setting.LogoImage;
-                    }
-                    _context.Update(existingSetting);
+                    existingSetting.BannerImage1 = setting.BannerImage1;
                 }
-                else
+                if (bannerImage2 != null && bannerImage2.Length > 0)
                 {
-                    setting.EntDate = DateTime.Now;
-                    setting.EntTime = DateTime.Now.ToLocalTime();
-                    setting.TagActive = 0;
-                    setting.TagDelete = 0;
-                    // Save doctor info to the database
-                    _context.HeadSetting.Add(setting);
+                    existingSetting.BannerImage2 = setting.BannerImage2;
                 }
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Site settings saved successfully!";
+                if (bannerImage3 != null && bannerImage3.Length > 0)
+                {
+                    existingSetting.BannerImage3 = setting.BannerImage3;
+                }
+                if (bannerImage4 != null && bannerImage4.Length > 0)
+                {
+                    existingSetting.BannerImage4 = setting.BannerImage4;
+                }
+                _context.Update(existingSetting);
             }
+            else
+            {
+                setting.EntDate = DateTime.Now;
+                setting.EntTime = DateTime.Now.ToLocalTime();
+                setting.TagActive = 0;
+                setting.TagDelete = 0;
+                // Save doctor info to the database
+                _context.HeadSetting.Add(setting);
+            }
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Site settings saved successfully!";
 
             return View(setting);
         }

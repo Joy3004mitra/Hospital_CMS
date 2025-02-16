@@ -1,6 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
+@{
+    var siteDetails = ViewBag.SiteDetails as HospitalManagement.Models.HeadSetting;
+}
 
 <!-- HERO-2
 ============================================= -->
@@ -10,43 +13,24 @@
     <!-- SLIDER -->
     <div class="slider blue-nav">
         <ul class="slides">
-
-
-            <!-- SLIDE #1 -->
-            <li id="slide-1">
-
-                <!-- Background Image -->
-                <img src="~/images/slider/slide1.jpg" alt="slide-background">
-
-
-            </li>	<!-- END SLIDE #1 -->
-            <!-- SLIDE #2 -->
-            <li id="slide-2">
-
-                <!-- Background Image -->
-                <img src="~/images/slider/slide2.jpg" alt="slide-background">
-
-
-            </li>	<!-- END SLIDE #1 -->
-            <!-- SLIDE #3 -->
-            <li id="slide-3">
-
-                <!-- Background Image -->
-                <img src="~/images/slider/slide3.jpg" alt="slide-background">
-
-            </li>	<!-- END SLIDE #1 -->
-            <!-- SLIDE #4 -->
-            <li id="slide-4">
-
-                <!-- Background Image -->
-                <img src="~/images/slider/slide4.jpg" alt="slide-background">
-
-            </li>	<!-- END SLIDE #1 -->
-
-
-
+            @if (siteDetails != null)
+            {
+                <li id="slide-1">
+                    <a href="@siteDetails.BannerLink1"><img src="@siteDetails.BannerImage1" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital"></a>
+                </li>
+                <li id="slide-2">
+                    <a href="@siteDetails.BannerLink2"><img src="@siteDetails.BannerImage2" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital"></a>
+                </li>
+                <li id="slide-3">
+                    <a href="@siteDetails.BannerLink3"><img src="@siteDetails.BannerImage3" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital"></a>
+                </li>
+                <li id="slide-4">
+                    <a href="@siteDetails.BannerLink4"><img src="@siteDetails.BannerImage4" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital"></a>
+                </li>
+            }
         </ul>
     </div>	<!-- END SLIDER -->
+
 
 
 </section>	<!-- END HERO-2 -->
@@ -73,7 +57,7 @@
                     <span class="section-id blue-color">Our Ambitions</span>
 
                     <!-- Title -->
-                    <h3 class="h3-md steelblue-color">Our Patients Are Our Priority, We Offer <span class="blue-text">Specialist Doctor Service</span></h3>
+                    <h1 class="h3-md steelblue-color">Our Patients Are Our Priority, We Offer <span class="blue-text">Specialist Doctor Service</span></h1>
 
                     <!-- Text -->
                     <p>
@@ -124,15 +108,15 @@
                         <div class="sbox-4 ">
 
                             <!-- Image -->
-                            <img class="img-fluid" src="@service.ServiceImage" alt="content-image" />
+                            <img class="img-fluid" src="@service.ServiceImage" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital" />
 
                             <!-- Text -->
                             <div class="sbox-4-txt">
-                                <h5 class="h5-md steelblue-color"><a href="single-services.html">@service.ServiceName</a></h5>
+                                <h5 class="h5-md steelblue-color"><a href="@Url.Action("Service","Home")">@service.ServiceName</a></h5>
                                 <p>
                                     @service.ServiceShortDesc
                                 </p>
-                                <a href="@Url.Action("Service","Home")" class="readmore blue-text">Read more <i class="fas fa-arrow-right"></i></a>
+                                @*<br /><a href="@Url.Action("Service","Home")" class="readmore blue-text">Read more <i class="fas fa-arrow-right"></i></a>*@
                             </div>
 
                         </div>
@@ -142,7 +126,7 @@
 
 
             <!-- Button -->
-            <a href="@Url.Action("Service","Home")" class="btn btn-blue blue-hover mx-auto">See All Services</a>
+            <div class="col-md-12 text-center"><a href="@Url.Action("Service","Home")" class="btn btn-blue blue-hover mx-auto">See All Services</a></div>
 
 
         </div>	   <!-- End row -->
@@ -158,7 +142,7 @@
             <!-- IMAGE BLOCK -->
             <div class="col-lg-4">
                 <div class="about-img text-center ">
-                    <img class="img-fluid" src="~/images/image-03.png" alt="about-image">
+                    <img class="img-fluid" src="~/images/image-03.png" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital">
                 </div>
             </div>
 
@@ -234,7 +218,6 @@
             </div>
         </div>
         <div class="col-md-12">
-
             <div class="row">
 
 
@@ -243,12 +226,12 @@
                     <div class="sbox-4">
 
                         <!-- Image -->
-                        <img class="img-fluid" src="~/images/HowItWorks1.svg" alt="content-image" />
+                        <img class="img-fluid" src="images/HowItWorks1.svg" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital" />
 
                         <!-- Text -->
                         <div class="sbox-4-txt">
                             <h5 class="h5-md steelblue-color"><a href="single-services.html">Search For Professionals</a></h5>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <p>Browse our network of trusted doctors, check their expertise, and pick the perfect match for your needs.</p>
 
                         </div>
 
@@ -261,12 +244,12 @@
                     <div class="sbox-4">
 
                         <!-- Image -->
-                        <img class="img-fluid" src="~/images/HowItWorks2.svg" alt="content-image" />
+                        <img class="img-fluid" src="images/HowItWorks2.svg" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital" />
 
                         <!-- Text -->
                         <div class="sbox-4-txt">
                             <h5 class="h5-md steelblue-color"><a href="single-services.html">Book An Appointment</a></h5>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <p>Choose your slot in seconds—online, over the phone, or walk in. We’ll fit your schedule, not the other way around.</p>
 
 
                         </div>
@@ -280,12 +263,12 @@
                     <div class="sbox-4">
 
                         <!-- Image -->
-                        <img class="img-fluid" src="~/images/HowItWorks3.svg" alt="content-image" />
+                        <img class="img-fluid" src="images/HowItWorks3.svg" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital" />
 
                         <!-- Text -->
                         <div class="sbox-4-txt">
                             <h5 class="h5-md steelblue-color"><a href="single-services.html">Get The Treatment</a></h5>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <p>From diagnosis to recovery, we’ll guide you step-by-step with care that’s as unique as you are.</p>
 
                         </div>
 
@@ -298,19 +281,19 @@
                     <div class="sbox-4">
 
                         <!-- Image -->
-                        <img class="img-fluid" src="~/images/HowItWorks4.svg" alt="content-image" />
+                        <img class="img-fluid" src="images/HowItWorks4.svg" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital" />
 
                         <!-- Text -->
                         <div class="sbox-4-txt">
                             <h5 class="h5-md steelblue-color"><a href="single-services.html">Leave Feedback</a></h5>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <p>Tell us how we did—your thoughts help us do better, and we read every word (promise!).</p>
                         </div>
 
                     </div>
                 </div>
 
 
-            </div>	   <!-- End row -->
+            </div>
         </div>
     </div>	   <!-- End container -->
 </section>	<!-- END SERVICES-4 -->
@@ -349,7 +332,7 @@
                                     <div class="hover-overlay text-center">
 
                                         <!-- Photo -->
-                                        <img class="img-fluid" src="@doctor.DoctorImage" alt="doctor-foto">
+                                        <img class="img-fluid" src="@doctor.DoctorImage" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital">
 
 
                                     </div>
@@ -390,7 +373,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="all-doctors mb-40">
-                    <a href="ourdoctors.html" class="btn btn-blue blue-hover">See All Doctors</a>
+                    <a href="@Url.Action("Doctor","Home")" class="btn btn-blue blue-hover">See All Doctors</a>
                 </div>
             </div>
         </div>
@@ -472,7 +455,7 @@
             <!-- STATISTIC IMAGE -->
             <div class="col-lg-6">
                 <div class="statistic-img text-center mb-40">
-                    <img class="img-fluid" src="~/images/image-04.png" alt="hiramanihospital" width="100%" height="auto" />
+                    <img class="img-fluid" src="~/images/image-04.png" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital" width="100%" height="auto" />
                 </div>
             </div>
 
@@ -511,11 +494,11 @@
                                 <div class="review-txt text-center">
 
                                     <!-- Quote -->
-                                    <div class="quote"><img src="~/images/quote.png" alt="quote-img" /></div>
+                                    <div class="quote"><img src="~/images/quote.png" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital" /></div>
 
                                     <!-- Author Avatar -->
                                     <div class="testimonial-avatar">
-                                        <img src="@testimonial.PatientImage" alt="testimonial-avatar">
+                                        <img src="@testimonial.PatientImage" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital">
                                     </div>
 
                                     <!-- Testimonial Text -->
@@ -532,7 +515,6 @@
                             </div>
                         }
                     }
-
                 </div>
             </div>
         </div>	<!-- END TESTIMONIALS CONTENT -->
@@ -544,32 +526,32 @@
     <script>
         $(document).ready(function () {
             // Initialize Doctor Carousel
-            var $doctorCarousel = $('.doctor-holder');
-            var doctorCount = $doctorCarousel.find('.doctor-item').length;
-            $doctorCarousel.owlCarousel({
-                loop: doctorCount > 1,  // Loop only if there is more than one doctor
-                margin: 10,
-                nav: true,
-                responsive: {
-                    0: { items: 1 },
-                    600: { items: 2 },
-                    1000: { items: 4 }
-                }
-            });
+            //var $doctorCarousel = $('.doctor-holder');
+            //var doctorCount = $doctorCarousel.find('.doctor-item').length;
+            //$doctorCarousel.owlCarousel({
+            //    loop: doctorCount > 1,  // Loop only if there is more than one doctor
+            //    margin: 10,
+            //    nav: true,
+            //    responsive: {
+            //        0: { items: 1 },
+            //        600: { items: 2 },
+            //        1000: { items: 4 }
+            //    }
+            //});
 
             // Initialize Reviews Carousel
-            var $reviewsCarousel = $('.reviews-holder');
-            var reviewCount = $reviewsCarousel.find('.review-2').length;
-            $reviewsCarousel.owlCarousel({
-                loop: reviewCount > 1,  // Loop only if there is more than one testimonial
-                margin: 10,
-                nav: true,
-                responsive: {
-                    0: { items: 1 },
-                    600: { items: 1 },
-                    1000: { items: 1 }
-                }
-            });
+            //var $reviewsCarousel = $('.reviews-holder');
+            //var reviewCount = $reviewsCarousel.find('.review-2').length;
+            //$reviewsCarousel.owlCarousel({
+            //    loop: reviewCount > 1,  // Loop only if there is more than one testimonial
+            //    margin: 10,
+            //    nav: true,
+            //    responsive: {
+            //        0: { items: 1 },
+            //        600: { items: 1 },
+            //        1000: { items: 1 }
+            //    }
+            //});
         });
     </script>
 }

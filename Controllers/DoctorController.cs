@@ -20,11 +20,20 @@ namespace HospitalManagement.Controllers
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
+        string defaultImagePath = "/images/review-author-1.jpg";
 
         //Index - View all doctors
         public IActionResult Index()
         {
             var doctors = _context.MastDoctors.Where(d => d.TagDelete == 0).ToList();
+            foreach (var doctor in doctors)
+            {
+                if (string.IsNullOrEmpty(doctor.DoctorImage) ||
+                    !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", doctor.DoctorImage.TrimStart('/'))))
+                {
+                    doctor.DoctorImage = defaultImagePath;
+                }
+            }
             return View(doctors);
         }
 
@@ -91,65 +100,67 @@ namespace HospitalManagement.Controllers
             {
                 return NotFound();
             }
+
+            if (string.IsNullOrEmpty(doctor.DoctorImage) ||
+                !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", doctor.DoctorImage.TrimStart('/'))))
+            {
+                doctor.DoctorImage = defaultImagePath;
+            }
+
             TempData["SuccessMessage"] = null;
             return View(doctor);
         }
 
         // Edit - Save edited doctor
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, MastDoctor doctor, IFormFile doctorImage)
         {
-
-            if (ModelState.IsValid)
+            var existingDoctor = _context.MastDoctors.FirstOrDefault(x => x.MastDoctorKey == id);
+            if (existingDoctor != null)
             {
-                var existingDoctor = _context.MastDoctors.FirstOrDefault(x => x.MastDoctorKey == id);
-                if (existingDoctor != null)
-                {
-                    existingDoctor.DoctorName = doctor.DoctorName;
-                    existingDoctor.DoctorDegree = doctor.DoctorDegree;
-                    existingDoctor.DoctorDesc = doctor.DoctorDesc;
-                    existingDoctor.FaceboolProfileLink = doctor.FaceboolProfileLink;
-                    existingDoctor.LinkedInLink = doctor.LinkedInLink;
-                    existingDoctor.XLink = doctor.XLink;
-                }
-                // Handle file upload if a new image is selected
-                if (doctorImage != null && doctorImage.Length > 0)
-                {
-                    // Get file name and define the path
-                    string fileName = Path.GetFileName(doctorImage.FileName);
-
-                    // Define the path in wwwroot
-                    string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "DoctorImages");
-
-                    // Ensure directory exists
-                    if (!Directory.Exists(uploadsDirectory))
-                    {
-                        Directory.CreateDirectory(uploadsDirectory);
-                    }
-
-                    // Define the file path
-                    string filePath = Path.Combine(uploadsDirectory, fileName);
-
-                    // Save the file to the server
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await doctorImage.CopyToAsync(stream);
-                    }
-
-                    // Update the doctor's image path
-                    existingDoctor.DoctorImage = "/Content/DoctorImages/" + fileName;
-                }
-
-                existingDoctor.EditDate = DateTime.Now;
-                existingDoctor.EditTime = DateTime.Now.ToLocalTime();
-                doctor.DoctorImage = existingDoctor.DoctorImage;
-
-                _context.Update(existingDoctor);
-                await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = "Doctor updated successfully!";
+                existingDoctor.DoctorName = doctor.DoctorName;
+                existingDoctor.DoctorDegree = doctor.DoctorDegree;
+                existingDoctor.DoctorDesc = doctor.DoctorDesc;
+                existingDoctor.FaceboolProfileLink = doctor.FaceboolProfileLink;
+                existingDoctor.LinkedInLink = doctor.LinkedInLink;
+                existingDoctor.XLink = doctor.XLink;
             }
+            // Handle file upload if a new image is selected
+            if (doctorImage != null && doctorImage.Length > 0)
+            {
+                // Get file name and define the path
+                string fileName = Path.GetFileName(doctorImage.FileName);
+
+                // Define the path in wwwroot
+                string uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "Content", "DoctorImages");
+
+                // Ensure directory exists
+                if (!Directory.Exists(uploadsDirectory))
+                {
+                    Directory.CreateDirectory(uploadsDirectory);
+                }
+
+                // Define the file path
+                string filePath = Path.Combine(uploadsDirectory, fileName);
+
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await doctorImage.CopyToAsync(stream);
+                }
+
+                // Update the doctor's image path
+                existingDoctor.DoctorImage = "/Content/DoctorImages/" + fileName;
+            }
+
+            existingDoctor.EditDate = DateTime.Now;
+            existingDoctor.EditTime = DateTime.Now.ToLocalTime();
+            doctor.DoctorImage = existingDoctor.DoctorImage;
+
+            _context.Update(existingDoctor);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Doctor updated successfully!";
             return View(doctor);
         }
 

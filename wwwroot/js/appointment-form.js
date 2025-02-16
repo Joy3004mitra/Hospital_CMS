@@ -94,16 +94,22 @@ $(document).ready(function () {
             data: JSON.stringify(formData),
             success: function (response) {
                 if (response.success) {
+                    let formattedDate = new Date(response.appointmentDate).toLocaleDateString('en-US', {
+                        month: 'short',  // "Feb"
+                        day: 'numeric',  // "17"
+                        year: '2-digit'  // "25"
+                    });
                     Swal.fire({
                         title: 'Success!',
                         html: 'Thank you for your booking request.<br><br>' +
                             'Our executive will get in touch with you shortly to confirm a time slot for your appointment on ' +
-                            `<b>${response.appointmentDate}</b>.<br><br>` +
+                            `<b>${formattedDate}</b>.<br><br>` +
                             'Alternatively, you can contact us at <b>+91 03472255448, +91 7872957300</b> or email us at ' +
                             '<a href="mailto:hiramanimemorialhospital@gmail.com">hiramanimemorialhospital@gmail.com</a> to select your preferred time slot.<br><br>' +
                             '<b>Please ensure you arrive at the hospital at least 30 minutes before your appointment.</b><br><br>' +
                             'Best regards,<br><b>Hiramani Memorial Hospital</b>',
                         icon: 'success',
+                        confirmButtonColor: '#0C5D87',
                         confirmButtonText: 'OK'
                     });
 

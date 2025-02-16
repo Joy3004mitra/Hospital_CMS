@@ -17,6 +17,14 @@ namespace HospitalManagement.Models
         public string? EmgncyPhoneNo { get; set; }
         public string? LinkedInLink { get; set; }
         public string? LogoImage { get; set; }
+        public string? BannerImage1 { get; set; }
+        public string? BannerImage2 { get; set; }
+        public string? BannerImage3 { get; set; }
+        public string? BannerImage4 { get; set; }
+        public string? BannerLink1 { get; set; }
+        public string? BannerLink2 { get; set; }
+        public string? BannerLink3 { get; set; }
+        public string? BannerLink4 { get; set; }
         public int? EntUserKey { get; set; }
         public DateTime EntDate { get; set; }
         public DateTime EntTime { get; set; }

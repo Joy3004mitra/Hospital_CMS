@@ -18,6 +18,8 @@ namespace HospitalManagement.Controllers
                 return RedirectToAction("Dashboard");
             }
             AdminLogin login = new AdminLogin();
+
+            TempData["SuccessMessage"] = null;
             return View(login);
         }
 
@@ -31,7 +33,11 @@ namespace HospitalManagement.Controllers
                 HttpContext.Session.SetString("UserEmail", login.EmailId);
                 return RedirectToAction("Dashboard");
             }
-            return View();
+            else
+            {
+                TempData["ErrorMessage"] = "Username or password are incorrect!";
+            }
+            return View(login);
         }
 
         public IActionResult Dashboard()

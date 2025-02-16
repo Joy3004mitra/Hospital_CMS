@@ -1,34 +1,68 @@
 ﻿using HospitalManagement.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
-using System.Numerics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HospitalManagement.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly EmailService _emailService;
-        private readonly ApplicationDbContext _context;
         private readonly ILogger<HomeController> _logger;
+        string defaultImagePath = "/images/review-author-1.jpg";
 
         public HomeController(EmailService emailService, ApplicationDbContext context, ILogger<HomeController> logger)
+            : base(context) // Call BaseController constructor
         {
             _emailService = emailService;
-            _context = context;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            var doctorList = _context.MastDoctors.Where(d => d.TagDelete == 0).ToList();
-            ViewBag.DoctorList = doctorList;
+            try
+            {
+                ViewBag.SiteDetails = _context.HeadSetting.FirstOrDefault();
+                var doctorList = _context.MastDoctors.Where(d => d.TagDelete == 0).ToList();
+                foreach (var doctor in doctorList)
+                {
+                    if (string.IsNullOrEmpty(doctor.DoctorImage) ||
+                        !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", doctor.DoctorImage.TrimStart('/'))))
+                    {
+                        doctor.DoctorImage = defaultImagePath;
+                    }
+                }
+                ViewBag.DoctorList = doctorList;
+                var serviceList = _context.MastHosServices.Where(d => d.TagDelete == 0).OrderByDescending(d => d.MastHosServiceKey).Take(4).ToList();
+                foreach (var service in serviceList)
+                {
+                    if (string.IsNullOrEmpty(service.ServiceImage) ||
+                        !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", service.ServiceImage.TrimStart('/'))))
+                    {
+                        service.ServiceImage = defaultImagePath;
+                    }
+                }
+                ViewBag.ServiceList = serviceList;
 
-            var serviceList = _context.MastHosServices.Where(d => d.TagDelete == 0).ToList();
-            ViewBag.ServiceList = serviceList;
-
-            var testimonialList = _context.MastHosTestimonials.Where(d => d.TagDelete == 0).ToList();
-            ViewBag.TestimonialList = testimonialList;
-
+                var testimonialList = _context.MastHosTestimonials.Where(d => d.TagDelete == 0).ToList();
+                foreach (var testimonial in testimonialList)
+                {
+                    if (string.IsNullOrEmpty(testimonial.PatientImage) ||
+                        !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", testimonial.PatientImage.TrimStart('/'))))
+                    {
+                        testimonial.PatientImage = defaultImagePath;
+                    }
+                }
+                ViewBag.TestimonialList = testimonialList;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading homepage data");
+                ViewBag.Error = "Failed to load data.";
+            }
             return View();
         }
 
@@ -40,24 +74,40 @@ namespace HospitalManagement.Controllers
         public IActionResult Service()
         {
             var serviceList = _context.MastHosServices.Where(d => d.TagDelete == 0).ToList();
+            foreach (var service in serviceList)
+            {
+                if (string.IsNullOrEmpty(service.ServiceImage) ||
+                    !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", service.ServiceImage.TrimStart('/'))))
+                {
+                    service.ServiceImage = defaultImagePath;
+                }
+            }
             return View(serviceList);
         }
+
         public IActionResult Doctor()
         {
             var doctorList = _context.MastDoctors.Where(d => d.TagDelete == 0).ToList();
+            foreach (var doctor in doctorList)
+            {
+                if (string.IsNullOrEmpty(doctor.DoctorImage) ||
+                    !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", doctor.DoctorImage.TrimStart('/'))))
+                {
+                    doctor.DoctorImage = defaultImagePath;
+                }
+            }
             return View(doctorList);
         }
 
         public IActionResult ContactUs()
         {
             ContactModel contactModel = new ContactModel();
-            var headSettings = _context.HeadSetting.FirstOrDefault();
-            if (headSettings != null)
+            if (ViewBag.SiteDetails != null)
             {
-                contactModel.SiteEmail = headSettings.EmailId;
-                contactModel.SiteAddress = headSettings.SiteAddress;
-                contactModel.SitePhoneNo = headSettings.PhoneNo;
-                contactModel.SiteEmergencyNo = headSettings.EmgncyPhoneNo;
+                contactModel.SiteEmail = ViewBag.SiteDetails.EmailId;
+                contactModel.SiteAddress = ViewBag.SiteDetails.SiteAddress;
+                contactModel.SitePhoneNo = ViewBag.SiteDetails.PhoneNo;
+                contactModel.SiteEmergencyNo = ViewBag.SiteDetails.EmgncyPhoneNo;
             }
             TempData["SuccessMessage"] = null;
             return View(contactModel);
@@ -69,22 +119,13 @@ namespace HospitalManagement.Controllers
             if (string.IsNullOrWhiteSpace(contactModel.Email) || string.IsNullOrWhiteSpace(contactModel.Message))
             {
                 ViewBag.Error = "Please fill in all required fields.";
-                return View();
+                return View(contactModel);
             }
 
-            //string emailBody = $"<h3>New Contact Us Form Submission</h3>" +
-            //                   $"<p><strong>Name:</strong> {contactModel.Name}</p>" +
-            //                   $"<p><strong>Email:</strong> {contactModel.Email}</p>" +
-            //                   $"<p><strong>Phone:</strong> {contactModel.PhoneNumber}</p>" +
-            //                   $"<p><strong>Subject:</strong> {contactModel.Subject}</p>" +
-            //                   $"<p><strong>Message:</strong> {contactModel.Message}</p>";
-
-            //bool emailSent = await _emailService.SendEmailAsync(contactModel.Email, "General Query", emailBody);
             bool emailSent = await _emailService.SendContactMailAsync(contactModel);
-
             if (emailSent)
             {
-                TempData["SuccessMessage"] = "Contact Us successfully!";
+                TempData["SuccessMessage"] = "Message sent successfully!";
             }
             else
             {
@@ -96,11 +137,8 @@ namespace HospitalManagement.Controllers
 
         public IActionResult BookingAppointment()
         {
-            var doctors = _context.MastDoctors.Where(x => x.TagDelete == 0).ToList();
-            ViewBag.Doctor = doctors;
-
-            var servies = _context.MastHosServices.Where(x => x.TagDelete == 0).ToList();
-            ViewBag.Service = servies;
+            ViewBag.Doctor = _context.MastDoctors.Where(x => x.TagDelete == 0).ToList();
+            ViewBag.Service = _context.MastHosServices.Where(x => x.TagDelete == 0).ToList();
 
             TempData["SuccessMessage"] = null;
             return View();
@@ -113,41 +151,29 @@ namespace HospitalManagement.Controllers
             {
                 return Json(new { success = false, message = "Invalid data." });
             }
-            AppointmentHistory appointmentHistory = new AppointmentHistory();
 
-            //string emailBody = $@"
-            //    <h3>New Appointment Request</h3>
-            //    <p><strong>Service:</strong> {model.ServiceName}</p>
-            //    <p><strong>Doctor:</strong> {model.DoctorName}</p>
-            //    <p><strong>Patient Status:</strong> {model.PatientStatus}</p>
-            //    <p><strong>Name:</strong> {model.FullName}</p>
-            //    <p><strong>Gender:</strong> {model.Gender}</p>
-            //    <p><strong>Age:</strong> {model.Age}</p>
-            //    <p><strong>Email:</strong> {model.Email}</p>
-            //    <p><strong>Phone:</strong> {model.PhoneNumber}</p>
-            //    <p><strong>Appointment Date:</strong> {model.AppointmentDate}</p>
-            //    <p><strong>Message:</strong> {model.Message}</p>
-            //";
-
-            //bool emailSent = await _emailService.SendEmailAsync(model.Email, "Booking Request", emailBody);
             bool emailSent = await _emailService.SendBookingMailAsync(model);
 
             if (emailSent)
             {
-                appointmentHistory.ServiceName = model.ServiceName;
-                appointmentHistory.DoctorName = model.DoctorName;
-                appointmentHistory.PatientStatus = model.PatientStatus;
-                appointmentHistory.FullName = model.FullName;
-                appointmentHistory.Gender = model.Gender;
-                appointmentHistory.Age = model.Age;
-                appointmentHistory.Email = model.Email;
-                appointmentHistory.PhoneNumber = model.PhoneNumber;
-                appointmentHistory.AppointmentDate = Convert.ToDateTime(model.AppointmentDate);
-                appointmentHistory.Message = model.Message;
-                appointmentHistory.EntDate = DateTime.Now;
-                appointmentHistory.EntTime = DateTime.Now.ToLocalTime();
-                appointmentHistory.TagActive = 1;
-                appointmentHistory.TagDelete = 0;
+                var appointmentHistory = new AppointmentHistory
+                {
+                    ServiceName = model.ServiceName,
+                    DoctorName = model.DoctorName,
+                    PatientStatus = model.PatientStatus,
+                    FullName = model.FullName,
+                    Gender = model.Gender,
+                    Age = model.Age,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    AppointmentDate = Convert.ToDateTime(model.AppointmentDate),
+                    Message = model.Message,
+                    EntDate = DateTime.Now,
+                    EntTime = DateTime.Now.ToLocalTime(),
+                    TagActive = 1,
+                    TagDelete = 0
+                };
+
                 _context.AppointmentHistories.Add(appointmentHistory);
                 try
                 {
@@ -155,7 +181,8 @@ namespace HospitalManagement.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { message = ex.Message.ToString() });
+                    _logger.LogError(ex, "Error saving appointment history");
+                    return Json(new { success = false, message = "Failed to save booking details." });
                 }
 
                 TempData["SuccessMessage"] = "Booking appointment done successfully!";
@@ -166,7 +193,6 @@ namespace HospitalManagement.Controllers
                 return Json(new { success = false, message = "Failed to send email." });
             }
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

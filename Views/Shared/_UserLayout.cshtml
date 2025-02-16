@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var sites = ViewBag.SiteDetails as HospitalManagement.Models.HeadSetting;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -68,8 +71,8 @@
             <!-- MOBILE HEADER START-->
             <div class="wsmobileheader clearfix">
                 <a id="wsnavtoggle" class="wsanimated-arrow"><span></span></a>
-                <span class="smllogo"><img src="~/images/logo.png" width="40" height="auto" alt="mobile-logo" /></span>
-                <a href="tel:+91 9000000000" class="callusbtn"> <i class="fas fa-phone"></i></a>
+                <span class="smllogo"><img src="@sites.LogoImage" width="40" height="auto" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital" /></span>
+                <a href="tel:+91 @sites.EmgncyPhoneNo" class="callusbtn"> <i class="fas fa-phone"></i></a>
             </div>
             <!-- MOBILE HEADER END-->
             <!-- HEADER STRIP -->
@@ -79,13 +82,13 @@
                     <!-- Address -->
                     <div class="headertopleft">
                         <div class="address clearfix">
-                            <a href="mailto:hiramanihospital@gmail.com" class="callusbtn"><span><i class="fas fa-map-marker-alt"></i><b>Email us: hiramanihospital@gmail.com</b></span> </a>
+                            <a href="mailto:@sites.EmailId" class="callusbtn"><span><i class="fas fa-map-marker-alt"></i><b>Email us: @sites.EmailId</b></span> </a>
                         </div>
                     </div>
                     <!-- Social Links -->
                     <div class="headertopright">
                         <div class="address clearfix">
-                            <a href="tel:123456789" class="callusbtn"><i class="fas fa-phone"></i><b>Helpline Number: +91 9000000000</b></a>
+                            <a href="tel:@sites.EmgncyPhoneNo" class="callusbtn"><i class="fas fa-phone"></i><b>Helpline Number: +91 @sites.EmgncyPhoneNo</b></a>
                         </div>
                     </div>
 
@@ -96,7 +99,7 @@
                 <div class="wsmainwp clearfix">
 
                     <!-- LOGO IMAGE -->
-                    <div class="desktoplogo"><a href="@Url.Action("Index","Home")"><img src="~/images/logo.png" width="40" height="auto" alt="header-logo">Hiramani Memorial Hospital</a></div>
+                    <div class="desktoplogo"><a href="@Url.Action("Index","Home")"><img src="@sites.LogoImage" width="40" height="auto" alt="Hiramani Memorial Hospital" title="Hiramani Memorial Hospital">Hiramani Memorial Hospital</a></div>
 
                     <!-- MAIN MENU -->
                     <nav class="wsmenu clearfix">
@@ -140,9 +143,9 @@
                         <div class="section-title">
                             <span class="section-id">Our Specialists</span>
                             <!-- Title 	-->
-                            <h3 class="h3-md">Meet Our Specialized Doctors</h3>
+                            <h2 class="h3-md">Meet Our Specialized Doctors</h2>
                             <div>
-                                <a href="appointment.html" class="btn btn-blue btnwhite">Book An Appointment</a>
+                                <a href="@Url.Action("BookingAppointment","Home")" class="btn btn-blue btnwhite">Book An Appointment</a>
                                 <a href="@Url.Action("Doctor","Home")" class="btn btn-blue btnwhiteborder">Our Specialists</a>
                             </div>
 
@@ -170,14 +173,14 @@
 
                             <!-- Footer Logo -->
                             <!-- For Retina Ready displays take a image with double the amount of pixels that your image will be displayed (e.g 360 x 80  pixels) -->
-                            <img src="~/images/footer-logo.png" width="120" height="auto" alt=" Hiramani Memorial Hospital">
+                            <img src="@sites.LogoImage" width="120" height="auto" alt=" Hiramani Memorial Hospital">
 
                             <!-- Email -->
-                            <p class="foo-email">E: <a href="mailto:yourdomain@mail.com">infomemorial@gmail.com</a></p>
+                            <p class="foo-email">E: <a href="mailto:@sites.EmailId">@sites.EmailId</a></p>
 
                             <!-- Phone -->
-                            <p>P: +90000000000</p>
-                            <p>P: +90000000000 [Emergency Number]</p>
+                            <p>P: +91 @sites.PhoneNo</p>
+                            <p>P: +91 @sites.EmgncyPhoneNo [Emergency Number]</p>
 
                             <!-- Social Icons -->
                             <div class="footer-socials-links mt-20">
@@ -185,7 +188,7 @@
 
                                     <li><a href="#" class="ico-facebook"><i class="fab fa-facebook-f"></i></a></li>
                                     <li><a href="#" class="ico-twitter"><i class="fab fa-instagram"></i></a></li>
-                                    <li><a href="#" class="ico-whatsapp"><i class="fab fa-whatsapp"></i></a></li>
+                                    <li><a href="https://wa.me/+917872957300" class="ico-whatsapp"><i class="fab fa-whatsapp"></i></a></li>
 
 
                                 </ul>
@@ -202,8 +205,8 @@
 
                             <!-- Footer List -->
                             <ul class="clearfix">
+                                <li><a href="@Url.Action("Service","Home")">Gynecological care</a></li>
                                 <li><a href="@Url.Action("Service","Home")">General Consultation</a></li>
-                                <li><a href="@Url.Action("Service","Home")">Paediatric Care</a></li>
                                 <li><a href="@Url.Action("Service","Home")">Specialized Treatments</a></li>
                                 <li><a href="@Url.Action("Service","Home")">Health Screenings</a></li>
                             </ul>
@@ -240,7 +243,7 @@
                             <h5 class="h5-xs">Get in touch:</h5>
 
                             <!-- Text -->
-                            <p class="p-sm m-bottom-20"><b>Adress:</b> 40, Ananta Hari Mitra Road, Krishnanagar, West Bengal 741101</p>
+                            <p class="p-sm m-bottom-20"><b>Adress:</b> @sites.SiteAddress</p>
 
                             <iframe width="100%" height="200" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3661.5484078983222!2d88.4932984!3d23.4045488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f92197ddc82241%3A0xbab7c9f76a494adf!2sHIRAMANI%20MEMORIAL%20HOSPITAL!5e0!3m2!1sen!2sin!4v1738433546220!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
@@ -264,7 +267,7 @@
         </footer>	<!-- END FOOTER-2 -->
 
         <div title="Chat on WhatsApp" class="flaoting">
-            <a title="Chat on WhatsApp" href="https://wa.me/9000000000" class="ico-whatsapp"><i class="fab fa-whatsapp"></i></a>
+            <a title="Chat on WhatsApp" href="https://wa.me/+917872957300" class="ico-whatsapp"><i class="fab fa-whatsapp"></i></a>
         </div>
     </div>
     <!-- EXTERNAL SCRIPTS

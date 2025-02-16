@@ -78,9 +78,49 @@ namespace HospitalManagement.Models
                     .HasColumnName("LINKED_IN_LINK");
 
                 entity.Property(e => e.LogoImage)
-                    .HasMaxLength(500)
+                    .HasMaxLength(5000)
                     .IsUnicode(false)
                     .HasColumnName("LOGO_IMAGE");
+
+                entity.Property(e => e.BannerImage1)
+                    .HasMaxLength(5000)
+                    .IsUnicode(false)
+                    .HasColumnName("BANNER_IMAGE1");
+
+                entity.Property(e => e.BannerImage2)
+                   .HasMaxLength(5000)
+                   .IsUnicode(false)
+                   .HasColumnName("BANNER_IMAGE2");
+
+                entity.Property(e => e.BannerImage3)
+                   .HasMaxLength(5000)
+                   .IsUnicode(false)
+                   .HasColumnName("BANNER_IMAGE3");
+
+                entity.Property(e => e.BannerImage4)
+                   .HasMaxLength(5000)
+                   .IsUnicode(false)
+                   .HasColumnName("BANNER_IMAGE4");
+
+                entity.Property(e => e.BannerLink1)
+                   .HasMaxLength(5000)
+                   .IsUnicode(false)
+                   .HasColumnName("BANNER_LINK1");
+
+                entity.Property(e => e.BannerLink2)
+                   .HasMaxLength(5000)
+                   .IsUnicode(false)
+                   .HasColumnName("BANNER_LINK2");
+
+                entity.Property(e => e.BannerLink3)
+                   .HasMaxLength(5000)
+                   .IsUnicode(false)
+                   .HasColumnName("BANNER_LINK3");
+
+                entity.Property(e => e.BannerLink4)
+                   .HasMaxLength(5000)
+                   .IsUnicode(false)
+                   .HasColumnName("BANNER_LINK4");
 
                 entity.Property(e => e.PhoneNo)
                     .HasMaxLength(50)

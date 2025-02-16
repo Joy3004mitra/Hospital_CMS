@@ -134,12 +134,13 @@ public class EmailService
         fileContent = fileContent.Replace("PHONENO", contactModel.PhoneNumber);
         fileContent = fileContent.Replace("SUBJECT", contactModel.Subject);
         fileContent = fileContent.Replace("MESSAGE", contactModel.Message);
-        fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString());
+        fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+
 
         MailMessage mail = new MailMessage();
         mail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
         mail.To.Add(adminEmail);
-        mail.Subject = "New Contact Form Submission Received -" + contactModel.Name;
+        mail.Subject = "New Contact Form Submission Received - " + contactModel.Name;
         mail.Body = fileContent;
         mail.IsBodyHtml = true;
 
@@ -157,7 +158,8 @@ public class EmailService
         fileContent = fileContent.Replace("PHONENO", contactModel.PhoneNumber);
         fileContent = fileContent.Replace("SUBJECT", contactModel.Subject);
         fileContent = fileContent.Replace("MESSAGE", contactModel.Message);
-        fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString());
+        //fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString());
+        fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
 
         MailMessage usermail = new MailMessage();
         usermail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
@@ -184,11 +186,12 @@ public class EmailService
         var adminEmail = _configuration["EmailSettings:AdminEmail"];
         var encodedPassword = _configuration["EmailSettings:FromPassword"];
         var fromPassword = Encoding.UTF8.GetString(Convert.FromBase64String(encodedPassword));
+        DateTime parsedDate;
 
         string path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "admin_booking_mail.html");
         string fileContent = File.ReadAllText(path);
         fileContent = fileContent.Replace("REQUESTSERVICE", appointmentModel.ServiceName);
-        fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
+        //fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
         fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName);
         fileContent = fileContent.Replace("AGE", appointmentModel.Age);
         fileContent = fileContent.Replace("GENDER", appointmentModel.Gender);
@@ -198,10 +201,15 @@ public class EmailService
         fileContent = fileContent.Replace("TYPE", appointmentModel.PatientStatus);
         fileContent = fileContent.Replace("MESSAGE", appointmentModel.Message);
 
+        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
+        {
+            fileContent = fileContent.Replace("DATETIME", parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+        }
+
         MailMessage mail = new MailMessage();
         mail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
         mail.To.Add(adminEmail);
-        mail.Subject = "Booking Request for" + appointmentModel.ServiceName + "on" + appointmentModel.AppointmentDate;
+        mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " on " + appointmentModel.AppointmentDate;
         mail.Body = fileContent;
         mail.IsBodyHtml = true;
 
@@ -215,14 +223,19 @@ public class EmailService
         path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "user_booking_mail.html");
         fileContent = File.ReadAllText(path);
         fileContent = fileContent.Replace("REQUESTSERVICE", appointmentModel.ServiceName);
-        fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
+        //fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
         fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName);
         fileContent = fileContent.Replace("AGE", appointmentModel.Age);
+
+        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
+        {
+            fileContent = fileContent.Replace("DATETIME", parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+        }
 
         MailMessage usermail = new MailMessage();
         usermail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
         usermail.To.Add(appointmentModel.Email);
-        usermail.Subject = "We Received your Booking Request for" + appointmentModel.ServiceName + "at Hiramani Hospital";
+        usermail.Subject = "We Received your Booking Request for" + " " + appointmentModel.ServiceName + " at Hiramani Hospital";
         usermail.Body = fileContent;
         usermail.IsBodyHtml = true;
 
