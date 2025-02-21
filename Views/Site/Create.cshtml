@@ -9,7 +9,7 @@
     <h2 class="space">Site Settings</h2>
 </div>
 
-<div class="card">
+<div class="card content-scroll">
     @using (Html.BeginForm("Create", "Site", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
@@ -44,79 +44,44 @@
         <div class="form-group upload-section">
             <label for="logoImage">Upload Logo Image</label>
             <div class="upload-box">
-                <input type="file" id="logoImage" name="logoImage" class="form-control" /><br>
+                <input type="file" id="logoImage" name="logoImage" class="form-control" onchange="previewImage(this, 'previewLogo')" /><br>
+
                 <label for="ImagePreview">Image Preview</label>
-                <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;">
+                <img id="previewLogo"
+                     src="@(string.IsNullOrEmpty(Model?.LogoImage) ? "#" : Url.Content(Model.LogoImage))"
+                     alt="Logo Image"
+                     class="img-thumbnail"
+                     style="max-height: 100px; display:@(string.IsNullOrEmpty(Model?.LogoImage) ? "none" : "block");" />
             </div>
         </div>
 
         <div class="upload-box">
             <div class="row"><h3>Banner Slider</h3><br><br><br></div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="BannerImage1">Upload Banner Image1</label>
-                        <input type="file" id="bannerImage1" name="bannerImage1" class="form-control"><br>
-                        <label for="ImagePreview">Image Preview</label>
-                        <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;"><br>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="BannerLink1">Banner Link1</label>
-                        <input type="text" id="BannerLink1" name="BannerLink1" class="form-control" placeholder="Enter banner link1" value="@Model?.BannerLink1" required />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="BannerImage2">Upload Banner Image2</label>
-                        <input type="file" id="bannerImage2" name="bannerImage2" class="form-control" /><br>
-                        <label for="ImagePreview">Image Preview</label>
-                        <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;"><br>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="BannerLink2">Banner Link2</label>
-                        <input type="text" id="BannerLink2" name="BannerLink2" class="form-control" placeholder="Enter banner link2" value="@Model?.BannerLink2" required />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="BannerImage3">Upload Banner Image3</label>
-                        <input type="file" id="bannerImage3" name="bannerImage3" class="form-control" /><br>
-                        <label for="ImagePreview">Image Preview</label>
-                        <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;"><br>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="BannerLink3">Banner Link3</label>
-                        <input type="text" id="BannerLink3" name="BannerLink3" class="form-control" placeholder="Enter banner link3" value="@Model?.BannerLink3" required />
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="BannerImage4">Upload Banner Image4</label>
-                        <input type="file" id="bannerImage4" name="bannerImage4" class="form-control" /><br>
-                        <label for="ImagePreview">Image Preview</label>
-                        <img src="../images/banner-1.jpg" alt="Doctor Image" class="img-thumbnail" style="max-height: 100px;"><br>
+            @for (int i = 1; i <= 4; i++)
+            {
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="bannerImage@(i)">Upload Banner Image@(i)</label>
+                            <input type="file" id="bannerImage@(i)" name="bannerImage@(i)" class="form-control" onchange="previewImage(this, 'previewBanner@(i)')" /><br>
+
+                            <label for="ImagePreview">Image Preview</label>
+                            <img id="previewBanner@(i)"
+                                 src="@(string.IsNullOrEmpty(Model?.GetType().GetProperty($"BannerImage{i}")?.GetValue(Model)?.ToString()) ? "#" : Url.Content(Model.GetType().GetProperty($"BannerImage{i}")?.GetValue(Model)?.ToString()))"
+                                 alt="Banner Image@(i)"
+                                 class="img-thumbnail"
+                                 style="max-height: 100px; display:@(string.IsNullOrEmpty(Model?.GetType().GetProperty($"BannerImage{i}")?.GetValue(Model)?.ToString()) ? "none" : "block");" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="BannerLink@(i)">Banner Link@(i)</label>
+                            <input type="text" id="BannerLink@(i)" name="BannerLink@(i)" class="form-control" placeholder="Enter banner link@(i)" value="@Model?.GetType().GetProperty($"BannerLink{i}")?.GetValue(Model)" required />
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="BannerLink4">Banner Link4</label>
-                        <input type="text" id="BannerLink4" name="BannerLink4" class="form-control" placeholder="Enter banner link4" value="@Model?.BannerLink4" required />
-                    </div>
-                </div>
-            </div>
+            }
         </div>
 
         <div class="col-md-6">
@@ -125,6 +90,20 @@
     }
 </div>
 
+<script>
+    function previewImage(input, imgId) {
+        var file = input.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var img = document.getElementById(imgId);
+                img.src = e.target.result;
+                img.style.display = "block";
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 
 @if (TempData["SuccessMessage"] != null)
 {

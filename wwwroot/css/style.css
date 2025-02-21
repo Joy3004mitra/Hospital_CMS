@@ -5876,3 +5876,15 @@ nav a#pull {
     width: 53px !important;
     height: auto;
 }
+
+/*.error-select {
+    border: 2px solid red !important;
+    background-color: #ffe6e6 !important;
+}*/
+
+.error-msg {
+    color: #e74c3c;
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}

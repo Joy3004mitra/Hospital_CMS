@@ -209,7 +209,11 @@ public class EmailService
         MailMessage mail = new MailMessage();
         mail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
         mail.To.Add(adminEmail);
-        mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " on " + appointmentModel.AppointmentDate;
+        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
+        {
+            mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " on " + parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        }
+        
         mail.Body = fileContent;
         mail.IsBodyHtml = true;
 

@@ -9,7 +9,7 @@
     <h2 class="space">Add New Testimonial</h2>
 </div>
 
-<div class="card">
+<div class="card content-scroll">
     @using (Html.BeginForm("Create", "Testimonial", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()

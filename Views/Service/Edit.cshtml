@@ -9,7 +9,7 @@
     <h2 class="space">Service Information</h2>
 </div>
 
-<div class="card">
+<div class="card content-scroll">
     @using (Html.BeginForm("Edit", "Service", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()

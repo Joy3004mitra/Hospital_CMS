@@ -18,7 +18,7 @@ body {
 
 .sidebar {
     width: 300px;
-    position: fixed;
+    /*position: fixed;*/
     /*background: #343a40;*/
     background: #0C5D87;
     padding: 20px;
@@ -215,4 +215,22 @@ body {
 
 .td-action-colomn {
     white-space: nowrap;
+}
+
+.content-scroll {
+    height: calc(100vh - 210px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.dataTables_filter, .dataTables_length {
+    margin-bottom: 20px;
+}
+
+.dataTables_info {
+    margin-top: 15px;
+}
+
+.dataTables_paginate.paging_simple_numbers {
+    margin-top: 15px;
 }

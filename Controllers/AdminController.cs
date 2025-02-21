@@ -52,11 +52,25 @@ namespace HospitalManagement.Controllers
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))
             {
-                var appointmentHistory = _context.AppointmentHistories.Where(x => x.TagDelete == 0).ToList();
+                var appointmentHistory = _context.AppointmentHistories
+                                                 .Where(x => x.TagDelete == 0)
+                                                 .OrderByDescending(x => x.AppointmentDate)
+                                                 .ToList();
                 return View(appointmentHistory);
             }
             return RedirectToAction("Login");
         }
+
+
+        //public IActionResult AppointmentHistory()
+        //{
+        //    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))
+        //    {
+        //        var appointmentHistory = _context.AppointmentHistories.Where(x => x.TagDelete == 0).ToList();
+        //        return View(appointmentHistory);
+        //    }
+        //    return RedirectToAction("Login");
+        //}
 
         public IActionResult Logout()
         {

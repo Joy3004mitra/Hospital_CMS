@@ -13,6 +13,7 @@ namespace HospitalManagement.Controllers
         private readonly EmailService _emailService;
         private readonly ILogger<HomeController> _logger;
         string defaultImagePath = "/images/review-author-1.jpg";
+        string serviceImagePath = "/images/services-section.jpg";
 
         public HomeController(EmailService emailService, ApplicationDbContext context, ILogger<HomeController> logger)
             : base(context) // Call BaseController constructor
@@ -42,7 +43,7 @@ namespace HospitalManagement.Controllers
                     if (string.IsNullOrEmpty(service.ServiceImage) ||
                         !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", service.ServiceImage.TrimStart('/'))))
                     {
-                        service.ServiceImage = defaultImagePath;
+                        service.ServiceImage = serviceImagePath;
                     }
                 }
                 ViewBag.ServiceList = serviceList;
@@ -79,7 +80,7 @@ namespace HospitalManagement.Controllers
                 if (string.IsNullOrEmpty(service.ServiceImage) ||
                     !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", service.ServiceImage.TrimStart('/'))))
                 {
-                    service.ServiceImage = defaultImagePath;
+                    service.ServiceImage = serviceImagePath;
                 }
             }
             return View(serviceList);

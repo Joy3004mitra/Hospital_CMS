@@ -5,8 +5,8 @@ $(document).ready(function () {
 
     $("#appointment-form").submit(function (e) {
         e.preventDefault();
-        var department = $(".department");
-        var doctor = $(".doctor");
+        var department = $("#departmentData");
+        var doctor = $("#doctorData");
         var patient = $(".patient");
         var date = $(".date");
         var name = $(".name");
@@ -14,21 +14,28 @@ $(document).ready(function () {
         var phone = $(".phone");
         var msg = $(".message");
         var flag = false;
+
+        department.removeClass("error-select").next(".error-msg").remove();
+        $(".error-msg").remove();
+
         if (department.val() == "Pick Service") {
-            department.closest(".form-control").addClass("error");
-            department.focus();
-            flag = false;
-            return false;
-        } else {
-            department.closest(".form-control").removeClass("error").addClass("success");
-        } if (doctor.val() == "Select Doctor") {
-            doctor.closest(".form-control").addClass("error");
-            doctor.focus();
-            flag = false;
-            return false;
-        } else {
-            doctor.closest(".form-control").removeClass("error").addClass("success");
-        } if (patient.val() == "") {
+            department.addClass("error-select");
+
+            // Check if error message already exists
+            if (department.next(".error-msg").length === 0) {
+                department.after('<span class="error-msg">This field is required.</span>');
+            }
+        }
+
+        if (doctor.val() == "Select Doctor") {
+            doctor.addClass("error-select");
+
+            // Check if error message already exists
+            if (doctor.next(".error-msg").length === 0) {
+                doctor.after('<span class="error-msg">This field is required.</span>');
+            }
+        }
+        if (patient.val() == "") {
             patient.closest(".form-control").addClass("error");
             patient.focus();
             flag = false;
@@ -94,6 +101,7 @@ $(document).ready(function () {
             data: JSON.stringify(formData),
             success: function (response) {
                 if (response.success) {
+                    $(".loading").fadeOut("slow")
                     let formattedDate = new Date(response.appointmentDate).toLocaleDateString('en-US', {
                         month: 'short',  // "Feb"
                         day: 'numeric',  // "17"
@@ -129,6 +137,31 @@ $(document).ready(function () {
         });
         return false;
     });
+
+    $("#departmentData").change(function () {
+        if ($(this).val() !== "Pick Service") {
+            $(this).siblings(".error-msg").remove(); // Removes only the related error message
+        }
+        else {
+            $(this).addClass("error-select");
+            if ($(this).siblings(".error-msg").length === 0) {
+                $(this).after('<span class="error-msg">This field is required.</span>');
+            }
+        }
+    });
+
+    $("#doctorData").change(function () {
+        if ($(this).val() !== "Select Doctor") {
+            $(this).siblings(".error-msg").remove(); // Removes only the related error message
+        }
+        else {
+            $(this).addClass("error-select");
+            if ($(this).siblings(".error-msg").length === 0) {
+                $(this).after('<span class="error-msg">This field is required.</span>');
+            }
+        }
+    });
+
     $("#reset").on('click', function () {
         $(".form-control").removeClass("success").removeClass("error");
     });

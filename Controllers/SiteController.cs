@@ -183,6 +183,7 @@ namespace HospitalManagement.Controllers
                 existingSetting.BannerLink2 = setting.BannerLink2;
                 existingSetting.BannerLink3 = setting.BannerLink3;
                 existingSetting.BannerLink4 = setting.BannerLink4;
+
                 if (logoImage != null && logoImage.Length > 0)
                 {
                     existingSetting.LogoImage = setting.LogoImage;
@@ -204,6 +205,12 @@ namespace HospitalManagement.Controllers
                     existingSetting.BannerImage4 = setting.BannerImage4;
                 }
                 _context.Update(existingSetting);
+
+                setting.LogoImage = existingSetting.LogoImage;
+                setting.BannerImage1 = existingSetting.BannerImage1;
+                setting.BannerImage2 = existingSetting.BannerImage2;
+                setting.BannerImage3 = existingSetting.BannerImage3;
+                setting.BannerImage4 = existingSetting.BannerImage4;
             }
             else
             {
@@ -214,7 +221,8 @@ namespace HospitalManagement.Controllers
                 // Save doctor info to the database
                 _context.HeadSetting.Add(setting);
             }
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); 
+
             TempData["SuccessMessage"] = "Site settings saved successfully!";
 
             return View(setting);

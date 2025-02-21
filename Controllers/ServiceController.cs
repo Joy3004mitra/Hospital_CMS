@@ -16,7 +16,7 @@ namespace HospitalManagement.Controllers
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
-        string defaultImagePath = "/images/review-author-1.jpg";
+        string defaultImagePath = "/images/services-section.jpg";
 
         // Index - View all Host service
         public IActionResult Index()
