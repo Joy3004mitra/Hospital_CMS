@@ -17,6 +17,7 @@ namespace HospitalManagement.Controllers
         string defaultImagePath = "/images/review-author-1.jpg";
 
         // Index - View all Host testimonial
+        [Route("/testimonial/list/")]
         public IActionResult Index()
         {
             var testimonialList = _context.MastHosTestimonials.Where(d => d.TagDelete == 0).ToList();

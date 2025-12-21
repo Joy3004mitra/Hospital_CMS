@@ -1,0 +1,406 @@
+﻿@model IEnumerable<HospitalManagement.Models.MastBlog>
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    Func<string, int, string> SnipHtml = (html, len) =>
+    {
+        if (string.IsNullOrWhiteSpace(html)) return "";
+        var plain = System.Text.RegularExpressions.Regex.Replace(html, "<.*?>", string.Empty);
+        plain = System.Net.WebUtility.HtmlDecode(plain);
+        plain = plain.Trim();
+        if (plain.Length <= len) return plain;
+        return plain.Substring(0, len).TrimEnd() + "...";
+    };
+}
+
+<!-- SEARCH BAR -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <form onsubmit="return false;" class="search-form">
+                <div class="input-group">
+                    <input id="blogSearch" type="search" class="form-control" placeholder="Search articles..." aria-label="Search articles" />
+                    <div class="input-group-append">
+                        <button id="searchBtn" class="btn btn-gradient" type="button">GO</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- LISTING -->
+<div class="container mt-4 mb-5 pb-5" style="padding-bottom:80px;">
+    <div class="row">
+        <div class="col-12">
+            @if (!Model?.Any() ?? true)
+            {
+                <div class="alert alert-info">No articles found.</div>
+            }
+            else
+            {
+                var idx = 0;
+                foreach (var blog in Model.OrderByDescending(b => b.EntDate))
+                {
+                    var slug = (blog.BlogTitle ?? "").Replace(" ", "-").ToLower();
+                    var summary = !string.IsNullOrWhiteSpace(blog.BlogSummary) ? blog.BlogSummary : SnipHtml(blog.BlogContent ?? "", 220);
+                    var imageUrl = blog.BlogImage ?? "/images/review-author-1.jpg";
+                    var cssClass = idx == 0 ? "hero-card hero-large" : "hero-card";
+                    <article class="@cssClass" data-title="@((blog.BlogTitle ?? "").ToLower())" data-summary="@((summary ?? "").ToLower())">
+                        <a href="@Url.Action("BlogDetails", "Home", new { id = blog.MastBlogKey, slug = slug })" class="hero-link" aria-label="@blog.BlogTitle">
+                            <div class="hero-img" style="background-image:url('@imageUrl')"></div>
+
+                            <div class="hero-overlay">
+                                <div class="hero-content container">
+                                    <div class="row">
+                                        <div class="col-lg-7 col-md-9">
+                                            <span class="kicker">Article</span>
+                                            <h2 class="hero-title">@blog.BlogTitle</h2>
+                                            <p class="hero-excerpt">@Html.Raw(summary)</p>
+                                            <div class="mt-3">
+                                                <span class="read-more">READ MORE</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    idx++;
+                }
+            }
+        </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="row mt-5">
+        <div class="col text-center">
+            <nav class="pagination-wrapper">
+                <ul id="pagination" class="pagination-list"></ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* design inspired by the screenshot: large stacked banners with overlay text (left) */
+    /* Pagination */
+    .pagination-wrapper {
+        margin-top: 30px;
+    }
+
+    .pagination-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        display: inline-flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+        .pagination-list li {
+            display: inline-block;
+        }
+
+        .pagination-list button {
+            border: none;
+            background: #ffffff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+            cursor: pointer;
+            transition: all .2s;
+            font-weight: 600;
+        }
+
+            .pagination-list button:hover {
+                background: rgba(99,102,241,0.09);
+            }
+
+            .pagination-list button.active {
+                background: linear-gradient(90deg,#6366f1,#8b5cf6);
+                color: #fff;
+            }
+
+            .pagination-list button.disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+    .hero-card {
+        position: relative;
+        margin-bottom: 22px;
+        border-radius: 6px;
+        overflow: hidden;
+        min-height: 220px;
+        background: #000;
+        border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .hero-large {
+        min-height: 360px;
+    }
+
+    .hero-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .hero-img {
+        position: absolute;
+        inset: 0;
+        background-position: center;
+        background-size: cover;
+        filter: brightness(0.62);
+        transform: scale(1);
+        transition: transform .35s ease, filter .35s ease;
+    }
+
+    /* overlay: gradient from left transparent -> dark right */
+    .hero-overlay {
+        position: relative;
+        z-index: 2;
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 40px 0;
+        background: linear-gradient(90deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.58) 60%);
+    }
+
+    /* content positioned left similar to screenshot */
+    .hero-content {
+        padding: 24px 28px;
+    }
+
+    .kicker {
+        display: inline-block;
+        background: rgba(255,255,255,0.06);
+        color: #ffd66b;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: .6px;
+        margin-bottom: 12px;
+    }
+
+    /* title/excerpt styling */
+    .hero-title {
+        color: #fff;
+        font-size: 28px;
+        line-height: 1.08;
+        margin: 6px 0 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+    }
+
+    .hero-excerpt {
+        color: rgba(255,255,255,0.92);
+        opacity: 0.95;
+        max-width: 80%;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+    /* read more */
+    .read-more {
+        display: inline-block;
+        color: #ffd66b;
+        font-weight: 700;
+        letter-spacing: .6px;
+        padding: 6px 0;
+    }
+
+    /* hover effect */
+    .hero-card:hover .hero-img {
+        transform: scale(1.03);
+        filter: brightness(0.7);
+    }
+
+    /* make overlay left more contrasted on small screens */
+    @@media (max-width: 992px) {
+        .hero-title {
+            font-size: 22px;
+        }
+
+        .hero-excerpt {
+            font-size: 14px;
+            max-width: 100%;
+        }
+
+        .hero-large {
+            min-height: 300px;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .hero-card {
+            min-height: 220px;
+        }
+
+        .hero-overlay {
+            padding: 18px 0;
+        }
+
+        .hero-title {
+            font-size: 18px;
+        }
+
+        .hero-excerpt {
+            display: block;
+            max-width: 100%;
+        }
+    }
+
+    /* search form / button */
+    .search-form .input-group {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .btn-gradient {
+        border: none;
+        padding: 10px 18px;
+        background: linear-gradient(90deg, #36d1dc, #5b86e5);
+        color: white;
+        font-weight: 700;
+        border-radius: 4px;
+    }
+
+    /* small helper to ensure clickable area doesn't show default link color */
+    .hero-link {
+        color: inherit;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        (function(){
+            // Query elements
+            const searchInput = document.getElementById('blogSearch');
+            const btn = document.getElementById('searchBtn');
+            const articles = Array.from(document.querySelectorAll('.hero-card'));
+            const paginationEl = document.getElementById('pagination');
+
+            // Pagination settings
+            let currentPage = 1;
+            let pageSize = 3;   // show 3 articles per page; change as needed
+
+            // Apply filter and reset pagination to page 1
+            function applyFilter(){
+                const q = (searchInput.value || '').trim().toLowerCase();
+                currentPage = 1;
+
+                if (!q) {
+                    articles.forEach(a => a.style.display = '');
+                } else {
+                    articles.forEach(a => {
+                        const title = (a.getAttribute('data-title') || '').toLowerCase();
+                        const summary = (a.getAttribute('data-summary') || '').toLowerCase();
+                        if (title.indexOf(q) !== -1 || summary.indexOf(q) !== -1) {
+                            a.style.display = '';
+                        } else {
+                            a.style.display = 'none';
+                        }
+                    });
+                }
+
+                paginateItems();
+                renderPagination();
+            }
+
+            // Paginate currently visible (non-hidden) items
+            function paginateItems(){
+                const visible = articles.filter(a => a.style.display !== 'none');
+                const total = visible.length;
+                const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
+                // clamp currentPage
+                if (currentPage > totalPages) currentPage = totalPages;
+                if (currentPage < 1) currentPage = 1;
+
+                const start = (currentPage - 1) * pageSize;
+                const end = start + pageSize;
+
+                visible.forEach((el, idx) => {
+                    el.style.display = (idx >= start && idx < end) ? '' : 'none';
+                });
+            }
+
+            // Render pagination controls
+            function renderPagination(){
+                if (!paginationEl) return;
+                paginationEl.innerHTML = '';
+                const visible = articles.filter(a => a.style.display !== 'none');
+                const total = visible.length;
+                const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
+                // If only one page, don't show pagination
+                if (totalPages <= 1) return;
+
+                // Prev button
+                const prevLi = document.createElement('li');
+                const prevBtn = document.createElement('button');
+                prevBtn.textContent = 'Prev';
+                if (currentPage === 1) prevBtn.classList.add('disabled');
+                prevBtn.onclick = function(){
+                    if (currentPage === 1) return;
+                    currentPage--;
+                    paginateItems();
+                    renderPagination();
+                    window.scrollTo({ top: 200, behavior: 'smooth' });
+                };
+                prevLi.appendChild(prevBtn);
+                paginationEl.appendChild(prevLi);
+
+                // Page buttons: show smart window
+                const maxButtons = 7;
+                let startPage = Math.max(1, currentPage - Math.floor(maxButtons/2));
+                let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+                if (endPage - startPage < maxButtons - 1) startPage = Math.max(1, endPage - maxButtons + 1);
+
+                for (let p = startPage; p <= endPage; p++){
+                    const li = document.createElement('li');
+                    const btn = document.createElement('button');
+                    btn.textContent = p;
+                    if (p === currentPage) btn.classList.add('active');
+                    btn.onclick = (function(page){
+                        return function(){
+                            currentPage = page;
+                            paginateItems();
+                            renderPagination();
+                            window.scrollTo({ top: 200, behavior: 'smooth' });
+                        };
+                    })(p);
+                    li.appendChild(btn);
+                    paginationEl.appendChild(li);
+                }
+
+                // Next button
+                const nextLi = document.createElement('li');
+                const nextBtn = document.createElement('button');
+                nextBtn.textContent = 'Next';
+                if (currentPage === totalPages) nextBtn.classList.add('disabled');
+                nextBtn.onclick = function(){
+                    if (currentPage === totalPages) return;
+                    currentPage++;
+                    paginateItems();
+                    renderPagination();
+                    window.scrollTo({ top: 200, behavior: 'smooth' });
+                };
+                nextLi.appendChild(nextBtn);
+                paginationEl.appendChild(nextLi);
+            }
+
+            // Events
+            if (searchInput) searchInput.addEventListener('input', function(){ applyFilter(); });
+            if (btn) btn.addEventListener('click', function(){ applyFilter(); });
+
+            // initialize: ensure filter/pagination applied on load
+            applyFilter();
+        })();
+    </script>
+}

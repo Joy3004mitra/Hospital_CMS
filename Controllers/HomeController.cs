@@ -16,7 +16,7 @@ namespace HospitalManagement.Controllers
         string serviceImagePath = "/images/services-section.jpg";
 
         public HomeController(EmailService emailService, ApplicationDbContext context, ILogger<HomeController> logger)
-            : base(context) // Call BaseController constructor
+            : base(context)
         {
             _emailService = emailService;
             _logger = logger;
@@ -67,11 +67,13 @@ namespace HospitalManagement.Controllers
             return View();
         }
 
+        [Route("/aboutus/")]
         public IActionResult AboutUs()
         {
             return View();
         }
 
+        [Route("/service/")]
         public IActionResult Service()
         {
             var serviceList = _context.MastHosServices.Where(d => d.TagDelete == 0).ToList();
@@ -86,6 +88,7 @@ namespace HospitalManagement.Controllers
             return View(serviceList);
         }
 
+        [Route("/doctor/")]
         public IActionResult Doctor()
         {
             var doctorList = _context.MastDoctors.Where(d => d.TagDelete == 0).ToList();
@@ -100,26 +103,23 @@ namespace HospitalManagement.Controllers
             return View(doctorList);
         }
 
+        [Route("/contactus/")]
         public IActionResult ContactUs()
         {
             ContactModel contactModel = new ContactModel();
-            if (ViewBag.SiteDetails != null)
-            {
-                contactModel.SiteEmail = ViewBag.SiteDetails.EmailId;
-                contactModel.SiteAddress = ViewBag.SiteDetails.SiteAddress;
-                contactModel.SitePhoneNo = ViewBag.SiteDetails.PhoneNo;
-                contactModel.SiteEmergencyNo = ViewBag.SiteDetails.EmgncyPhoneNo;
-            }
+            FillSiteDetails(contactModel);
             TempData["SuccessMessage"] = null;
             return View(contactModel);
         }
 
         [HttpPost]
+        [Route("/contactus/")]
         public async Task<IActionResult> ContactUs(ContactModel contactModel)
         {
             if (string.IsNullOrWhiteSpace(contactModel.Email) || string.IsNullOrWhiteSpace(contactModel.Message))
             {
                 ViewBag.Error = "Please fill in all required fields.";
+                FillSiteDetails(contactModel);
                 return View(contactModel);
             }
 
@@ -132,10 +132,11 @@ namespace HospitalManagement.Controllers
             {
                 ViewBag.Error = "Failed to send email. Please try again later.";
             }
-
+            FillSiteDetails(contactModel);
             return View(contactModel);
         }
 
+        [Route("/bookingappointment/")]
         public IActionResult BookingAppointment()
         {
             ViewBag.Doctor = _context.MastDoctors.Where(x => x.TagDelete == 0).ToList();
@@ -146,6 +147,7 @@ namespace HospitalManagement.Controllers
         }
 
         [HttpPost]
+        [Route("/bookingappointment/")]
         public async Task<IActionResult> BookingAppointmentSubmit([FromBody] AppointmentModel model)
         {
             if (model == null || string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.FullName))
@@ -195,10 +197,75 @@ namespace HospitalManagement.Controllers
             }
         }
 
+        // Blog listing
+        [Route("/blog/")]
+        public IActionResult Blog()
+        {
+            try
+            {
+                ViewBag.SiteDetails = _context.HeadSetting.FirstOrDefault();
+
+                var blogList = _context.MastBlogs
+                    .Where(b => b.TagDelete == 0)
+                    .OrderByDescending(b => b.EntDate)
+                    .ToList();
+
+                foreach (var blog in blogList)
+                {
+                    if (string.IsNullOrEmpty(blog.BlogImage) ||
+                        !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", blog.BlogImage?.TrimStart('/') ?? "")))
+                    {
+                        blog.BlogImage = defaultImagePath;
+                    }
+                }
+
+                return View(blogList);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading blog list");
+                return View(Enumerable.Empty<MastBlog>());
+            }
+        }
+
+        // Blog details
+        [Route("/blog/{id:int}/{slug?}")]
+        public IActionResult BlogDetails(int id, string? slug = null)
+        {
+            var blog = _context.MastBlogs.FirstOrDefault(b => b.MastBlogKey == id && b.TagDelete == 0);
+            if (blog == null) return NotFound();
+
+            if (string.IsNullOrEmpty(blog.BlogImage) ||
+                !System.IO.File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", blog.BlogImage?.TrimStart('/') ?? "")))
+            {
+                blog.BlogImage = defaultImagePath;
+            }
+
+            // set SEO values to be rendered client-side if layout doesn't support server-side head injection
+            ViewBag.MetaTitle = string.IsNullOrWhiteSpace(blog.MetaTitle) ? blog.BlogTitle : blog.MetaTitle;
+            ViewBag.MetaDescription = blog.MetaDescription ?? "";
+            ViewBag.MetaKeywords = blog.MetaKeywords ?? "";
+
+            return View(blog);
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        private void FillSiteDetails(ContactModel contactModel)
+        {
+            if (ViewBag.SiteDetails != null)
+            {
+                contactModel.SiteEmail = ViewBag.SiteDetails.EmailId;
+                contactModel.SiteAddress = ViewBag.SiteDetails.SiteAddress;
+                contactModel.SitePhoneNo = ViewBag.SiteDetails.PhoneNo;
+                contactModel.SiteEmergencyNo = ViewBag.SiteDetails.EmgncyPhoneNo;
+            }
+        }
+
     }
 }

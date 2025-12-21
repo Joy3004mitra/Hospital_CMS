@@ -983,7 +983,8 @@ span.id-color {
  }
 
  .headerwp {
-  max-width: 1140px;
+  /*max-width: 1140px;*/
+  max-width:100%;
   margin: 0 auto;
   padding: 0;
  }
@@ -5887,4 +5888,121 @@ nav a#pull {
     font-size: 14px;
     font-weight: 300;
     margin-bottom: 20px;
+}
+.wsmobileheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+}
+
+.mobile-logo-block {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    position: relative;
+}
+
+.mobile-clinic-name {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 180px;
+    margin: 0 auto;
+}
+
+.smllogo {
+    position: absolute;
+    right: 0;
+}
+
+.mobile-logo-img {
+    width: 80px !important;
+    height: auto;
+}
+/* Hide mobile header on desktop */
+.wsmobileheader {
+    display: none;
+}
+
+/* Show only on mobile (max 767px) */
+@media (max-width: 767px) {
+    .wsmobileheader {
+        display: flex !important;
+    }
+}
+
+/* SERVICES SECTION STYLING */
+
+.services-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 30px;
+}
+
+/* Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards */
+.service-card {
+    background: #fff;
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: 0.25s;
+}
+
+    .service-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+/* Image */
+.service-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* Name */
+.service-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+/* Description */
+.service-desc {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.5;
 }

@@ -1,0 +1,7 @@
+
+User-agent: *
+Disallow: 
+Disallow: /cgi-bin/
+Disallow: /admin/login/
+
+Sitemap: https://.com/sitemap.xml

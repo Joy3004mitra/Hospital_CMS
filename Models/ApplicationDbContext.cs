@@ -23,6 +23,9 @@ namespace HospitalManagement.Models
         public virtual DbSet<AppointmentHistory> AppointmentHistories { get; set; } = null!;
         public virtual DbSet<AdminLogin> AdminLogin { get; set; } = null!;
 
+        // <-- ADDED: MastBlog DbSet
+        public virtual DbSet<MastBlog> MastBlogs { get; set; } = null!;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -385,6 +388,75 @@ namespace HospitalManagement.Models
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("PASSWD");
+            });
+
+            // <-- ADDED: Mapping for MastBlog table
+            modelBuilder.Entity<MastBlog>(entity =>
+            {
+                entity.HasKey(e => e.MastBlogKey);
+
+                entity.ToTable("MAST_BLOG");
+
+                entity.Property(e => e.MastBlogKey).HasColumnName("MAST_BLOG_KEY");
+
+                entity.Property(e => e.BlogTitle)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("BLOG_TITLE");
+
+                entity.Property(e => e.BlogSummary)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("BLOG_SUMMARY");
+
+                entity.Property(e => e.BlogContent)
+                    .HasColumnType("nvarchar(max)")
+                    .IsUnicode(true)
+                    .HasColumnName("BLOG_CONTENT");
+
+                entity.Property(e => e.MetaTitle)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("META_TITLE");
+
+                entity.Property(e => e.MetaDescription)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("META_DESCRIPTION");
+
+                entity.Property(e => e.MetaKeywords)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("META_KEYWORDS");
+
+                entity.Property(e => e.BlogImage)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("BLOG_IMAGE");
+
+                entity.Property(e => e.EntDate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("ENT_DATE");
+
+                entity.Property(e => e.EntTime)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("ENT_TIME");
+
+                entity.Property(e => e.EntUserKey).HasColumnName("ENT_USER_KEY");
+
+                entity.Property(e => e.EditDate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("EDIT_DATE");
+
+                entity.Property(e => e.EditTime)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("EDIT_TIME");
+
+                entity.Property(e => e.EditUserKey).HasColumnName("EDIT_USER_KEY");
+
+                entity.Property(e => e.TagActive).HasColumnName("TAG_ACTIVE");
+
+                entity.Property(e => e.TagDelete).HasColumnName("TAG_DELETE");
             });
 
             OnModelCreatingPartial(modelBuilder);

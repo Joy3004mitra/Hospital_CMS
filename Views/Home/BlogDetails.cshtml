@@ -1,0 +1,434 @@
+﻿@model HospitalManagement.Models.MastBlog
+
+@using System.Linq
+@inject HospitalManagement.Models.ApplicationDbContext _context
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+    var metaTitle = !string.IsNullOrWhiteSpace(Model.MetaTitle) ? Model.MetaTitle : Model.BlogTitle;
+    var metaDescription = Model.MetaDescription ?? "";
+    var metaKeywords = Model.MetaKeywords ?? "";
+
+    Func<string, int> ReadTimeMinutes = (html) =>
+    {
+        var plain = string.IsNullOrWhiteSpace(html) ? "" : System.Text.RegularExpressions.Regex.Replace(html, "<.*?>", string.Empty);
+        var words = plain.Split(new[] { ' ', '\r', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        return Math.Max(1, (int)Math.Ceiling(words / 200.0));
+    };
+
+    var readTime = ReadTimeMinutes(Model.BlogContent ?? "");
+    var published = Model.EntDate;
+    var imageUrl = string.IsNullOrWhiteSpace(Model.BlogImage) ? "/images/review-author-1.jpg" : Model.BlogImage;
+}
+
+<!-- HERO: using <img> so we can object-position to top -->
+<section class="post-hero">
+    <img class="hero-bg" src="@imageUrl" alt="@Model.BlogTitle" loading="eager" />
+    <div class="hero-overlay">
+        <div class="container">
+            <div class="hero-inner">
+                <span class="post-kicker">Article</span>
+                <h1 class="post-title">@Model.BlogTitle</h1>
+                @if (!string.IsNullOrWhiteSpace(Model.BlogSummary))
+                {
+                    <p class="post-subtitle">@Model.BlogSummary</p>
+                }
+                <div class="hero-meta">
+                    <span class="meta-date">@published.ToString("dd MMM yyyy")</span>
+                    <span class="meta-dot">•</span>
+                    <span class="meta-read">@readTime min read</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN -->
+<div class="container post-body-container">
+    <div class="row">
+        <main class="col-lg-8">
+            <article class="post-content">
+                @Html.Raw(Model.BlogContent ?? "<p>No content available</p>")
+            </article>
+
+            <div class="post-actions d-flex align-items-center justify-content-between mt-4">
+                <div class="author-info">
+                    <div class="author-name"><strong>Ratnakamal Medical Centre</strong></div>
+                    <div class="author-role small text-muted">Health & Medical</div>
+                </div>
+
+                <div class="share-inline">
+                    <button class="share-btn" id="shareTwitter">Twitter</button>
+                    <button class="share-btn" id="shareFacebook">Facebook</button>
+                    <button class="share-btn" id="shareWhatsApp">WhatsApp</button>
+                    <button class="share-btn" id="copyLinkBtn">Copy link</button>
+                </div>
+            </div>
+
+            <section class="related-posts mt-5">
+                <h5>Related Articles</h5>
+                <div id="relatedList" class="related-list">
+                    @{
+                        var related = _context.MastBlogs
+                        .Where(b => b.TagDelete == 0 && b.MastBlogKey != Model.MastBlogKey)
+                        .OrderByDescending(b => b.EntDate)
+                        .Take(3)
+                        .ToList();
+                    }
+                    @foreach (var r in related)
+                    {
+                        var slugR = (r.BlogTitle ?? "").Replace(" ", "-").ToLower();
+                        <div class="related-item">
+                            <a href="@Url.Action("BlogDetails", "Home", new { id = r.MastBlogKey, slug = slugR })">
+                                <div class="thumb" style="background-image:url('@(string.IsNullOrWhiteSpace(r.BlogImage) ? "/images/review-author-1.jpg" : r.BlogImage)')"></div>
+                                <div class="meta">
+                                    <div class="r-title">@r.BlogTitle</div>
+                                    <div class="r-date small text-muted">@r.EntDate.ToString("dd MMM yyyy")</div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </section>
+        </main>
+
+        <aside class="col-lg-4">
+            <div class="sticky-side">
+                <div class="card side-card">
+                    <div class="side-item">
+                        <strong>Published</strong>
+                        <div class="small text-muted">@published.ToString("dd MMM yyyy")</div>
+                    </div>
+
+                    <div class="side-item mt-3">
+                        <strong>Read time</strong>
+                        <div class="small text-muted">@readTime min</div>
+                    </div>
+
+                    <div class="side-item mt-3">
+                        <strong>Tags</strong>
+                        <div class="small text-muted">@(!string.IsNullOrWhiteSpace(Model.MetaKeywords) ? Model.MetaKeywords : "—")</div>
+                    </div>
+
+                    <div class="side-item mt-3">
+                        <a class="btn btn-primary w-100" href="@Url.Action("Blog", "Home")">All Articles</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<style>
+    :root {
+        --hero-height: 420px;
+    }
+    /* adjust to taste */
+
+    /* HERO wrapper */
+    .post-hero {
+        position: relative;
+        width: 100%;
+        min-height: var(--hero-height);
+        overflow: hidden;
+        display: block;
+    }
+
+        /* actual image element — object-fit lets us control focal point */
+        .post-hero .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* cover, preserve aspect */
+            object-position: top center; /* IMPORTANT: keep top visible */
+            -webkit-object-fit: cover;
+            -webkit-object-position: top center;
+            z-index: 0;
+        }
+
+        /* overlay layer: light at top, darker at bottom for readable text */
+        .post-hero .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.55) 78%);
+            display: flex;
+            align-items: center;
+        }
+
+    /* content sits above overlay */
+    .hero-inner {
+        position: relative;
+        z-index: 2;
+        max-width: 1100px;
+        padding: 22px 18px;
+    }
+
+    .post-kicker {
+        display: inline-block;
+        background: rgba(255,255,255,0.08);
+        color: #ffd66b;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        font-size: 12px;
+    }
+
+    .post-title {
+        color: #fff;
+        font-size: 34px;
+        font-weight: 800;
+        margin: 6px 0 12px;
+    }
+
+    .post-subtitle {
+        color: rgba(255,255,255,0.92);
+        margin-bottom: 14px;
+        max-width: 85%;
+    }
+
+    .hero-meta {
+        font-size: 14px;
+        color: rgba(255,255,255,0.85);
+    }
+
+    /* MAIN CONTENT */
+    .post-body-container {
+        margin-top: 28px;
+        margin-bottom: 80px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .post-content {
+        font-size: 17px;
+        line-height: 1.78;
+        color: #111827;
+        max-width: 760px;
+    }
+
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 18px 0;
+        }
+
+    .post-actions {
+        border-top: 1px solid rgba(15,23,42,0.04);
+        padding-top: 18px;
+    }
+
+    .share-inline .share-btn {
+        border: none;
+        background: transparent;
+        color: #0f172a;
+        padding: 8px 10px;
+        cursor: pointer;
+        font-weight: 700;
+        border-radius: 6px;
+        margin-left: 6px;
+    }
+
+        .share-inline .share-btn:hover {
+            background: rgba(99,102,241,0.06);
+        }
+
+    .related-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .related-item {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+        .related-item .thumb {
+            width: 86px;
+            height: 60px;
+            background-position: center;
+            background-size: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .related-item .r-title {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .related-item a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+    .sticky-side {
+        position: sticky;
+        top: 96px;
+    }
+
+    .side-card {
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(15,23,42,0.06);
+        background: #fff;
+    }
+
+    .side-item {
+        margin-bottom: 10px;
+    }
+
+    @@media (max-width: 992px) {
+        :root {
+            --hero-height: 340px;
+        }
+
+        .post-title {
+            font-size: 28px;
+        }
+
+        .sticky-side {
+            position: static;
+            margin-top: 20px;
+        }
+
+        .post-subtitle {
+            max-width: 100%;
+        }
+        /* adjust object-position on medium screens if needed */
+        .post-hero .hero-bg {
+            object-position: center center;
+            -webkit-object-position: center center;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        :root {
+            --hero-height: 260px;
+        }
+
+        .post-title {
+            font-size: 20px;
+        }
+
+        .post-subtitle {
+            display: block;
+            font-size: 14px;
+        }
+
+        .hero-inner {
+            padding: 12px;
+        }
+
+        .post-body-container {
+            padding: 0 12px;
+        }
+
+        .post-hero .hero-bg {
+            object-position: top center;
+            -webkit-object-position: top center;
+        }
+    }
+</style>
+
+@section Scripts {
+    <script>
+        (function(){
+            // SEO meta injection safely
+            try {
+                var metaTitle = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(metaTitle));
+                var metaDesc = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(metaDescription));
+                var metaKeys = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(metaKeywords));
+
+                if (metaTitle && metaTitle.length) document.title = metaTitle;
+
+                function setMeta(name, content) {
+                    if (!name) return;
+                    var tag = document.querySelector('meta[name="'+name+'"]');
+                    if (tag) { tag.setAttribute('content', content || ''); }
+                    else {
+                        var m = document.createElement('meta');
+                        m.name = name;
+                        m.content = content || '';
+                        document.head.appendChild(m);
+                    }
+                }
+
+                setMeta('description', metaDesc);
+                setMeta('keywords', metaKeys);
+            } catch(e) { console && console.warn && console.warn('meta inject', e); }
+
+            // Social share buttons
+            var url = window.location.href;
+            var title = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.BlogTitle ?? ""));
+            var text = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.BlogSummary ?? ""));
+
+            function openPopup(href, w=640, h=420) {
+                var left = (screen.width/2)-(w/2);
+                var top = (screen.height/2)-(h/2);
+                window.open(href, '_blank', 'toolbar=0,status=0,width='+w+',height='+h+',top='+top+',left='+left);
+            }
+
+            var twitter = document.getElementById('shareTwitter');
+            var fb = document.getElementById('shareFacebook');
+            var wa = document.getElementById('shareWhatsApp');
+            var copyBtn = document.getElementById('copyLinkBtn');
+
+            if (twitter) twitter.addEventListener('click', function(){
+                var href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(title + ' - ' + (text || '')) + '&url=' + encodeURIComponent(url);
+                openPopup(href);
+            });
+
+            if (fb) fb.addEventListener('click', function(){
+                var href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+                openPopup(href);
+            });
+
+            if (wa) wa.addEventListener('click', function(){
+                var href = 'https://wa.me/?text=' + encodeURIComponent(title + ' - ' + url);
+                window.open(href, '_blank');
+            });
+
+            if (copyBtn) copyBtn.addEventListener('click', function(){
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(function(){
+                        var el = document.createElement('div');
+                        el.textContent = 'Link copied to clipboard';
+                        el.style.position = 'fixed';
+                        el.style.right = '20px';
+                        el.style.bottom = '20px';
+                        el.style.padding = '10px 12px';
+                        el.style.background = 'rgba(15,23,42,0.92)';
+                        el.style.color = '#fff';
+                        el.style.borderRadius = '8px';
+                        el.style.boxShadow = '0 8px 20px rgba(15,23,42,0.2)';
+                        document.body.appendChild(el);
+                        setTimeout(function(){ document.body.removeChild(el); }, 1800);
+                    }, function(){ alert('Copy failed'); });
+                } else {
+                    var ta = document.createElement('textarea');
+                    ta.value = url; document.body.appendChild(ta);
+                    ta.select(); try { document.execCommand('copy');
+                        var el = document.createElement('div');
+                        el.textContent = 'Link copied to clipboard'; el.style.position='fixed';
+                        el.style.right='20px'; el.style.bottom='20px'; el.style.padding='10px 12px';
+                        el.style.background='rgba(15,23,42,0.92)'; el.style.color='#fff'; el.style.borderRadius='8px';
+                        document.body.appendChild(el); setTimeout(function(){ document.body.removeChild(el); }, 1800);
+                    } catch(e){ alert('Copy failed'); }
+                    document.body.removeChild(ta);
+                }
+            });
+
+        })();
+    </script>
+}

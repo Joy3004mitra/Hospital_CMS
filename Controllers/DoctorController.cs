@@ -23,6 +23,7 @@ namespace HospitalManagement.Controllers
         string defaultImagePath = "/images/review-author-1.jpg";
 
         //Index - View all doctors
+        [Route("/doctor/list/")]
         public IActionResult Index()
         {
             var doctors = _context.MastDoctors.Where(d => d.TagDelete == 0).ToList();

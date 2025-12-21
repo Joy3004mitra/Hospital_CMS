@@ -58,7 +58,7 @@ public class EmailService
         {
             using (MailMessage mail = new MailMessage())
             {
-                mail.From = new MailAddress(from, "Hiramani Memorial Hospital");
+                mail.From = new MailAddress(from, "Ratnakamal Medical Centre of Excellence");
                 mail.To.Add(to);
                 mail.Subject = subject;
                 mail.Body = body;
@@ -95,7 +95,7 @@ public class EmailService
 
     //        using (MailMessage mail = new MailMessage())
     //        {
-    //            mail.From = new MailAddress(formEmail, "Hiramani Memorial Hospital");
+    //            mail.From = new MailAddress(formEmail, "Ratnakamal Medical Centre of Excellence");
     //            mail.To.Add(toEmail);
     //            mail.Subject = subject;
     //            mail.Body = message;
@@ -138,7 +138,7 @@ public class EmailService
 
 
         MailMessage mail = new MailMessage();
-        mail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
+        mail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
         mail.To.Add(adminEmail);
         mail.Subject = "New Contact Form Submission Received - " + contactModel.Name;
         mail.Body = fileContent;
@@ -162,9 +162,9 @@ public class EmailService
         fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
 
         MailMessage usermail = new MailMessage();
-        usermail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
+        usermail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
         usermail.To.Add(contactModel.Email);
-        usermail.Subject = "Thank You for Contacting Hiramani Memorial Hospital!";
+        usermail.Subject = "Thank You for Contacting Ratnakamal Medical Centre of Excellence!";
         usermail.Body = fileContent;
         usermail.IsBodyHtml = true;
 
@@ -207,7 +207,7 @@ public class EmailService
         }
 
         MailMessage mail = new MailMessage();
-        mail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
+        mail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
         mail.To.Add(adminEmail);
         if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
         {
@@ -237,7 +237,7 @@ public class EmailService
         }
 
         MailMessage usermail = new MailMessage();
-        usermail.From = new MailAddress(fromEmail, "Hiramani Memorial Hospital");
+        usermail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
         usermail.To.Add(appointmentModel.Email);
         usermail.Subject = "We Received your Booking Request for" + " " + appointmentModel.ServiceName + " at Hiramani Hospital";
         usermail.Body = fileContent;

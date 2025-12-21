@@ -19,6 +19,8 @@ namespace HospitalManagement.Controllers
         string defaultImagePath = "/images/services-section.jpg";
 
         // Index - View all Host service
+        [Route("/service/list/")]
+        [HttpGet("/services")]
         public IActionResult Index()
         {
             var services = _context.MastHosServices.Where(d => d.TagDelete == 0).ToList();

@@ -1,0 +1,95 @@
+﻿@model HospitalManagement.Models.MastBlog
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Edit Blog";
+}
+
+<div class="page-header">
+    <h2 class="space">Edit Blog</h2>
+</div>
+
+<div class="card content-scroll">
+    @using (Html.BeginForm("Edit", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MastBlogKey)
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="BlogTitle">Title</label>
+                    <input type="text" id="BlogTitle" name="BlogTitle" class="form-control" placeholder="Enter title" value="@Model?.BlogTitle" required />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="BlogSummary">Summary</label>
+                    <input type="text" id="BlogSummary" name="BlogSummary" class="form-control" placeholder="Short summary" value="@Model?.BlogSummary" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-3">
+            <label for="BlogContent">Content</label>
+            <textarea id="BlogContent" name="BlogContent" class="form-control" rows="8">@Model?.BlogContent</textarea>
+        </div>
+
+        <hr />
+        <h5>SEO / Meta</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="MetaTitle">Meta Title</label>
+                    <input type="text" id="MetaTitle" name="MetaTitle" class="form-control" placeholder="Meta title" value="@Model?.MetaTitle" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="MetaKeywords">Meta Keywords</label>
+                    <input type="text" id="MetaKeywords" name="MetaKeywords" class="form-control" placeholder="keyword1, keyword2" value="@Model?.MetaKeywords" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <label for="MetaDescription">Meta Description</label>
+            <textarea id="MetaDescription" name="MetaDescription" class="form-control" rows="3">@Model?.MetaDescription</textarea>
+        </div>
+
+        <div class="form-group upload-section mt-3">
+            <label for="blogImage">Upload Blog Image</label>
+            <div class="upload-box">
+                <input type="file" id="blogImage" name="blogImage" class="form-control" />
+                <br />
+                @if (!string.IsNullOrEmpty(Model.BlogImage))
+                {
+                    <label>Current Image:</label>
+                    <img src="@Url.Content(Model.BlogImage)" alt="Blog Image" class="img-thumbnail" style="max-height: 120px;" />
+                }
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-3">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    }
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Blog updated successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("Index", "Blog")';
+                }
+            });
+        });
+    </script>
+}

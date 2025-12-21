@@ -40,6 +40,7 @@ namespace HospitalManagement.Controllers
             return View(login);
         }
 
+        [Route("/dashboard/")]
         public IActionResult Dashboard()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))
@@ -48,6 +49,8 @@ namespace HospitalManagement.Controllers
             }
             return RedirectToAction("Login");
         }
+
+        [Route("/appointmenthistory/")]
         public IActionResult AppointmentHistory()
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))

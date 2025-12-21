@@ -9,8 +9,6 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.log
-web.config
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -31,6 +29,7 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
+[Oo]ut/
 [Ll]og/
 [Ll]ogs/
 
@@ -360,68 +359,11 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# Fody - auto-generated XML schema
-FodyWeavers.xsd
-/FoodSafetyPlanner.Web.rar
-/FoodSafetyPlanner.Web/Docs
-/FoodSafetyPlanner.Web/CompanyImageLogo
-/FoodSafetyPlanner ast March.Web.rar
-/dbscript 1st March.sql
-/Git.proj 02.03.2021 1800pm.zip
-/WebApplication1
-/FoodSafetyPlanner.Web/Properties
-/FoodSafetyPlanner.Web 13 march.rar
-/Git.proj15.03.2021.zip
-/FoodSafetyPlanner 18 march.Web.rar
-/FoodSafetyPlanner.Web/M2Docs
-/FoodSafetyPlanner.Web/M4AuditDocs/fa816a12-df56-45e6-9a7f-0e808bff8dad.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/efcd4b5a-2c2b-4302-a609-46994a7b113b.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/ea121400-728b-4670-801a-6ca57190eabc.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/e6695422-4350-4b63-8eaf-a7aae958fc7e.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/d2c1aa65-79a2-42ce-80dc-feb4b126917a.png
-/FoodSafetyPlanner.Web/M4AuditDocs/ca9208e6-d4dd-4cc9-b76a-609d501fee7d.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/c85a0f50-a442-4991-9315-bae2b61ef321.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/c3f2a7e5-7a0b-436f-adad-2949b19b5e0d.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/be03eb04-9663-49fb-b8ce-d2745f7aab87.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/aed3515d-8ebe-49ff-8dec-ebc40cbf5222.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/96fbc91b-d8eb-4701-8073-c07c076561ce.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/95a715fe-97e5-4014-a748-e9f52127828c.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/84258493-e4aa-4888-8420-0394203b1e07.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/80e68334-be8c-401f-aa40-4857c4d83b0c.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/750efa24-98c1-4324-a80e-c72956a30ad8.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/744d62dd-12a4-492b-bedf-e1373d8120a2.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/5e31c928-5650-4d85-9a57-18689a9bb034.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/5e260867-39a8-4f65-9613-b9c5d6fb186c.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/598f8df4-aa34-4074-a51f-369ae87cedc9.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/59068e48-fe9a-4e56-8a51-afb30dfac56b.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/58faf976-7c7c-4515-8064-35f6ef98f3be.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/4d7ac5a9-e75e-4019-a3c0-6ddc8eb59105.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/45dd41b7-b23c-48db-bdef-8ac7710bd73d.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/2607eb48-29c0-49c3-b21a-51c581f2906c.png
-/FoodSafetyPlanner.Web/M4AuditDocs/253bc6cf-0e12-4407-ad84-1a34abbf8204.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/248c4215-99ac-4fc0-a10d-6ee41c7db7dc.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/0c421e6f-0bc9-4e43-b895-5bfa3fcadee4.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/08b08aa0-0dda-4920-a281-26d4c47a9e00.pdf
-/FoodSafetyPlanner.Web/M4AuditDocs/0770e8aa-cf39-4d7e-8b46-d61d8ace8f2b.jpg
-/FoodSafetyPlanner.Web/M4AuditDocs/0240d6a2-22b4-4daf-b83a-23a2ce5c338c.jpg
-/FoodSafetyPlanner.Web/M1PositionDocs/ff5277b7-cde1-47c9-8311-1948389c5b3a.pdf
-/FoodSafetyPlanner.Web/M1PositionDocs/9c10b1ee-2557-4ce1-9e2c-88109c4ea959.jpg
-/FoodSafetyPlanner.Web/M1PositionDocs/845c3241-0491-4cd1-bb0a-c498d98f38e7.jpg
-/FoodSafetyPlanner.Web/M1PositionDocs/579ccc7c-6aeb-44bd-aa11-bddc1292d461.jpg
-/FoodSafetyPlanner.Web/F2LiveStockMovementDocs
-/FoodSafetyPlanner.Web/F6WaterSourceDocs
-/FoodSafetyPlanner.Web/F6WaterTreatmentDocs
-/FoodSafetyPlanner.Web/M1PositionDocs
-/FoodSafetyPlanner.Web/M3TrainingDocs
-/FoodSafetyPlanner.Web/M4AuditDocs
-/FoodSafetyPlanner.Web/M1PropertyMapDocs
-/FoodSafetyPlanner.Web/M4ManagementReviewDocs/4fb8b44c-d090-4a12-bc1c-dd79c1a1a1f8.png
-/FoodSafetyPlanner.Web/M4ManagementReviewDocs
-/FoodSafetyPlanner.Web/F4ChemicalInventoryDocs
-FoodSafetyPlanner.Web/Web.config
-FoodSafetyPlanner.Web/Web.config
-FoodSafetyPlanner.Web/Web.config
-FoodSafetyPlanner.Web/Web.config
-FoodSafetyPlanner.Web/Web.config
-/FoodSafetyPlanner.Web/FoodSafetyDocs
-/FoodSafetyPlanner.Web/F8CleaningPlanDocs
+.vs
+node_modules/
+appsettings.local.json
+.vscode
+
+**/App_Data/Files/
+**/App_Data/Emails/
+/db_vdg_cof.sql
