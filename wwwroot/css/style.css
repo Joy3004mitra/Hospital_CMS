@@ -5232,9 +5232,41 @@ ul.blog-category-list li:hover {
   =========================================================================== */
 
 #breadcrumb {
-  background-image: url(../images/breadcrumb.jpg);
-  background-position: center center;
-  background-repeat: no-repeat;
+    position: relative;
+    background-image: url(../images/breadcrumb.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+}
+
+    /* overlay */
+    #breadcrumb::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* dark overlay */
+        z-index: 1;
+    }
+
+    /* text content */
+    #breadcrumb * {
+        position: relative;
+        z-index: 2;
+        color: #fff;
+    }
+@media (min-width:1200px){
+    #breadcrumb {
+        height: 400px;
+    }
+}
+@media (min-width:1600px) {
+    #breadcrumb {
+        height: 600px;
+    }
 }
 
 .breadcrumb-holder {
