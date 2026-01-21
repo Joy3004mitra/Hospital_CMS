@@ -13,7 +13,7 @@ namespace HospitalManagement.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        string defaultImagePath = "/images/review-author-1.jpg";
+        string defaultImagePath = "/images/review-author-1.png";
 
         public BlogController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {

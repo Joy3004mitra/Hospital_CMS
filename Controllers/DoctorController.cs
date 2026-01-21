@@ -20,7 +20,7 @@ namespace HospitalManagement.Controllers
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
-        string defaultImagePath = "/images/review-author-1.jpg";
+        string defaultImagePath = "/images/review-author-1.png";
 
         //Index - View all doctors
         [Route("/doctor/list/")]

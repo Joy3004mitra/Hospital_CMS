@@ -1,4 +1,4 @@
-
+﻿
 
 
 
@@ -257,7 +257,9 @@ body {
 .bg-lightdark { background-color: #35363a; }
 .bg-dark { background-color: #2e2f33!important; }
 .bg-lightgrey { background-color: #f8f9fb; }
-.bg-blue { background-color: #00a3c8; }
+.bg-blue {
+    background-color: #fdf4f4;
+}
 .bg-deepblue { background-color: #004a91; }
 .bg-steelblue { background-color: #004861; }
 .bg-darkgreen { background-color: #0dc176; }
@@ -478,9 +480,9 @@ ul.content-list li:last-child {
 
 .btn-blue,
 .white-color .btn-blue {
-  color: #fff;
-  background-color: #00a3c8;
-  border-color: #00a3c8;
+    color: #fff;
+    background-color: #d2181d;
+    border-color: #d2181d;
 }
 
 .btn-darkgreen,
@@ -542,24 +544,24 @@ ul.content-list li:last-child {
 
 .blue-hover:hover,
 .white-color .blue-hover:hover {
-  color: #fff!important;
-  background-color: #0e8eab;
-  border-color: #0e8eab;
+    color: #fff !important;
+    background-color: #d2181d;
+    border-color: #d2181d;
 }
-.blue-text{
-  color:#00a3c8 !important;
+.blue-text {
+    color: #d2181d !important;
 }
 .readmore{
   font-weight: 500;
   margin: 16px 0;
   display: block;
 }
-.bg-lightblue{
-  background:#E6F9FF ;
+.bg-lightblue {
+    background: #fdf4f4;
 }
-.hwitworksbg{
-  background: url(../images/bggroup.png);
- background-size: 66% 90%;
+.hwitworksbg {
+    background-image: url('../images/redbgarrow.png');
+    background-size: 40% 90%;
     background-repeat: no-repeat;
     background-position: left center;
     padding: 24px 32px;
@@ -865,18 +867,20 @@ span.id-color {
 .lightgrey-color span { color: #ccc; }
 
 .blue-color,
-.blue-color h2, 
-.blue-color h3, 
-.blue-color h4, 
-.blue-color h5, 
-.blue-color h6, 
-.blue-color p, 
-.blue-color a, 
+.blue-color h2,
+.blue-color h3,
+.blue-color h4,
+.blue-color h5,
+.blue-color h6,
+.blue-color p,
+.blue-color a,
 .blue-color li,
-.blue-color i, 
+.blue-color i,
 .white-color .blue-color,
 .steelblue-color .blue-color,
-.blue-color span { color: #00a3c8; }
+.blue-color span {
+    color: #d2181d;
+}
 
 .darkblue-color,
 .darkblue-color h2, 
@@ -892,17 +896,19 @@ span.id-color {
 .darkblue-color span { color: #1d437b; }
 
 .steelblue-color,
-.steelblue-color h2, 
-.steelblue-color h3, 
-.steelblue-color h4, 
-.steelblue-color h5, 
-.steelblue-color h6, 
-.steelblue-color p, 
-.steelblue-color a, 
+.steelblue-color h2,
+.steelblue-color h3,
+.steelblue-color h4,
+.steelblue-color h5,
+.steelblue-color h6,
+.steelblue-color p,
+.steelblue-color a,
 .steelblue-color li,
-.steelblue-color i, 
+.steelblue-color i,
 .white-color .steelblue-color,
-.steelblue-color span { color: #004861; }
+.steelblue-color span {
+    color: #080808;
+}
 
 .lime-color,
 .lime-color h2, 
@@ -1001,16 +1007,16 @@ span.id-color {
   padding: 16px 0px 0px 0px;
   display: block;
 }
-.desktoplogo{
-  color: #00a3c8;
-  font-weight: bold;
-  font-size: 22px;
+.desktoplogo {
+    color: #080808;
+    font-weight: bold;
+    font-size: 22px;
 }
-.desktoplogo a{
-  color: #00a3c8;
-  font-weight: bold;
-  font-size: 22px;
-}
+    .desktoplogo a {
+        color: #080808;
+        font-weight: bold;
+        font-size: 22px;
+    }
 #header-2 .wsmainfull.cloned .wsmenu > .wsmenu-list > li > a {
   padding: 10px 32px 10px 18px;
 }
@@ -1030,19 +1036,18 @@ span.id-color {
 /*------------------------------------------*/
 
 .headtoppart {
-  display: block;
-  width: 100%;
-  height: 40px;
-  margin: 0px auto;
-  padding: 0px 0px;
-  min-width: 320px;
-  -webkit-transition: all 450ms ease-in-out;
-  -moz-transition: all 450ms ease-in-out;
-  -o-transition: all 450ms ease-in-out;
-  -ms-transition: all 450ms ease-in-out;
-  transition: all 450ms ease-in-out; 
-
-  background: #0C5D87;
+    display: block;
+    width: 100%;
+    height: 40px;
+    margin: 0px auto;
+    padding: 0px 0px;
+    min-width: 320px;
+    -webkit-transition: all 450ms ease-in-out;
+    -moz-transition: all 450ms ease-in-out;
+    -o-transition: all 450ms ease-in-out;
+    -ms-transition: all 450ms ease-in-out;
+    transition: all 450ms ease-in-out;
+    background: #d2181d;
 }
 
 .headtoppart.bg-lightgrey {
@@ -1421,8 +1426,8 @@ p.header-widget-phone {
 }
 
 .slider.blue-nav .indicators .indicator-item {
-  border: 2px solid #004861;
-  opacity: .5;
+    border: 2px solid #d2181d;
+    opacity: .5;
 }
 
 .slider.green-nav .indicators .indicator-item {
@@ -1436,8 +1441,8 @@ p.header-widget-phone {
 }
 
 .slider.blue-nav .indicators .indicator-item.active {
-  background-color: #004861;
-  opacity: 1;
+    background-color: #d2181d;
+    opacity: 1;
 }
 
 .slider.green-nav .indicators .indicator-item.active {
@@ -3248,14 +3253,17 @@ td.text-right {
 /*------------------------------------------*/
 
 .doctor-1 {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 60px;
-  overflow: hidden;
-  background: #fff;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: -2px 2px 7px 3px #00a3c842;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 60px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: -2px 2px 7px 3px #e77061;
+    padding-bottom: 15px !important;
+}
+.doctor-meta {
+    padding-bottom: 20px;
 }
 
 .doctor-2 {
@@ -3274,8 +3282,11 @@ td.text-right {
 /*------------------------------------------*/
 
 .doctor-meta {
-  padding-top: 18px;
-  padding-bottom: 0;
+    padding-top: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: visible; /* ✅ ADD THIS */
 }
 
 .doctor-meta h5.h5-sm,
@@ -3858,13 +3869,13 @@ td.text-right {
 /*------------------------------------------*/
 
 .reviews-section .owl-theme .owl-dots .owl-dot span {
-  background: transparent;
-  border: 2px solid #004861;
+    background: transparent;
+    border: 2px solid #d2181d;
 }
 
-.reviews-section .owl-theme .owl-dots .owl-dot.active span, 
+.reviews-section .owl-theme .owl-dots .owl-dot.active span,
 .reviews-section .owl-theme .owl-dots .owl-dot:hover span {
-  background: #004861;
+    background: #d2181d;
 }
 
 
@@ -3876,12 +3887,12 @@ td.text-right {
   .calltoactioinaouter{
     position: relative;
   }
-.calltoaction{
-    background: #005869;
+.calltoaction {
+    background: #d2181d;
     padding: 35px;
-    border-radius: 15px; 
-    max-width: 768px;  
-    margin: auto; 
+    border-radius: 15px;
+    max-width: 768px;
+    margin: auto;
     z-index: 1;
 }
 .calltoaction .section-title{ 
@@ -5865,7 +5876,7 @@ nav a#pull {
 }
 .section-title p a {
     font-weight: 500;
-    color: #00a3c8;
+    color: #d2181d;
 }
 .facilitiesimg img{
   margin-bottom: 20px;
@@ -5882,7 +5893,9 @@ nav a#pull {
 .bluemotiffbg h3,.bluemotiffbg b,.bluemotiffbg ul li,.bluemotiffbg ol li,.bluemotiffbg p,.bluemotiffbg a{
   color: #fff;
 }
-.reviews-section.bg-blue .h3-md.steelblue-color{color: #fff;}
+.reviews-section.bg-blue .h3-md.steelblue-color {
+    color: #080808;
+}
 .bookingform-legend{
     text-align: left;
     margin: 0 0px 15px 0;
@@ -6037,4 +6050,490 @@ nav a#pull {
     font-size: 14px;
     color: #6b7280;
     line-height: 1.5;
+}
+/* =========================================================
+   DOCTOR CARD SIZE OPTIMIZATION (SAFE OVERRIDES)
+   ========================================================= */
+
+/* Reduce vertical spacing */
+.doctor-1 {
+    margin-bottom: 32px; /* was 60px */
+    padding: 12px; /* was 15px */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: visible !important;
+}
+
+    /* Control image height */
+    .doctor-1 .hover-overlay img {
+        max-height: 190px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+/* Compact meta section */
+    /* Reduce text footprint (NO content change) */
+    .doctor-meta h5 {
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+
+    .doctor-meta span {
+        font-size: 13px;
+        line-height: 1.3;
+    }
+
+    /* Push social icons to bottom */
+    .doctor-meta .footer-socials-links {
+        margin-top: auto;
+    }
+
+/* Read more toggle */
+.read-more-toggle {
+    background: none;
+    border: none;
+    margin: 6px auto 0;
+    padding: 0;
+    cursor: pointer;
+    display: block; /* IMPORTANT */
+}
+
+    /* Chevron arrow */
+    .read-more-toggle .chevron {
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        border-right: 2px solid #00a3c8;
+        border-bottom: 2px solid #00a3c8;
+        transform: rotate(45deg);
+        transition: transform 0.25s ease;
+    }
+
+    /* Arrow up when expanded */
+    .read-more-toggle.expanded .chevron {
+        transform: rotate(-135deg);
+    }
+/* =========================================================
+   DOCTOR DESCRIPTION – SAFE READ MORE SYSTEM
+   ========================================================= */
+
+/* Fix paragraph dash issue */
+.doctor-meta p::before,
+.doctor-meta p::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Description base */
+/* Doctor description – collapsed by default */
+.doctor-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    max-height: 72px; /* ≈ 3 lines */
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.3s ease;
+}
+
+    /* Expanded */
+    .doctor-desc.expanded {
+        max-height: 1000px;
+    }
+
+
+    /* Expanded state */
+    .doctor-desc.expanded {
+        max-height: 1000px; /* large safe value */
+    }
+/* Force modal visibility (fallback-safe) */
+#doctorModal.show {
+    display: block;
+    background: rgba(0,0,0,0.6);
+}
+
+#doctorModal .modal-dialog {
+    transform: translateY(0);
+}
+/* FORCE SHOW View Profile button */
+.doctor-meta .view-profile {
+    display: inline-block !important;
+    margin-top: 10px;
+    font-size: 13px;
+}
+.doctor-1,
+.doctor-meta {
+    overflow: visible !important;
+}
+    /* FORCE buttons to appear inside doctor cards */
+    .doctor-1 .btn,
+    .doctor-meta .btn,
+    .doctor-meta button {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative;
+        z-index: 10;
+        margin-top: 12px;
+    }
+
+/* Prevent clipping */
+.doctor-1,
+.doctor-meta {
+    overflow: visible !important;
+}
+/* Proper View Profile button styling */
+.view-profile {
+    display: inline-block !important;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #d2181d;
+    border: 1px solid #d2181d;
+    background: transparent;
+    border-radius: 6px;
+    margin-top: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+    /* Hover effect */
+    .view-profile:hover {
+        background: #d2181d;
+        color: #fff;
+    }
+
+    /* Remove ugly focus outline */
+    .view-profile:focus {
+        outline: none;
+        box-shadow: none;
+    }
+/* Spacing for View Profile button */
+.doctor-meta .view-profile {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+.doctor-meta .footer-socials-links {
+    margin-top: 15px;
+}
+/* Space between doctor cards (rows) */
+.col-md-6.col-lg-3 {
+    margin-bottom: 25px;
+}
+
+/* Inner card spacing */
+.doctor-meta {
+    padding-bottom: 0px;
+    padding-top:55px;
+}
+
+/* Prevent float collapse */
+.footer-socials-links {
+    overflow: hidden;
+}
+.owl-carousel .owl-stage {
+    display: flex !important;
+    align-items: stretch;
+}
+
+.owl-carousel .owl-item {
+    display: flex;
+    height: auto !important;
+}
+
+.doctor-item,
+.doctor-1 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.doctor-meta {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.footer-socials-links {
+    margin-top: auto;
+    overflow: hidden;
+}
+
+/* Push social icons to bottom */
+.footer-socials-links {
+    margin-top: auto;
+    overflow: hidden; /* keeps float fix */
+}
+/* ==============================
+   LEFT CARD – TRICOLOUR BACKGROUND
+================================ */
+.camp-left {
+    position: relative;
+    padding: 3.2rem 3.5rem;
+    border-radius: 28px;
+    background: linear-gradient( 120deg, rgba(255, 153, 51, 0.35), rgba(255, 255, 255, 0.98), rgba(19, 136, 8, 0.35), rgba(255, 153, 51, 0.35) );
+    background-size: 300% 300%;
+    animation: tricolourFlow 18s ease-in-out infinite;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12), inset 0 0 60px rgba(255,153,51,0.18), inset 0 0 60px rgba(19,136,8,0.18);
+    border-left: 6px solid #ff9933;
+    border-right: 6px solid #138808;
+}
+@keyframes tricolourFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .camp-left {
+        animation: none;
+    }
+}
+/* ==============================
+   FORCE RIGHT AREA TO SHOW ON MOBILE
+============================== */
+@media (max-width: 768px) {
+
+    /* Override theme hiding */
+    #statistic-3 .statistic-img,
+    #statistic-3 .camp-right,
+    #statistic-3 .themed-right {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+        /* Ensure image is visible */
+        #statistic-3 .statistic-img img {
+            display: block !important;
+            width: 100% !important;
+            height: auto !important;
+        }
+}
+@media (max-width: 768px) {
+    #statistic-3 .col-lg-6 {
+        width: 100%;
+        float: none;
+    }
+}
+@media (max-width: 768px) {
+    .camp-right {
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 2px dashed rgba(0,0,0,0.2);
+    }
+}
+
+/* =================================
+   HEADING & TAG
+================================= */
+.section-id {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.camp-left h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-top: 1rem;
+}
+
+    .camp-left h3 span {
+        color: #0ea5e9;
+    }
+
+/* =================================
+   JOIN US TEXT
+================================= */
+.camp-subtext {
+    margin: 1.4rem 0 2rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* =================================
+   FACILITIES (BIGGER & BOLDER)
+================================= */
+.camp-facilities {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.2rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    gap: 0.9rem 1.6rem;
+}
+
+    .camp-facilities li {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+/* =================================
+   CTA ROW
+================================= */
+.camp-cta-row {
+    display: flex;
+    gap: 1.2rem;
+    align-items: stretch;
+    margin-bottom: 1.2rem;
+}
+
+/* =================================
+   REGISTRATION FEE (STATIC)
+================================= */
+.camp-highlight {
+    min-height: 80px;
+    padding: 0.9rem 1.8rem;
+    background: linear-gradient(135deg, #7f1d1d, #dc2626);
+    border: 2px solid #111;
+    border-radius: 14px;
+    color: #ffffff;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    box-shadow: 0 12px 28px rgba(220, 38, 38, 0.35);
+}
+
+    .camp-highlight span {
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        opacity: 0.9;
+    }
+
+    .camp-highlight strong {
+        font-size: 1.5rem;
+        font-weight: 900;
+    }
+
+/* =================================
+   CALL BUTTON (CLICKABLE)
+================================= */
+.rmc-call-btn {
+    flex: 1;
+    min-height: 80px;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #111111, #1f1f1f);
+    border: 2px solid #dc2626;
+    border-radius: 16px;
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    transition: all 0.25s ease;
+}
+
+    .rmc-call-btn span {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #fecaca;
+    }
+
+    .rmc-call-btn:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 24px 50px rgba(220,38,38,0.6);
+    }
+
+    .rmc-call-btn:active {
+        transform: scale(0.96);
+    }
+
+/* =================================
+   NOTE
+================================= */
+.camp-note {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #dc2626;
+}
+
+/* =================================
+   RIGHT SIDE
+================================= */
+.camp-right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.image-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+/* =================================
+   MOTIVATION LINE (PIC ER NICHE)
+================================= */
+.camp-motivation {
+    margin-top: 1.6rem;
+    padding: 1.2rem 1.6rem;
+    background: #fff1dc;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #b91c1c;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* =================================
+   MOBILE
+================================= */
+@media (max-width: 768px) {
+    .camp-cta-row {
+        flex-direction: column;
+    }
+
+    .camp-highlight,
+    .rmc-call-btn {
+        width: 100%;
+    }
+
+    .camp-left {
+        padding: 2.2rem;
+    }
+}
+/* ==============================
+   DESKTOP VISUAL ALIGNMENT FIX
+============================== */
+@media (min-width: 992px) {
+    #statistic-3 .camp-right {
+        margin-top: 3.5rem; /* visually centers with left card */
+    }
+}
+.wsmenu > .wsmenu-list > li > a:hover,
+.wsmenu > .wsmenu-list > li > a:focus {
+    color: #d2181d !important;
+}
+a.btn.btn-blue.btnwhite {
+    color: #1f2937 !important;
+}
+/* Doctor / Card shadow color */
+.card,
+.doctor-card,
+.profile-card {
+    box-shadow: 0 10px 25px rgba(210, 24, 29, 0.18) !important;
 }

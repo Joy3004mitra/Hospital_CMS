@@ -320,12 +320,29 @@
     <!-- Custom Script -->
     <script src="~/js/custom.js"></script>
     @RenderSection("Scripts", required: false)
-
     <script>
         new WOW().init();
     </script>
     <script src="~/js/changer.js"></script>
     <script defer src="~/js/styleswitch.js"></script>
+    
+    <script>
+        document.addEventListener("click", function (e) {
+
+            if (!e.target.classList.contains("view-profile")) return;
+
+            const btn = e.target;
+
+            document.getElementById("docName").innerText   = btn.dataset.name;
+            document.getElementById("docDegree").innerText = btn.dataset.degree;
+            document.getElementById("docDesc").innerText   = btn.dataset.desc;
+
+            const modalEl = document.getElementById("doctorModal");
+            const modal = new bootstrap.Modal(modalEl);
+
+            modal.show();
+        });
+    </script>
 
 
 </body>

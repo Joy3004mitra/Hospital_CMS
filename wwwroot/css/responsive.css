@@ -2008,3 +2008,48 @@
 
 }
 
+@media (min-width: 992px) {
+    .doctor-1 {
+        min-height: 320px;
+    }
+}
+@media (max-width: 768px) {
+    #statistic-3 .row {
+        flex-direction: column;
+    }
+
+    #statistic-3 .col-lg-6,
+    #statistic-3 .col-lg-5,
+    #statistic-3 .col-lg-7 {
+        width: 100%;
+    }
+}
+@media (max-width: 768px) {
+    .themed-right,
+    .statistic-img {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 2px dashed rgba(0,0,0,0.15);
+    }
+}
+@media (max-width: 768px) {
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 768px) {
+    #statistic-3 .row {
+        display: block !important;
+    }
+}
+@media (max-width: 768px) {
+    #statistic-3 .row {
+        display: block !important;
+    }
+}
+@media (max-width: 768px) {
+    .camp-right {
+        border-top: 2px dashed rgba(0,0,0,0.15);
+        padding-top: 1.5rem;
+    }
+}

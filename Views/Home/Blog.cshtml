@@ -45,7 +45,7 @@
                 {
                     var slug = (blog.BlogTitle ?? "").Replace(" ", "-").ToLower();
                     var summary = !string.IsNullOrWhiteSpace(blog.BlogSummary) ? blog.BlogSummary : SnipHtml(blog.BlogContent ?? "", 220);
-                    var imageUrl = blog.BlogImage ?? "/images/review-author-1.jpg";
+                    var imageUrl = blog.BlogImage ?? "/images/review-author-1.png";
                     var cssClass = idx == 0 ? "hero-card hero-large" : "hero-card";
                     <article class="@cssClass" data-title="@((blog.BlogTitle ?? "").ToLower())" data-summary="@((summary ?? "").ToLower())">
                         <a href="@Url.Action("BlogDetails", "Home", new { id = blog.MastBlogKey, slug = slug })" class="hero-link" aria-label="@blog.BlogTitle">

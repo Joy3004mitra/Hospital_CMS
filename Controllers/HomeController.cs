@@ -12,7 +12,7 @@ namespace HospitalManagement.Controllers
     {
         private readonly EmailService _emailService;
         private readonly ILogger<HomeController> _logger;
-        string defaultImagePath = "/images/review-author-1.jpg";
+        string defaultImagePath = "/images/review-author-1.png";
         string serviceImagePath = "/images/services-section.jpg";
 
         public HomeController(EmailService emailService, ApplicationDbContext context, ILogger<HomeController> logger)

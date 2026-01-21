@@ -19,7 +19,7 @@
 
     var readTime = ReadTimeMinutes(Model.BlogContent ?? "");
     var published = Model.EntDate;
-    var imageUrl = string.IsNullOrWhiteSpace(Model.BlogImage) ? "/images/review-author-1.jpg" : Model.BlogImage;
+    var imageUrl = string.IsNullOrWhiteSpace(Model.BlogImage) ? "/images/review-author-1.png" : Model.BlogImage;
 }
 
 <!-- HERO: using <img> so we can object-position to top -->
@@ -81,7 +81,7 @@
                         var slugR = (r.BlogTitle ?? "").Replace(" ", "-").ToLower();
                         <div class="related-item">
                             <a href="@Url.Action("BlogDetails", "Home", new { id = r.MastBlogKey, slug = slugR })">
-                                <div class="thumb" style="background-image:url('@(string.IsNullOrWhiteSpace(r.BlogImage) ? "/images/review-author-1.jpg" : r.BlogImage)')"></div>
+                                <div class="thumb" style="background-image:url('@(string.IsNullOrWhiteSpace(r.BlogImage) ? "/images/review-author-1.png" : r.BlogImage)')"></div>
                                 <div class="meta">
                                     <div class="r-title">@r.BlogTitle</div>
                                     <div class="r-date small text-muted">@r.EntDate.ToString("dd MMM yyyy")</div>
