@@ -367,3 +367,6 @@ appsettings.local.json
 **/App_Data/Files/
 **/App_Data/Emails/
 /db_vdg_cof.sql
+/Migrations/20260122165859_AppointmentHistory.cs
+/Migrations/20260122165859_AppointmentHistory.Designer.cs
+/Migrations/ApplicationDbContextModelSnapshot.cs
