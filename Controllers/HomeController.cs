@@ -197,6 +197,64 @@ namespace HospitalManagement.Controllers
             }
         }
 
+        [Route("/testingappointment/")]
+        public IActionResult TestingAppointment()
+        {
+            ViewBag.Service = _context.MastHosServices.Where(x => x.TagDelete == 0).ToList();
+
+            TempData["SuccessMessage"] = null;
+            return View();
+        }
+
+        [HttpPost]
+        [Route("/testingappointment/")]
+        public async Task<IActionResult> TestingAppointmentSubmit([FromBody] AppointmentModel model)
+        {
+            if (model == null || string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.FullName))
+            {
+                return Json(new { success = false, message = "Invalid data." });
+            }
+
+            bool emailSent = await _emailService.SendTestingMailAsync(model);
+
+            if (emailSent)
+            {
+                var appointmentHistory = new AppointmentHistory
+                {
+                    ServiceName = model.ServiceName,
+                    FullName = model.FullName,
+                    Gender = model.Gender,
+                    Age = model.Age,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    AppointmentDate = Convert.ToDateTime(model.AppointmentDate),
+                    Message = model.Message,
+                    EntDate = DateTime.Now,
+                    EntTime = DateTime.Now.ToLocalTime(),
+                    TagActive = 1,
+                    TagDelete = 0
+                };
+
+                _context.AppointmentHistories.Add(appointmentHistory);
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error saving appointment history");
+                    return Json(new { success = false, message = "Failed to save booking details." });
+                }
+
+                TempData["SuccessMessage"] = "Booking appointment done successfully!";
+                return Json(new { success = true, AppointmentDate = appointmentHistory.AppointmentDate });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Failed to send email." });
+            }
+        }
+
         // Blog listing
         [Route("/blog/")]
         public IActionResult Blog()

@@ -3,34 +3,28 @@ $(document).ready(function () {
 
     "use strict";
 
-    $("#appointment-form").submit(function (e) {
+    $("#test-form").submit(function (e) {
         e.preventDefault();
-        var doctor = $("#doctorData");
-        var patient = $(".patient");
+        var department = $("#departmentData");
         var date = $(".date");
         var name = $(".name");
         var email = $(".email");
         var phone = $(".phone");
         var msg = $(".message");
         var flag = false;
+
+        department.removeClass("error-select").next(".error-msg").remove();
         $(".error-msg").remove();
 
-        if (doctor.val() == "Select Doctor") {
-            doctor.addClass("error-select");
+        if (department.val() == "Pick Service") {
+            department.addClass("error-select");
 
             // Check if error message already exists
-            if (doctor.next(".error-msg").length === 0) {
-                doctor.after('<span class="error-msg">This field is required.</span>');
+            if (department.next(".error-msg").length === 0) {
+                department.after('<span class="error-msg">This field is required.</span>');
             }
         }
-        if (patient.val() == "") {
-            patient.closest(".form-control").addClass("error");
-            patient.focus();
-            flag = false;
-            return false;
-        } else {
-            patient.closest(".form-control").removeClass("error").addClass("success");
-        } if (date.val() == "") {
+        if (date.val() == "") {
             date.closest(".form-control").addClass("error");
             date.focus();
             flag = false;
@@ -68,8 +62,7 @@ $(document).ready(function () {
             flag = true;
         }
         var formData = {
-            DoctorName: $("#doctorData").val(),
-            PatientStatus: $("#inlineFormCustomSelect3").val(),
+            ServiceName: $("#departmentData").val(),
             FullName: $("input[name='name']").val(),
             Gender: $("select[name='gender']").val(),
             Age: $("input[name='age']").val(),
@@ -83,7 +76,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/bookingappointment/",
+            url: "/testingappointment/",
             contentType: "application/json",
             data: JSON.stringify(formData),
             success: function (response) {

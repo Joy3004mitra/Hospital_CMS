@@ -41,37 +41,24 @@
             <div class="col-lg-12 pb-100">
                 <!-- APPOINTMENT FORM -->
                 <div id="appointment-form-holder" class="text-center">
-                    <form id="appointment-form" name="appointmentform" class="row appointment-form">
+                    <form id="test-form" name="testform" class="row appointment-form">
                         <div class="col-md-12">
                             <h3 class="bookingform-legend steelblue-color">Select Your  <span class="blue-text">Service</span></h3>
                         </div>
                         <!-- Form Select -->
-
-                        <!-- Form Select -->
-                        <div id="input-doctor" class="col-md-4 input-doctor">
+                        <div id="input-department" class="col-md-4 input-department">
                             @{
-                                var doctors = ViewBag.Doctor as List<HospitalManagement.Models.MastDoctor>;
+                                var departments = ViewBag.Service as List<HospitalManagement.Models.MastHosService>;
                             }
-                            <select id="doctorData" name="doctor" class="custom-select doctor" required>
-                                <option value="Select Doctor">Select Doctor</option>
-                                @if (doctors != null && doctors.Count > 0)
+                            <select id="departmentData" name="department" class="custom-select department" required>
+                                <option value="Pick Service">Pick Service</option>
+                                @if (departments != null && departments.Count > 0)
                                 {
-                                    @foreach (MastDoctor doctor in doctors)
+                                    @foreach (MastHosService department in departments)
                                     {
-                                        <option value="@doctor.DoctorName">@doctor.DoctorName</option>
+                                        <option value="@department.ServiceName">@department.ServiceName</option>
                                     }
-                                    <option value="Others">Others</option>
                                 }
-                            </select>
-                        </div>
-
-                        <!-- Form Select -->
-                        <div id="input-patient" class="col-md-4 input-patient">
-                            <select id="inlineFormCustomSelect3" name="patient" class="custom-select patient" required>
-                                <option value="">Have You Visited Us Before?*</option>
-                                <option>New Patient</option>
-                                <option>Returning Patient</option>
-                                <option>Other</option>
                             </select>
                         </div>
 
