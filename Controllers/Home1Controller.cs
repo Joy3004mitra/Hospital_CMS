@@ -144,7 +144,8 @@ namespace HospitalManagement.Controllers
         [Route("/bookingappointment/")]
         public IActionResult BookingAppointment()
         {
-            ViewBag.Doctor = _context.MastDoctors.Where(x => x.TagDelete == 0).ToList();
+            ViewBag.Doctor = _context.MastDoctors.FirstOrDefault(x => (x.TagDelete == 0) && (x.MastDoctorKey == 10));
+            //ViewBag.Doctor = _context.MastDoctors.Where(x => x.TagDelete == 0).ToList();
             ViewBag.Service = _context.MastHosServices.Where(x => x.TagDelete == 0).ToList();
 
             TempData["SuccessMessage"] = null;

@@ -353,7 +353,7 @@ $(document).ready(function () {
 
     /*$('#datetimepicker').datetimepicker();*/
     $('#datetimepicker').datetimepicker({
-        format: 'Y/m/d', // Show only date, remove time
+        format: 'DD/MM/YYYY', // Show only date, remove time
         timepicker: false, // Disable time selection
         scrollMonth: false, // Disable scrolling month
         scrollInput: false // Disable scrolling in input field
