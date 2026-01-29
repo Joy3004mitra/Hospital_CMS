@@ -315,6 +315,16 @@
     <script src="~/js/test-form.js"></script>
     <script src="~/js/jquery.datetimepicker.full.js"></script>
     <script src="~/js/jquery.validate.min.js"></script>
+    <script>
+        if ($.validator) {
+            $.validator.methods.date = function (value, element) {
+                if (this.optional(element)) return true;
+
+                var regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+                return regex.test(value);
+            };
+        }
+    </script>
     <script src="~/js/jquery.ajaxchimp.min.js"></script>
     <script src="~/js/wow.js"></script>
 

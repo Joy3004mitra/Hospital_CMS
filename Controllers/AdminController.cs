@@ -53,15 +53,16 @@ namespace HospitalManagement.Controllers
         [Route("/appointmenthistory/")]
         public IActionResult AppointmentHistory()
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))
-            {
-                var appointmentHistory = _context.AppointmentHistories
-                                                 .Where(x => x.TagDelete == 0)
-                                                 .OrderByDescending(x => x.AppointmentDate)
-                                                 .ToList();
-                return View(appointmentHistory);
-            }
-            return RedirectToAction("Login");
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))
+                return RedirectToAction("Login");
+
+            var appointments = _context.AppointmentHistories
+                .Where(x => x.TagDelete == 0)
+                .OrderByDescending(x => x.AppointmentDate)
+                .ToList();
+
+            return View(appointments);
+
         }
 
 

@@ -7,30 +7,65 @@
 <div class="page-header space">
     <h2>Appointment History</h2>
 </div>
+
 <div class="content-scroll">
-    <table id="appointmentTable" class="table table-striped">
+
+    <!-- ===================== -->
+    <!-- SECTION 1: DOCTOR -->
+    <!-- ===================== -->
+    <h3 class="mt-4 text-success">Doctor Appointments</h3>
+
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Department</th>
                 <th>Doctor Name</th>
                 <th>Patient Name</th>
-                <th>Email Id</th>
+                <th>Email</th>
                 <th>Contact No</th>
                 <th>Appointment Date</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var appointment in Model)
+            @foreach (var appointment in Model.Where(x => !string.IsNullOrEmpty(x.DoctorName)))
             {
                 <tr>
-                    <td>@appointment.ServiceName</td>
                     <td>@appointment.DoctorName</td>
                     <td>@appointment.FullName</td>
                     <td>@appointment.Email</td>
                     <td>@appointment.PhoneNumber</td>
-                    <td>@appointment.AppointmentDate.ToString("dd/MM/yyyy")</td>
+                    <td>@appointment.AppointmentDate?.ToString("dd/MM/yyyy")</td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <!-- ===================== -->
+    <!-- SECTION 2: DEPARTMENT -->
+    <!-- ===================== -->
+    <h3 class="mt-5 text-primary">Department Appointments</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Patient Name</th>
+                <th>Email</th>
+                <th>Contact No</th>
+                <th>Appointment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.Where(x => !string.IsNullOrEmpty(x.ServiceName)))
+            {
+                <tr>
+                    <td>@appointment.ServiceName</td>
+                    <td>@appointment.FullName</td>
+                    <td>@appointment.Email</td>
+                    <td>@appointment.PhoneNumber</td>
+                    <td>@appointment.AppointmentDate?.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>
