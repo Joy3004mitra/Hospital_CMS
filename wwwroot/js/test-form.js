@@ -1,4 +1,4 @@
-// JavaScript Document
+﻿// JavaScript Document
 $(document).ready(function () {
 
     "use strict";
@@ -99,6 +99,14 @@ $(document).ready(function () {
                         icon: 'success',
                         confirmButtonColor: '#0C5D87',
                         confirmButtonText: 'OK'
+                    }).then(() => {
+
+                        // ✅ CLEAR FIELDS HERE (ONE PLACE ONLY)
+                        $("#test-form")[0].reset();
+
+                        // optional cleanup
+                        $(".form-control").removeClass("error success");
+                        $(".error-msg").remove();
                     });
 
                 } else {

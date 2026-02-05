@@ -138,7 +138,7 @@ public class EmailService
 
 
         MailMessage mail = new MailMessage();
-        mail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
+        mail.From = new MailAddress(fromEmail, "New Contact Request");
         mail.To.Add(adminEmail);
         mail.Subject = "New Contact Form Submission Received - " + contactModel.Name;
         mail.Body = fileContent;
@@ -162,7 +162,7 @@ public class EmailService
         fileContent = fileContent.Replace("DATETIME", DateTime.Now.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
 
         MailMessage usermail = new MailMessage();
-        usermail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
+        usermail.From = new MailAddress(fromEmail, "New Contact Request");
         usermail.To.Add(contactModel.Email);
         usermail.Subject = "Thank You for Contacting Ratnakamal Medical Centre of Excellence!";
         usermail.Body = fileContent;

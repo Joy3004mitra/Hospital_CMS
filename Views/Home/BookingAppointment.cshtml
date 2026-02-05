@@ -50,6 +50,10 @@
                         <!-- Form Select -->
                         <div id="input-doctor" class="col-md-4 input-doctor">
                             @{
+                                var doctors = ViewBag.Doctor as HospitalManagement.Models.MastDoctor;
+                            }
+                            <input type="text" name="name" value="@doctors.DoctorName" class="form-control name" readonly>
+                            @* @{
                                 var doctors = ViewBag.Doctor as List<HospitalManagement.Models.MastDoctor>;
                             }
                             <select id="doctorData" name="doctor" class="custom-select doctor" required>
@@ -62,7 +66,7 @@
                                     }
                                     <option value="Others">Others</option>
                                 }
-                            </select>
+                            </select> *@
                         </div>
 
                         <!-- Form Select -->
