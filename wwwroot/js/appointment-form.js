@@ -5,24 +5,25 @@ $(document).ready(function () {
 
     $("#appointment-form").submit(function (e) {
         e.preventDefault();
-        var doctor = $("#doctorData");
+        //var doctor = $("#doctorData");
+        var doctor = $(".name");
         var patient = $(".patient");
         var date = $(".date");
-        var name = $(".name");
+        var name = $(".patientname");
         var email = $(".email");
         var phone = $(".phone");
         var msg = $(".message");
         var flag = false;
         $(".error-msg").remove();
 
-        if (doctor.val() == "Select Doctor") {
-            doctor.addClass("error-select");
+        //if (doctor.val() == "Select Doctor") {
+        //    doctor.addClass("error-select");
 
-            // Check if error message already exists
-            if (doctor.next(".error-msg").length === 0) {
-                doctor.after('<span class="error-msg">This field is required.</span>');
-            }
-        }
+        //    // Check if error message already exists
+        //    if (doctor.next(".error-msg").length === 0) {
+        //        doctor.after('<span class="error-msg">This field is required.</span>');
+        //    }
+        //}
         if (patient.val() == "") {
             patient.closest(".form-control").addClass("error");
             patient.focus();
@@ -68,9 +69,10 @@ $(document).ready(function () {
             flag = true;
         }
         var formData = {
-            DoctorName: $("#doctorData").val(),
+            //DoctorName: $("#doctorData").val(),
+            DoctorName: $("input[name='name']").val(),
             PatientStatus: $("#inlineFormCustomSelect3").val(),
-            FullName: $("input[name='name']").val(),
+            FullName: $("input[name='patientname']").val(),
             Gender: $("select[name='gender']").val(),
             Age: $("input[name='age']").val(),
             Email: $("input[name='email']").val(),

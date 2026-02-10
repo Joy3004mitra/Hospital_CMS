@@ -208,11 +208,12 @@ public class EmailService
         MailMessage mail = new MailMessage();
         mail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
         mail.To.Add(adminEmail);
+        mail.Subject = "Booking Request for" + " " + appointmentModel.FullName + " at Ratnakamal Medical Center";
         if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
         {
             mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " on " + parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
         }
-        
+
         mail.Body = fileContent;
         mail.IsBodyHtml = true;
 
@@ -237,7 +238,7 @@ public class EmailService
         MailMessage usermail = new MailMessage();
         usermail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
         usermail.To.Add(appointmentModel.Email);
-        usermail.Subject = "We Received your Booking Request for" + " " + appointmentModel.ServiceName + " at Ratnakamal Medical Center";
+        usermail.Subject = "We Received your Booking Request for" + " " + appointmentModel.FullName + " at Ratnakamal Medical Center";
         usermail.Body = fileContent;
         usermail.IsBodyHtml = true;
 
@@ -280,10 +281,11 @@ public class EmailService
         MailMessage mail = new MailMessage();
         mail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
         mail.To.Add(adminEmail);
-        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
-        {
-            mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " on " + parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-        }
+        mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " at Ratnakamal Medical Center";
+        //if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
+        //{
+        //    mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " on " + parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        //}
 
         mail.Body = fileContent;
         mail.IsBodyHtml = true;
