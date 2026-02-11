@@ -5,8 +5,8 @@ $(document).ready(function () {
 
     $("#appointment-form").submit(function (e) {
         e.preventDefault();
-        //var doctor = $("#doctorData");
-        var doctor = $(".name");
+        var doctor = $("#doctorData");
+        //var doctor = $(".name");
         var patient = $(".patient");
         var date = $(".date");
         var name = $(".patientname");
@@ -16,14 +16,15 @@ $(document).ready(function () {
         var flag = false;
         $(".error-msg").remove();
 
-        //if (doctor.val() == "Select Doctor") {
-        //    doctor.addClass("error-select");
+        if (doctor.val() == "Select Doctor") {
+            doctor.addClass("error-select");
 
-        //    // Check if error message already exists
-        //    if (doctor.next(".error-msg").length === 0) {
-        //        doctor.after('<span class="error-msg">This field is required.</span>');
-        //    }
-        //}
+            // Check if error message already exists
+            if (doctor.next(".error-msg").length === 0) {
+                doctor.after('<span class="error-msg">This field is required.</span>');
+            }
+        }
+
         if (patient.val() == "") {
             patient.closest(".form-control").addClass("error");
             patient.focus();
@@ -69,8 +70,8 @@ $(document).ready(function () {
             flag = true;
         }
         var formData = {
-            //DoctorName: $("#doctorData").val(),
-            DoctorName: $("input[name='name']").val(),
+            //DoctorName: $("input[name='name']").val(),
+            DoctorName: $("#doctorData").val(),
             PatientStatus: $("#inlineFormCustomSelect3").val(),
             FullName: $("input[name='patientname']").val(),
             Gender: $("select[name='gender']").val(),
@@ -101,7 +102,7 @@ $(document).ready(function () {
                         html: 'Thank you for your booking request.<br><br>' +
                             'Our executive will get in touch with you shortly to confirm a time slot for your appointment on ' +
                             `<b>${formattedDate}</b>.<br><br>` +
-                            'Alternatively, you can contact us at <b>+91 9230648141, +91 9230648141</b> or email us at ' +
+                            'Alternatively, you can contact us at <b>+91 9230648141, +91 9230648142</b> or email us at ' +
                             '<a href="mailto:ratnakalmcoe@gmail.com">ratnakalmcoe@gmail.com</a> to select your preferred time slot.<br><br>' +
                             '<b>Please ensure you arrive at the hospital at least 30 minutes before your appointment.</b><br><br>' +
                             'Best regards,<br><b>Ratnakamal Medical Centre of Excellence</b>',
