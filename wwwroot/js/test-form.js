@@ -92,7 +92,7 @@ $(document).ready(function () {
                         html: 'Thank you for your booking request.<br><br>' +
                             'Our executive will get in touch with you shortly to confirm a time slot for your appointment on ' +
                             `<b>${formattedDate}</b>.<br><br>` +
-                            'Alternatively, you can contact us at <b>+91 9230648141, +91 9230648141</b> or email us at ' +
+                            'Alternatively, you can contact us at <b>+91 9230648141, +91 9230648142</b> or email us at ' +
                             '<a href="mailto:ratnakalmcoe@gmail.com">ratnakalmcoe@gmail.com</a> to select your preferred time slot.<br><br>' +
                             '<b>Please ensure you arrive at the hospital at least 30 minutes before your appointment.</b><br><br>' +
                             'Best regards,<br><b>Ratnakamal Medical Centre of Excellence</b>',
