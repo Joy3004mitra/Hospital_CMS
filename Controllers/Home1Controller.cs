@@ -174,7 +174,7 @@ namespace HospitalManagement.Controllers
                     Age = model.Age,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
-                    AppointmentDate = Convert.ToDateTime(model.AppointmentDate),
+                    AppointmentDate = DateTime.ParseExact(model.AppointmentDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                     Message = model.Message,
                     EntDate = DateTime.Now,
                     EntTime = DateTime.Now.ToLocalTime(),
