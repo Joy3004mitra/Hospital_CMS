@@ -1,10 +1,11 @@
-﻿using System.Net;
+﻿using HospitalManagement.Models;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.Extensions.Configuration;
+using System.Globalization;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using HospitalManagement.Models;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.Extensions.Configuration;
 
 public class EmailService
 {
@@ -186,68 +187,91 @@ public class EmailService
         var adminEmail = _configuration["EmailSettings:AdminEmail"];
         var encodedPassword = _configuration["EmailSettings:FromPassword"];
         var fromPassword = Encoding.UTF8.GetString(Convert.FromBase64String(encodedPassword));
-        DateTime parsedDate;
 
-        string path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "admin_booking_mail.html");
+        DateTime appointmentDate;
+
+        // ✅ SAFE DATE PARSE (dd/MM/yyyy)
+        bool isDateValid = DateTime.TryParseExact(
+            appointmentModel.AppointmentDate,
+            "dd/MM/yyyy",
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.None,
+            out appointmentDate
+        );
+
+        string formattedDate = isDateValid
+            ? appointmentDate.ToString("dd/MM/yyyy")
+            : appointmentModel.AppointmentDate;
+
+        /* =========================
+           ADMIN MAIL
+        ========================== */
+
+        string path = Path.Combine(
+            Environment.CurrentDirectory,
+            "Templates", "mail", "admin_booking_mail.html"
+        );
+
         string fileContent = File.ReadAllText(path);
-        //fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
-        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName);
-        fileContent = fileContent.Replace("AGE", appointmentModel.Age);
-        fileContent = fileContent.Replace("GENDER", appointmentModel.Gender);
-        fileContent = fileContent.Replace("PHONENO", appointmentModel.PhoneNumber);
-        fileContent = fileContent.Replace("EMAIL", appointmentModel.Email);
-        fileContent = fileContent.Replace("DOCTORNAME", appointmentModel.DoctorName);
-        fileContent = fileContent.Replace("TYPE", appointmentModel.PatientStatus);
-        fileContent = fileContent.Replace("MESG", appointmentModel.Message);
 
-        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
+        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName ?? "");
+        fileContent = fileContent.Replace("AGE", appointmentModel.Age ?? "");
+        fileContent = fileContent.Replace("GENDER", appointmentModel.Gender ?? "");
+        fileContent = fileContent.Replace("PHONENO", appointmentModel.PhoneNumber ?? "");
+        fileContent = fileContent.Replace("EMAIL", appointmentModel.Email ?? "");
+        fileContent = fileContent.Replace("DOCTORNAME", appointmentModel.DoctorName ?? "");
+        fileContent = fileContent.Replace("TYPE", appointmentModel.PatientStatus ?? "");
+        fileContent = fileContent.Replace("MESG", appointmentModel.Message ?? "");
+        fileContent = fileContent.Replace("DATETIME", formattedDate);
+
+        MailMessage adminMail = new MailMessage
         {
-            fileContent = fileContent.Replace("DATETIME", parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+            From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence"),
+            Subject = $"Booking Request for {appointmentModel.DoctorName} on {formattedDate}",
+            Body = fileContent,
+            IsBodyHtml = true
+        };
+        adminMail.To.Add(adminEmail);
+
+        using (SmtpClient smtp = new SmtpClient(smtpServer, smtpPort))
+        {
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
+            smtp.EnableSsl = true;
+            await smtp.SendMailAsync(adminMail);
         }
 
-        MailMessage mail = new MailMessage();
-        mail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
-        mail.To.Add(adminEmail);
-        mail.Subject = "Booking Request for" + " " + appointmentModel.FullName + " at Ratnakamal Medical Center";
-        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
-        {
-            mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " on " + parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-        }
+        /* =========================
+           USER MAIL
+        ========================== */
 
-        mail.Body = fileContent;
-        mail.IsBodyHtml = true;
+        path = Path.Combine(
+            Environment.CurrentDirectory,
+            "Templates", "mail", "user_booking_mail.html"
+        );
 
-        SmtpClient smtp = new SmtpClient(smtpServer, smtpPort);
-
-        smtp.UseDefaultCredentials = false;
-        smtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
-        smtp.EnableSsl = true;
-        await smtp.SendMailAsync(mail);
-
-        path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "user_booking_mail.html");
         fileContent = File.ReadAllText(path);
-        //fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
-        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName);
-        fileContent = fileContent.Replace("AGE", appointmentModel.Age);
 
-        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
+        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName ?? "");
+        fileContent = fileContent.Replace("AGE", appointmentModel.Age ?? "");
+        fileContent = fileContent.Replace("DATETIME", formattedDate);
+
+        MailMessage userMail = new MailMessage
         {
-            fileContent = fileContent.Replace("DATETIME", parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+            From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence"),
+            Subject = $"We Received Your Booking Request for {formattedDate}",
+            Body = fileContent,
+            IsBodyHtml = true
+        };
+        userMail.To.Add(appointmentModel.Email);
+
+        using (SmtpClient userSmtp = new SmtpClient(smtpServer, smtpPort))
+        {
+            userSmtp.UseDefaultCredentials = false;
+            userSmtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
+            userSmtp.EnableSsl = true;
+            await userSmtp.SendMailAsync(userMail);
         }
-
-        MailMessage usermail = new MailMessage();
-        usermail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
-        usermail.To.Add(appointmentModel.Email);
-        usermail.Subject = "We Received your Booking Request for" + " " + appointmentModel.FullName + " at Ratnakamal Medical Center";
-        usermail.Body = fileContent;
-        usermail.IsBodyHtml = true;
-
-        SmtpClient usersmtp = new SmtpClient(smtpServer, smtpPort);
-
-        usersmtp.UseDefaultCredentials = false;
-        usersmtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
-        usersmtp.EnableSsl = true;
-        await smtp.SendMailAsync(usermail);
 
         return true;
     }
@@ -259,69 +283,94 @@ public class EmailService
         var fromEmail = _configuration["EmailSettings:FromEmail"];
         var adminEmail = _configuration["EmailSettings:AdminEmail"];
         var encodedPassword = _configuration["EmailSettings:FromPassword"];
-        var fromPassword = Encoding.UTF8.GetString(Convert.FromBase64String(encodedPassword));
-        DateTime parsedDate;
+        var fromPassword = Encoding.UTF8.GetString(
+            Convert.FromBase64String(encodedPassword)
+        );
 
-        string path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "admin_testing_mail.html");
+        DateTime appointmentDate;
+
+        // ✅ SAFE DATE PARSE (dd/MM/yyyy)
+        bool isDateValid = DateTime.TryParseExact(
+            appointmentModel.AppointmentDate,
+            "dd/MM/yyyy",
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.None,
+            out appointmentDate
+        );
+
+        string formattedDate = isDateValid
+            ? appointmentDate.ToString("dd/MM/yyyy")
+            : appointmentModel.AppointmentDate;
+
+        /* =========================
+           ADMIN MAIL
+        ========================== */
+
+        string path = Path.Combine(
+            Environment.CurrentDirectory,
+            "Templates", "mail", "admin_testing_mail.html"
+        );
+
         string fileContent = File.ReadAllText(path);
-        fileContent = fileContent.Replace("REQUESTSERVICE", appointmentModel.ServiceName);
-        //fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
-        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName);
-        fileContent = fileContent.Replace("AGE", appointmentModel.Age);
-        fileContent = fileContent.Replace("GENDER", appointmentModel.Gender);
-        fileContent = fileContent.Replace("PHONENO", appointmentModel.PhoneNumber);
-        fileContent = fileContent.Replace("EMAIL", appointmentModel.Email);
-        fileContent = fileContent.Replace("MESG", appointmentModel.Message);
 
-        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
+        fileContent = fileContent.Replace("REQUESTSERVICE", appointmentModel.ServiceName ?? "");
+        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName ?? "");
+        fileContent = fileContent.Replace("AGE", appointmentModel.Age ?? "");
+        fileContent = fileContent.Replace("GENDER", appointmentModel.Gender ?? "");
+        fileContent = fileContent.Replace("PHONENO", appointmentModel.PhoneNumber ?? "");
+        fileContent = fileContent.Replace("EMAIL", appointmentModel.Email ?? "");
+        fileContent = fileContent.Replace("MESG", appointmentModel.Message ?? "");
+        fileContent = fileContent.Replace("DATETIME", formattedDate);
+
+        MailMessage adminMail = new MailMessage
         {
-            fileContent = fileContent.Replace("DATETIME", parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+            From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence"),
+            Subject = $"Booking Request for {appointmentModel.ServiceName} on {formattedDate}",
+            Body = fileContent,
+            IsBodyHtml = true
+        };
+        adminMail.To.Add(adminEmail);
+
+        using (SmtpClient smtp = new SmtpClient(smtpServer, smtpPort))
+        {
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
+            smtp.EnableSsl = true;
+            await smtp.SendMailAsync(adminMail);
         }
 
-        MailMessage mail = new MailMessage();
-        mail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
-        mail.To.Add(adminEmail);
-        mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " at Ratnakamal Medical Center";
-        //if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
-        //{
-        //    mail.Subject = "Booking Request for" + " " + appointmentModel.ServiceName + " on " + parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-        //}
+        /* =========================
+           USER MAIL
+        ========================== */
 
-        mail.Body = fileContent;
-        mail.IsBodyHtml = true;
+        path = Path.Combine(
+            Environment.CurrentDirectory,
+            "Templates", "mail", "user_testing_mail.html"
+        );
 
-        SmtpClient smtp = new SmtpClient(smtpServer, smtpPort);
-
-        smtp.UseDefaultCredentials = false;
-        smtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
-        smtp.EnableSsl = true;
-        await smtp.SendMailAsync(mail);
-
-        path = Path.Combine(Environment.CurrentDirectory, "Templates", "mail", "user_testing_mail.html");
         fileContent = File.ReadAllText(path);
-        fileContent = fileContent.Replace("REQUESTSERVICE", appointmentModel.ServiceName);
-        //fileContent = fileContent.Replace("DATETIME", appointmentModel.AppointmentDate);
-        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName);
-        fileContent = fileContent.Replace("AGE", appointmentModel.Age);
 
-        if (DateTime.TryParse(appointmentModel.AppointmentDate, out parsedDate))
+        fileContent = fileContent.Replace("REQUESTSERVICE", appointmentModel.ServiceName ?? "");
+        fileContent = fileContent.Replace("PATIENTNAME", appointmentModel.FullName ?? "");
+        fileContent = fileContent.Replace("AGE", appointmentModel.Age ?? "");
+        fileContent = fileContent.Replace("DATETIME", formattedDate);
+
+        MailMessage userMail = new MailMessage
         {
-            fileContent = fileContent.Replace("DATETIME", parsedDate.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture));
+            From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence"),
+            Subject = $"We Received Your Booking Request for {formattedDate}",
+            Body = fileContent,
+            IsBodyHtml = true
+        };
+        userMail.To.Add(appointmentModel.Email);
+
+        using (SmtpClient userSmtp = new SmtpClient(smtpServer, smtpPort))
+        {
+            userSmtp.UseDefaultCredentials = false;
+            userSmtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
+            userSmtp.EnableSsl = true;
+            await userSmtp.SendMailAsync(userMail);
         }
-
-        MailMessage usermail = new MailMessage();
-        usermail.From = new MailAddress(fromEmail, "Ratnakamal Medical Centre of Excellence");
-        usermail.To.Add(appointmentModel.Email);
-        usermail.Subject = "We Received your Booking Request for" + " " + appointmentModel.ServiceName + " at Ratnakamal Medical Center";
-        usermail.Body = fileContent;
-        usermail.IsBodyHtml = true;
-
-        SmtpClient usersmtp = new SmtpClient(smtpServer, smtpPort);
-
-        usersmtp.UseDefaultCredentials = false;
-        usersmtp.Credentials = new NetworkCredential(fromEmail, fromPassword);
-        usersmtp.EnableSsl = true;
-        await smtp.SendMailAsync(usermail);
 
         return true;
     }
