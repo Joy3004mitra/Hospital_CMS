@@ -1,5 +1,6 @@
 ﻿using HospitalManagement.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalManagement.Controllers
 {
@@ -53,16 +54,13 @@ namespace HospitalManagement.Controllers
         [Route("/appointmenthistory/")]
         public IActionResult AppointmentHistory()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserEmail")))
-                return RedirectToAction("Login");
+            var query = _context.AppointmentHistories.Where(x => x.TagDelete == 0).OrderByDescending(x => x.HeadAppointmentKey);
 
-            var appointments = _context.AppointmentHistories
-                .Where(x => x.TagDelete == 0)
-                .OrderByDescending(x => x.AppointmentDate)
-                .ToList();
+            var sql = query.ToQueryString();   // <-- THIS LINE
+            Console.WriteLine(sql);
 
+            var appointments = query.AsNoTracking().ToList();
             return View(appointments);
-
         }
 
 

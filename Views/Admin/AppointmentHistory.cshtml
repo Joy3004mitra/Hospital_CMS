@@ -4,6 +4,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    var doctorAppointments = Model
+        .Where(x => !string.IsNullOrWhiteSpace(x.DoctorName))
+        .OrderByDescending(x => x.HeadAppointmentKey)
+        .ToList();
+
+    var departmentAppointments = Model
+        .Where(x => !string.IsNullOrWhiteSpace(x.ServiceName))
+        .OrderByDescending(x => x.HeadAppointmentKey)
+        .ToList();
+}
+
 <div class="page-header space">
     <h2>Appointment History</h2>
 </div>
@@ -18,6 +30,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th style="display:none">ID</th>
                 <th>Doctor Name</th>
                 <th>Patient Name</th>
                 <th>Email</th>
@@ -26,10 +39,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var appointment in Model.Where(x => !string.IsNullOrEmpty(x.DoctorName)))
+            @foreach (var appointment in doctorAppointments)
             {
                 <tr>
-                    <td>@appointment.DoctorName</td>
+                    <td style="display:none">@appointment.HeadAppointmentKey</td>
+                    <td>@appointment.DoctorName.Trim()</td>
                     <td>@appointment.FullName</td>
                     <td>@appointment.Email</td>
                     <td>@appointment.PhoneNumber</td>
@@ -47,6 +61,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th style="display:none">ID</th>
                 <th>Department</th>
                 <th>Patient Name</th>
                 <th>Email</th>
@@ -55,10 +70,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var appointment in Model.Where(x => !string.IsNullOrEmpty(x.ServiceName)))
+            @foreach (var appointment in departmentAppointments)
             {
                 <tr>
-                    <td>@appointment.ServiceName</td>
+                    <td style="display:none">@appointment.HeadAppointmentKey</td>
+                    <td>@appointment.ServiceName.Trim()</td>
                     <td>@appointment.FullName</td>
                     <td>@appointment.Email</td>
                     <td>@appointment.PhoneNumber</td>

@@ -29,12 +29,12 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="@Url.Action("Index","Doctor")">Doctors</a></li>
-                    <li><a href="@Url.Action("Index","Blog")">Blogs</a></li>
-                    <li><a href="@Url.Action("Index","Service")">Hospital Services</a></li>
-                    <li><a href="@Url.Action("Index","Testimonial")">Testimonials</a></li>
-                    <li><a href="@Url.Action("Create","Site")">Site Settings</a></li>
-                    <li><a href="@Url.Action("AppointmentHistory","Admin")">Appointment History</a></li>
+                    <li><a href="@Url.Action("Index", "Doctor")">Doctors</a></li>
+                    <li><a href="@Url.Action("Index", "Blog")">Blogs</a></li>
+                    <li><a href="@Url.Action("Index", "Service")">Hospital Services</a></li>
+                    <li><a href="@Url.Action("Index", "Testimonial")">Testimonials</a></li>
+                    <li><a href="@Url.Action("Create", "Site")">Site Settings</a></li>
+                    <li><a href="@Url.Action("AppointmentHistory", "Admin")">Appointment History</a></li>
                 </ul>
 
             </nav>
@@ -53,13 +53,14 @@
     <script>
         $(document).ready(function () {
             $(".table").DataTable({
-                "pageLength": 10, // Default rows per page
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                "lengthChange": true, // Allow changing page size
-                "ordering": true,
-                "searching": true,
-                "paging": true,
-                "info": true
+                order: [[0, "desc"]],
+                columnDefs: [
+                    { targets: 0, visible: false, searchable: false }
+                ],
+                ordering: true,
+                searching: true,
+                paging: true,
+                info: true
             });
         });
     </script>
